@@ -235,8 +235,16 @@ h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: url("../img/pozadina2.jpeg") top center;
-  background-size: cover;
+  background: linear-gradient(-45deg, #1e3c72, #2a5298, #74b9ff, #00cec9);
+  animation: gradientShift 18s ease infinite;
+}
+
+
+/* Za mobilne uređaje */
+@media (max-width: 690px) {
+  #hero {
+    background-image: url("../img/pozadina.jpg");
+  }
 }
 
 
