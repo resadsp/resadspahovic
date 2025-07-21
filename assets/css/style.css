@@ -243,7 +243,7 @@ h6 {
 /* Za mobilne uređaje */
 @media (max-width: 590px) {
   #hero {
-    background-image: url("../img/download.jpeg");
+    background-image: url("../img/a.jpeg");
     background-position: center;
     background-size: 100% 100%;
   }
