@@ -286,8 +286,9 @@ h6 {
 
 @media (max-width: 768px) {
   #hero h1 {
-    font-size: 38px;
+    font-size: 48px;
     line-height: 36px;
+    color: whitesmoke;
   }
 
   #hero h2 {
