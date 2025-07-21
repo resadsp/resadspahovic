@@ -244,6 +244,8 @@ h6 {
 @media (max-width: 690px) {
   #hero {
     background-image: url("../img/pozadina.jpg");
+    background-position: center;
+    background-size: 100% 100%;
   }
 }
 
