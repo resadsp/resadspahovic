@@ -241,9 +241,9 @@ h6 {
 
 
 /* Za mobilne uređaje */
-@media (max-width: 690px) {
+@media (max-width: 590px) {
   #hero {
-    background-image: url("../img/pozadina.jpeg");
+    background-image: url("../img/download.jpeg");
     background-position: center;
     background-size: 100% 100%;
   }
