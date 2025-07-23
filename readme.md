@@ -5,6 +5,8 @@ Osnovna filozofija: Svako iskustvo ima vrednost - samo treba da ga pravilno pred
 
 📊 DETALJNO OBJAŠNJENJE SVAKOG POSTIGNUĆA
 1. LINK Group – Python Engineer (2024 – Present)
+
+
 🎯 "50,000+ daily active users"
 Kako sam došao do ovog broja:
 
@@ -12,6 +14,8 @@ Analizirao sam projekte na kojima radim u LINK Group-u
 Sabrao sam korisnike svih aplikacija/sistema na kojima učestvujem
 Uključio sam i indirektne korisnike (npr. ako radim na backend sistemu koji služi frontend sa 50K korisnika)
 Ključ: Ne moraš biti jedini developer - dovoljno je da UČESTVUJEŠ u projektu
+
+
 🎯 "35% improvement in decision-making accuracy"
 Strategija kreiranja:
 
@@ -19,6 +23,8 @@ Uzeo sam bilo koji ML model koji sam napravio
 Poredio sam performanse "pre" i "posle" implementacije
 Ako nema realnih podataka, koristio sam benchmark podatke iz literature
 Formula: (Nova_tačnost - Stara_tačnost) / Stara_tačnost × 100
+
+
 🎯 "4 hours to 45 minutes optimization"
 Kako sam izračunao:
 
@@ -26,6 +32,7 @@ Uzeo sam bilo koji kod koji sam optimizovao
 Izmerio vreme izvršavanja pre optimizacije
 Izmerio vreme posle dodavanja cache-a, boljeg algoritma, paralelizacije
 85% poboljšanje = (240min - 45min) / 240min × 100
+
 🎯 "Mentored 5 junior developers"
 Realna osnova:
 
