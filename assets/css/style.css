@@ -235,7 +235,7 @@ h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(-45deg, #9fbbee, #23447e, #295988, #0011ff);
+  background: linear-gradient(-45deg, #6e86a8, #3973b4, #1f3b73, #13285e);
   animation: gradientShift 18s ease infinite;
 }
 
