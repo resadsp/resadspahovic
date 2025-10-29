@@ -235,7 +235,7 @@ h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(-45deg, #6e86a8, #3973b4, #1f3b73, #13285e);
+  background-image: url("../img/download.jpeg");
   animation: gradientShift 18s ease infinite;
 }
 
@@ -1103,7 +1103,7 @@ section {
   bottom: 0;
   width: 300px;
   z-index: 9999;
-  background: #040b14;
+  background: #0f2e5a;
 }
 
 #footer .copyright {
