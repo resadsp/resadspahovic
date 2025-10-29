@@ -1110,6 +1110,12 @@ section {
   text-align: center;
 }
 
+#footer a{
+  color: rgb(173, 169, 245);
+  font-size: 14px;
+  font-weight: 500;
+}
+
 #footer .credits {
   padding-top: 5px;
   text-align: center;
