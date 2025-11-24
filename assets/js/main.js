@@ -268,6 +268,8 @@
     const downloadBtn = select('#cvDownloadBtn');
     const modalEl = select('#cvModal');
 
+    const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '');
+
     const loadBlob = () => {
       if (cvBlobUrl) return Promise.resolve(cvBlobUrl);
       return fetch(cvPath).then(res => {
@@ -283,6 +285,11 @@
     if (previewBtn) {
       previewBtn.addEventListener('click', function(e){
         e.preventDefault();
+        // On mobile devices prefer direct URL so native viewer handles filename and preview
+        if (isMobile()) {
+          if (iframe) iframe.src = cvPath;
+          return;
+        }
         loadBlob().then(url => {
           if (iframe) iframe.src = url;
         }).catch(() => {
@@ -295,10 +302,15 @@
     if (downloadBtn) {
       downloadBtn.addEventListener('click', function(e){
         e.preventDefault();
+        // On mobile some browsers mishandle blob downloads — open direct URL to let server headers control filename
+        if (isMobile()) {
+          window.open(cvPath, '_blank');
+          return;
+        }
         loadBlob().then(url => {
           const a = document.createElement('a');
           a.href = url;
-            a.download = 'Resad_Spahovic_CV.pdf';
+          a.download = 'Resad_Spahovic_CV.pdf';
           document.body.appendChild(a);
           a.click();
           a.remove();
