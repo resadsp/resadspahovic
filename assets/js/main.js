@@ -298,7 +298,7 @@
         loadBlob().then(url => {
           const a = document.createElement('a');
           a.href = url;
-          a.download = 'My_CV.pdf';
+          a.download = 'Resad_Spahovic_CV.pdf';
           document.body.appendChild(a);
           a.click();
           a.remove();
