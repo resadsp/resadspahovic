@@ -258,4 +258,33 @@
    */
   new PureCounter();
 
+  /**
+   * CV download fallback: try to fetch and force download,
+   * otherwise open in new tab as fallback.
+   */
+  on('click', '#cv-download', function(e) {
+    e.preventDefault();
+    const url = this.getAttribute('href');
+    const filename = this.getAttribute('download') || 'MyCV.pdf';
+
+    // Try fetch + blob download
+    fetch(url).then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.blob();
+    }).then(blob => {
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(blobUrl);
+      a.remove();
+    }).catch(() => {
+      // Fallback: open in new tab for manual save
+      window.open(url, '_blank');
+    });
+  });
+
 })()
