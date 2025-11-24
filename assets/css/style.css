@@ -206,13 +206,13 @@ h6 {
   top: 15px;
   z-index: 9998;
   border: 0;
-  font-size: 26px;
+  font-size: 27px;
   transition: all 0.4s;
   outline: none !important;
   background-color: #132f55;
   color: #fff;
-  width: 41px;
-  height: 41px;
+  width: 46px;
+  height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1223,4 +1223,45 @@ section {
   font-size: 14px;
   margin: 0;
   opacity: 0.9;
+}
+
+/*--------------------------------------------------------------
+# CV Nav Buttons
+--------------------------------------------------------------*/
+.cv-nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 6px;
+}
+.cv-nav-buttons .btn {
+  width: calc(100% - 6px);
+  text-align: left;
+  font-size: 13px;
+  padding: 6px 10px;
+}
+@media (max-width: 768px) {
+  .cv-nav-buttons {
+    flex-direction: row;
+  }
+  .cv-nav-buttons .btn {
+    width: auto;
+  }
+}
+
+/* Fullscreen CV modal styles */
+#cvModal .modal-content { background: #ffffff; }
+#cvModal .modal-header { border-bottom: 0; }
+.cv-iframe-wrap { height: calc(100vh - 58px - 44px); /* subtract header + button bar heights */ }
+#cvIframe { height: 100%; }
+
+@media (max-width: 576px) {
+  .cv-iframe-wrap { height: calc(100vh - 56px - 48px); }
+}
+/* Ensure modal appears above the fixed sidebar/header */
+#cvModal.modal {
+  z-index: 10060; /* above header z-index 9997 */
+}
+.modal-backdrop.show {
+  z-index: 10050 !important;
 }

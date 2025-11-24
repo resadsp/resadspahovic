@@ -257,34 +257,83 @@
    * Initiate Pure Counter 
    */
   new PureCounter();
-
   /**
-   * CV download fallback: try to fetch and force download,
-   * otherwise open in new tab as fallback.
+   * CV modal preview & download logic
    */
-  on('click', '#cv-download', function(e) {
-    e.preventDefault();
-    const url = this.getAttribute('href');
-    const filename = this.getAttribute('download') || 'MyCV.pdf';
+  (function(){
+    const cvPath = 'assets/files/Resad_Spahovic_CV.pdf';
+    let cvBlobUrl = null;
+    const iframe = select('#cvIframe');
+    const previewBtn = select('#cvPreviewBtn');
+    const downloadBtn = select('#cvDownloadBtn');
+    const modalEl = select('#cvModal');
 
-    // Try fetch + blob download
-    fetch(url).then(response => {
-      if (!response.ok) throw new Error('Network response was not ok');
-      return response.blob();
-    }).then(blob => {
-      const blobUrl = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = blobUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(blobUrl);
-      a.remove();
-    }).catch(() => {
-      // Fallback: open in new tab for manual save
-      window.open(url, '_blank');
-    });
-  });
+    const loadBlob = () => {
+      if (cvBlobUrl) return Promise.resolve(cvBlobUrl);
+      return fetch(cvPath).then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.blob();
+      }).then(blob => {
+        cvBlobUrl = window.URL.createObjectURL(blob);
+        return cvBlobUrl;
+      });
+    };
+
+    // Preview action: load blob and show in iframe
+    if (previewBtn) {
+      previewBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        loadBlob().then(url => {
+          if (iframe) iframe.src = url;
+        }).catch(() => {
+          if (iframe) iframe.src = cvPath; // fallback to direct link
+        });
+      });
+    }
+
+    // Download action: ensure blob is loaded then trigger download
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        loadBlob().then(url => {
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'My_CV.pdf';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }).catch(() => {
+          window.open(cvPath, '_blank');
+        });
+      });
+    }
+
+    // When modal shown, auto-load preview
+    if (modalEl) {
+      modalEl.addEventListener('shown.bs.modal', function(){
+        // If mobile nav is open, close it so modal is visible
+        try {
+          const body = select('body');
+          if (body && body.classList.contains('mobile-nav-active')) {
+            body.classList.remove('mobile-nav-active');
+            const navbarToggle = select('.mobile-nav-toggle');
+            if (navbarToggle) {
+              navbarToggle.classList.remove('bi-x');
+              navbarToggle.classList.add('bi-list');
+            }
+          }
+        } catch (err) {
+          // ignore
+        }
+
+        // Load preview
+        loadBlob().then(url => { if (iframe) iframe.src = url; }).catch(()=>{ if (iframe) iframe.src = cvPath; });
+      });
+      modalEl.addEventListener('hidden.bs.modal', function(){
+        if (iframe) iframe.src = '';
+        if (cvBlobUrl) { URL.revokeObjectURL(cvBlobUrl); cvBlobUrl = null; }
+      });
+    }
+  })();
 
 })()

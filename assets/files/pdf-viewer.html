@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PDF Viewer</title>
+  <style>
+    html,body{height:100%;margin:0}
+    .toolbar{background:#132f55;color:#fff;padding:8px 12px;display:flex;gap:8px;align-items:center}
+    .toolbar a{color:#fff;text-decoration:none;padding:6px 10px;background:#149ddd;border-radius:4px}
+    .container{height:calc(100% - 48px)}
+    iframe{width:100%;height:100%;border:0}
+    .message{padding:16px}
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div id="title">Preview</div>
+    <div style="margin-left:auto">
+      <a id="downloadLink" href="#">Download</a>
+      <a id="openDirect" href="#" target="_blank">Open Direct</a>
+    </div>
+  </div>
+  <div class="container" id="viewer">
+    <div class="message">Loading preview…</div>
+  </div>
+
+  <script>
+    (function(){
+      function qs(name){
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+      const file = qs('file');
+      const viewer = document.getElementById('viewer');
+      const downloadLink = document.getElementById('downloadLink');
+      const openDirect = document.getElementById('openDirect');
+      if(!file){
+        viewer.innerHTML = '<div class="message">No file specified.</div>';
+        downloadLink.style.display='none';
+        openDirect.style.display='none';
+        return;
+      }
+      const url = decodeURIComponent(file);
+      downloadLink.href = url;
+      openDirect.href = url;
+
+      // Fetch the PDF and show as blob URL in iframe to avoid automatic-download Content-Disposition
+      fetch(url, {credentials: 'same-origin'}).then(function(resp){
+        if(!resp.ok) throw new Error('Network response not ok');
+        return resp.blob();
+      }).then(function(blob){
+        const blobUrl = URL.createObjectURL(blob);
+        viewer.innerHTML = '<iframe src="'+blobUrl+'"></iframe>';
+        // set download link to blob too
+        downloadLink.href = blobUrl;
+        downloadLink.setAttribute('download','My_CV.pdf');
+      }).catch(function(err){
+        // Fallback: show message and provide direct link
+        viewer.innerHTML = '<div class="message">Unable to preview file inline. <a href="'+url+'" target="_blank">Open directly</a></div>';
+      });
+    })();
+  </script>
+</body>
+</html>

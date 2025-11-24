@@ -60,7 +60,9 @@
           <li><a href="#hero" class="nav-link scrollto active" target="_blank"><i class="bx bx-home"></i> <span>Home</span></a></li>
           <li><a href="#about" class="nav-link scrollto" target="_blank"><i class="bx bx-user"></i> <span>About</span></a></li>
           <li><a href="#resume" class="nav-link scrollto" target="_blank"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-            <li><a href="assets/files/Resad_Spahovic_CV.pdf" id="cv-download" class="nav-link" rel="noopener" download="MyCV.pdf"><i class="bx bx-download"></i> <span>My CV</span></a></li>
+          <li>
+            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#cvModal"><i class="bx bx-download"></i> <span>My CV</span></a>
+          </li>
           <li><a href="#workspace" class="nav-link scrollto"><i class="bx bx-desktop"></i> <span>Workspace</span></a></li>
           <li><a href="#contact" class="nav-link scrollto" target="_blank"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
         </ul>
@@ -492,6 +494,27 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
+
+  <!-- ======= CV Modal ======= -->
+  <div class="modal fade" id="cvModal" tabindex="-1" aria-labelledby="cvModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title" id="cvModalLabel">My CV</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="d-flex p-2 gap-2 align-items-center bg-light">
+            <button id="cvPreviewBtn" class="btn btn-primary btn-sm" style="margin-top: 10px;">Preview</button>
+            <button id="cvDownloadBtn" class="btn btn-outline-primary btn-sm" style="margin-top: 10px;">Download</button>
+          </div>
+          <div class="cv-iframe-wrap">
+            <iframe id="cvIframe" src="" style="width:100%;border:0"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
