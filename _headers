@@ -1,0 +1,12 @@
+/assets/files/Resad_Spahovic_CV.pdf
+  Content-Type: application/pdf
+  Content-Disposition: inline; filename="Resad_Spahovic_CV.pdf"
+
+# Fallback for any PDF in that folder (optional) — keep the original filename when possible
+/assets/files/*.pdf
+  Content-Type: application/pdf
+  # Use a generic inline disposition but keep user-visible filename as Resad_Spahovic_CV.pdf
+  Content-Disposition: inline; filename="Resad_Spahovic_CV.pdf"
+
+# If production uses hashed filenames and you prefer a stable public URL, add this redirect:
+# /cv.pdf  /assets/files/334324534353435355.pdf  200
