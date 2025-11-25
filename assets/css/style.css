@@ -74,7 +74,7 @@ h6 {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 258px;
   transition: all ease-in-out 0.5s;
   z-index: 9997;
   transition: all 0.5s;
@@ -207,13 +207,13 @@ h6 {
   top: 15px;
   z-index: 9998;
   border: 0;
-  font-size: 27px;
+  font-size: 28px;
   transition: all 0.4s;
   outline: none !important;
   background-color: #132f55;
   color: #fff;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
