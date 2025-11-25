@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resad Spahovic - CV</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #222;
+      overflow: hidden;
+    }
+    .pdf-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #222;
+      color: #fff;
+      padding: 12px 20px;
+      border-bottom: 1px solid #333;
+      height: 60px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .pdf-header h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .pdf-header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .pdf-header-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 6px 14px;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .pdf-header-btn.download {
+      background: #007bff;
+      color: #fff;
+    }
+    .pdf-header-btn.download:hover {
+      background: #0056b3;
+    }
+    .pdf-header-btn.close:hover {
+      background: #555;
+    }
+    .pdf-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .pdf-viewer {
+      flex: 1;
+      overflow: hidden;
+    }
+    .pdf-viewer iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    @media (max-width: 600px) {
+      .pdf-header {
+        padding: 10px 12px;
+        height: 50px;
+      }
+      .pdf-header h2 {
+        font-size: 1.1rem;
+      }
+      .pdf-header-btn {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+      }
+      .pdf-header-actions {
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="pdf-container">
+    <div class="pdf-header">
+      <h2>Resad Spahovic - CV</h2>
+      <div class="pdf-header-actions">
+        <a href="https://resadspahovic.com/assets/files/Resad_Spahovic_CV.pdf" download="Resad_Spahovic_CV.pdf" class="pdf-header-btn download" title="Download CV">
+          <span>📥 Download</span>
+        </a>
+        <button class="pdf-header-btn close" onclick="window.history.back()" title="Close">
+          <span>✕</span>
+        </button>
+      </div>
+    </div>
+    <div class="pdf-viewer">
+      <iframe src="https://resadspahovic.com/assets/files/Resad_Spahovic_CV.pdf#toolbar=0"></iframe>
+    </div>
+  </div>
+</body>
+</html>
