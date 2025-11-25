@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resad Spahovic - CV</title>
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -11,83 +12,155 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Open Sans', sans-serif;
-      background: #222;
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a1a;
       overflow: hidden;
-    }
-    .pdf-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #222;
-      color: #fff;
-      padding: 12px 20px;
-      border-bottom: 1px solid #333;
-      height: 60px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
-    .pdf-header h2 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin: 0;
-    }
-    .pdf-header-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .pdf-header-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 6px 14px;
-      border-radius: 4px;
-      transition: background 0.2s, color 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-    }
-    .pdf-header-btn.download {
-      background: #007bff;
-      color: #fff;
-    }
-    .pdf-header-btn.download:hover {
-      background: #0056b3;
-    }
-    .pdf-header-btn.close:hover {
-      background: #555;
+      height: 100vh;
     }
     .pdf-container {
       display: flex;
       flex-direction: column;
       height: 100vh;
+      width: 100%;
+    }
+    .pdf-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #fff;
+      padding: 14px 22px;
+      border-bottom: 2px solid #007bff;
+      height: 64px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+    .pdf-header h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .pdf-header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .pdf-header-btn {
+      background: none;
+      border: 2px solid #555;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.95rem;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      font-weight: 600;
+      outline: none;
+    }
+    .pdf-header-btn:active {
+      transform: scale(0.98);
+    }
+    .pdf-header-btn.download {
+      background: #007bff;
+      border-color: #0056b3;
+      color: #fff;
+    }
+    .pdf-header-btn.download:hover {
+      background: #0056b3;
+      border-color: #003d82;
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    }
+    .pdf-header-btn.close {
+      border-color: #666;
+      color: #aaa;
+      font-size: 1.3rem;
+      padding: 6px 12px;
+      min-width: 44px;
+      justify-content: center;
+    }
+    .pdf-header-btn.close:hover {
+      background: #e74c3c;
+      border-color: #c0392b;
+      color: #fff;
     }
     .pdf-viewer {
       flex: 1;
       overflow: hidden;
+      width: 100%;
+      background: #111;
     }
     .pdf-viewer iframe {
       width: 100%;
       height: 100%;
       border: none;
+      display: block;
     }
-    @media (max-width: 600px) {
+    .download-status {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      font-weight: 600;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @media (max-width: 768px) {
       .pdf-header {
-        padding: 10px 12px;
-        height: 50px;
+        padding: 11px 14px;
+        height: 56px;
       }
       .pdf-header h2 {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
       }
       .pdf-header-btn {
-        font-size: 0.9rem;
-        padding: 5px 10px;
+        font-size: 0.85rem;
+        padding: 7px 13px;
       }
       .pdf-header-actions {
-        gap: 6px;
+        gap: 8px;
+      }
+    }
+    @media (max-width: 480px) {
+      .pdf-header {
+        padding: 10px 12px;
+        height: 52px;
+      }
+      .pdf-header h2 {
+        font-size: 1rem;
+      }
+      .pdf-header-btn {
+        font-size: 0.8rem;
+        padding: 6px 11px;
+      }
+      .pdf-header-btn span {
+        display: none;
+      }
+      .pdf-header-btn.download i {
+        margin: 0;
+      }
+      .pdf-header-btn.close {
+        font-size: 1.2rem;
+        padding: 5px 10px;
       }
     }
   </style>
@@ -95,19 +168,57 @@
 <body>
   <div class="pdf-container">
     <div class="pdf-header">
-      <h2>Resad Spahovic - CV</h2>
+      <h2>My CV</h2>
       <div class="pdf-header-actions">
-        <a href="https://resadspahovic.com/assets/files/Resad_Spahovic_CV.pdf" download="Resad_Spahovic_CV.pdf" class="pdf-header-btn download" title="Download CV">
-          <span>📥 Download</span>
-        </a>
-        <button class="pdf-header-btn close" onclick="window.history.back()" title="Close">
+        <button id="downloadBtn" class="pdf-header-btn download" title="Download CV">
+          <i class="bx bx-download"></i>
+          <span>Download</span>
+        </button>
+        <button id="closeBtn" class="pdf-header-btn close" title="Close">
           <span>✕</span>
         </button>
       </div>
     </div>
     <div class="pdf-viewer">
-      <iframe src="https://resadspahovic.com/assets/files/Resad_Spahovic_CV.pdf#toolbar=0"></iframe>
+      <iframe id="pdfIframe" src="https://resadspahovic.com/assets/files/Resad_Spahovic_CV.pdf#toolbar=1&navpanes=0" allowfullscreen></iframe>
     </div>
   </div>
+
+  <div class="download-status" id="downloadStatus">✓ CV Downloaded</div>
+
+  <script>
+    const pdfUrl = 'https://resadspahovic.com/assets/files/Resad_Spahovic_CV.pdf';
+    const fileName = 'Resad_Spahovic_CV.pdf';
+    
+    // Download button
+    document.getElementById('downloadBtn').addEventListener('click', async function() {
+      try {
+        const response = await fetch(pdfUrl);
+        if (!response.ok) throw new Error('Network error');
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        
+        // Show download confirmation
+        const status = document.getElementById('downloadStatus');
+        status.style.display = 'block';
+        setTimeout(() => { status.style.display = 'none'; }, 2000);
+      } catch (error) {
+        console.error('Download failed:', error);
+        window.open(pdfUrl, '_blank');
+      }
+    });
+    
+    // Close button
+    document.getElementById('closeBtn').addEventListener('click', function() {
+      window.history.back();
+    });
+  </script>
 </body>
 </html>
