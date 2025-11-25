@@ -261,7 +261,8 @@
    * CV modal preview & download logic
    */
   (function(){
-    const cvPath = 'assets/files/Resad_Spahovic_CV.pdf';
+    // Use the production absolute URL so mobile/native viewers get correct filename
+    const cvPath = 'https://resadspahovic.com/assets/files/Resad_Spahovic_CV.pdf';
     let cvBlobUrl = null;
     const iframe = select('#cvIframe');
     const previewBtn = select('#cvPreviewBtn');
