@@ -34,6 +34,7 @@
       height: 64px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       flex-shrink: 0;
+      display: none;
     }
     .pdf-header h2 {
       font-size: 1.4rem;
@@ -115,6 +116,11 @@
         opacity: 1;
       }
     }
+    @media (max-width: 1024px) {
+      .pdf-header {
+        display: flex;
+      }
+    }
     @media (max-width: 768px) {
       .pdf-header {
         padding: 11px 14px;
@@ -136,15 +142,16 @@
     @media (max-width: 480px) {
       .pdf-header {
         padding: 10px 12px;
-        height: 52px;
+        height: 59px;
       }
       .pdf-header h2 {
         font-size: 1rem;
       }
       .pdf-header-btn.download {
         font-size: 0.95rem;
-        padding: 12px 20px;
+        padding: 9px 15px;
         border-radius: 8px;
+        margin: 56px 0;
       }
     }
   </style>
