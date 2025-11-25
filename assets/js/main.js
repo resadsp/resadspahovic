@@ -299,25 +299,31 @@
       });
     }
 
-    // Download action: ensure blob is loaded then trigger download
+    // Download action: try to fetch file and force download with correct filename
     if (downloadBtn) {
-      downloadBtn.addEventListener('click', function(e){
+      downloadBtn.addEventListener('click', async function(e){
         e.preventDefault();
-        // On mobile some browsers mishandle blob downloads — open direct URL to let server headers control filename
-        if (isMobile()) {
-          window.open(cvPath, '_blank');
-          return;
-        }
-        loadBlob().then(url => {
+        // Try programmatic fetch + download (works on most browsers)
+        try {
+          const resp = await fetch(cvPath, { cache: 'no-store' });
+          if (!resp.ok) throw new Error('Network response was not ok');
+          const blob = await resp.blob();
+          // Create a File with the desired filename so some browsers preserve it
+          const file = new File([blob], 'Resad_Spahovic_CV.pdf', { type: blob.type || 'application/pdf' });
+          const url = window.URL.createObjectURL(file);
           const a = document.createElement('a');
           a.href = url;
-          a.download = 'Resad_Spahovic_CV.pdf';
+          a.download = file.name;
           document.body.appendChild(a);
           a.click();
           a.remove();
-        }).catch(() => {
+          // revoke after a short delay
+          setTimeout(() => { window.URL.revokeObjectURL(url); }, 1500);
+          return;
+        } catch (err) {
+          // If anything fails (CORS, mobile quirks), fall back to opening the direct URL
           window.open(cvPath, '_blank');
-        });
+        }
       });
     }
 
