@@ -340,6 +340,18 @@
         }
 
         // Load preview
+        // On mobile devices do NOT create a blob URL (some mobile browsers
+        // assign random filenames to blob URLs). Use direct URL so native
+        // viewer and server headers control filename/preview.
+        try {
+          if (isMobile()) {
+            if (iframe) iframe.src = cvPath;
+            return;
+          }
+        } catch (err) {
+          // if isMobile check fails, fall back to blob behavior
+        }
+
         loadBlob().then(url => { if (iframe) iframe.src = url; }).catch(()=>{ if (iframe) iframe.src = cvPath; });
       });
       modalEl.addEventListener('hidden.bs.modal', function(){
