@@ -303,7 +303,18 @@
     if (downloadBtn) {
       downloadBtn.addEventListener('click', async function(e){
         e.preventDefault();
-        // Try programmatic fetch + download (works on most browsers)
+        // On mobile, skip programmatic fetch/blob method — open direct URL so
+        // the native viewer / server headers determine filename and behavior.
+        try {
+          if (isMobile()) {
+            window.open(cvPath, '_blank');
+            return;
+          }
+        } catch (err) {
+          // If isMobile check throws unexpectedly, continue to programmatic attempt
+        }
+
+        // Try programmatic fetch + download (works on most desktop browsers)
         try {
           const resp = await fetch(cvPath, { cache: 'no-store' });
           if (!resp.ok) throw new Error('Network response was not ok');
@@ -321,7 +332,7 @@
           setTimeout(() => { window.URL.revokeObjectURL(url); }, 1500);
           return;
         } catch (err) {
-          // If anything fails (CORS, mobile quirks), fall back to opening the direct URL
+          // If anything fails (CORS, browser quirks), fall back to opening the direct URL
           window.open(cvPath, '_blank');
         }
       });
