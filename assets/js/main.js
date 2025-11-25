@@ -307,7 +307,9 @@
         // the native viewer / server headers determine filename and behavior.
         try {
           if (isMobile()) {
-            window.open(cvPath, '_blank');
+            // Navigate current tab to the PDF URL so mobile browsers handle it
+            // natively and respect server headers (avoids popup blockers).
+            window.location.href = cvPath;
             return;
           }
         } catch (err) {
@@ -332,8 +334,9 @@
           setTimeout(() => { window.URL.revokeObjectURL(url); }, 1500);
           return;
         } catch (err) {
-          // If anything fails (CORS, browser quirks), fall back to opening the direct URL
-          window.open(cvPath, '_blank');
+          // If anything fails (CORS, browser quirks), navigate to the direct URL
+          // to let the native viewer / server headers handle download/preview.
+          window.location.href = cvPath;
         }
       });
     }
