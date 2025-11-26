@@ -136,8 +136,8 @@
       strings: typed_strings,
       loop: true,
       typeSpeed: 80,
-      backSpeed: 40,
-      backDelay: 500
+      backSpeed: 45,
+      backDelay: 400
     });
   }
 

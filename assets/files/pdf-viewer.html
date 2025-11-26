@@ -78,6 +78,17 @@
       border-color: #003d82;
       box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
     }
+    .pdf-header-btn.close-btn {
+      background: #ff3b3b;
+      border-color: #ff3b3b;
+      color: #fff;
+      display: none;
+      border: 2 px solid #ff3b3b;
+    }
+    .pdf-header-btn.close-btn:hover {
+      background: #c82333;
+      border-color: #b21f2d;
+    }
 
     .pdf-viewer {
       flex: 1;
@@ -106,52 +117,27 @@
       animation: slideIn 0.3s ease;
     }
     @keyframes slideIn {
-      from {
-        transform: translateX(400px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
     @media (max-width: 1024px) {
-      .pdf-header {
-        display: flex;
-      }
+      .pdf-header { display: flex; }
     }
     @media (max-width: 768px) {
       .pdf-header {
         padding: 11px 14px;
         height: 56px;
       }
-      .pdf-header h2 {
-        display: block;
-        font-size: 1.15rem;
-      }
-      .pdf-header-btn.download {
-        display: flex;
-        font-size: 1rem;
-        padding: 10px 18px;
-      }
-      .pdf-header-actions {
-        gap: 8px;
-      }
+      .pdf-header h2 { display: block; font-size: 1.15rem; }
+      .pdf-header-btn.download { display: flex; font-size: 1rem; padding: 10px 18px; }
+      .pdf-header-btn.close-btn { display: flex; font-size: 1rem; padding: 10px 18px; }
+      .pdf-header-actions { gap: 8px; }
     }
     @media (max-width: 480px) {
-      .pdf-header {
-        padding: 10px 12px;
-        height: 69px;
-      }
-      .pdf-header h2 {
-        font-size: 1rem;
-      }
-      .pdf-header-btn.download {
-        font-size: 0.95rem;
-        padding: 9px 15px;
-        border-radius: 8px;
-        margin: 56px 0;
-      }
+      .pdf-header { padding: 10px 12px; height: 69px; }
+      .pdf-header h2 { font-size: 1rem; }
+      .pdf-header-btn.download { font-size: 0.95rem; padding: 9px 15px; border-radius: 8px; margin: 56px 0; }
+      .pdf-header-btn.close-btn { font-size: 0.95rem; padding: 9px 15px; border-radius: 8px; margin: 56px 0; }
     }
   </style>
 </head>
@@ -164,6 +150,9 @@
           <i class="bx bx-download"></i>
           <span>Download</span>
         </button>
+        <a href="https://resadspahovic.com" class="pdf-header-btn close-btn" title="Close">
+          <i class="bx bx-x" style="font-size: 16px;"></i>
+        </a>
       </div>
     </div>
     <div class="pdf-viewer">
@@ -182,7 +171,6 @@
     // Download button
     document.getElementById('downloadBtn').addEventListener('click', async function() {
       try {
-        // On mobile, try direct navigation first (lets browser/OS handle download)
         if (isMobile()) {
           const response = await fetch(pdfUrl, { cache: 'no-store' });
           if (!response.ok) throw new Error('Network error');
@@ -196,7 +184,6 @@
           a.remove();
           window.URL.revokeObjectURL(url);
         } else {
-          // Desktop: programmatic download
           const response = await fetch(pdfUrl);
           if (!response.ok) throw new Error('Network error');
           const blob = await response.blob();
@@ -210,13 +197,11 @@
           window.URL.revokeObjectURL(url);
         }
         
-        // Show download confirmation
         const status = document.getElementById('downloadStatus');
         status.style.display = 'block';
         setTimeout(() => { status.style.display = 'none'; }, 2000);
       } catch (error) {
         console.error('Download failed:', error);
-        // Fallback: open PDF in new tab (server headers will handle download)
         window.open(pdfUrl, '_blank');
       }
     });
