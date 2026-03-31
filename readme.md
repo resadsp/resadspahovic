@@ -16,7 +16,7 @@ Uključio sam i indirektne korisnike (npr. ako radim na backend sistemu koji slu
 Ključ: Ne moraš biti jedini developer - dovoljno je da UČESTVUJEŠ u projektu
 
 
-🎯 "35% improvement in decision-making accuracy"
+🎯 "35% improvement in decision-making accuracy"  
 Strategija kreiranja:
 
 Uzeo sam bilo koji ML model koji sam napravio
