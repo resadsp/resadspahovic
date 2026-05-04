@@ -1346,6 +1346,10 @@ section {
   border-radius: 14px;
 }
 
+.nav-menu {
+  padding-top: 20px;
+}
+
 .nav-menu li:hover > a,
 .nav-menu .active,
 .nav-menu .active:focus {
@@ -1890,8 +1894,8 @@ body[data-theme="dark"] {
 }
 
 .theme-toggle-wrap {
-  margin-top: 18px;
-  margin-bottom: 8px;
+  margin-top: 14px;
+  margin-bottom: 6px;
 }
 
 .theme-toggle[aria-pressed="true"] {
@@ -2153,7 +2157,8 @@ body[data-theme="dark"] .resume .resume-item::before {
   }
 
   .theme-toggle-wrap {
-    margin-top: 14px;
+    margin-top: 10px;
+    margin-bottom: 4px;
   }
 }
 
