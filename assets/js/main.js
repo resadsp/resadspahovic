@@ -126,6 +126,34 @@
   });
 
   /**
+   * Theme toggle with persistence
+   */
+  const applyTheme = (theme) => {
+    document.body.setAttribute('data-theme', theme)
+
+    const toggle = select('.theme-toggle')
+    if (toggle) {
+      const icon = toggle.querySelector('i')
+      const isDark = theme === 'dark'
+      toggle.setAttribute('aria-pressed', String(isDark))
+      if (icon) {
+        icon.classList.toggle('bi-moon-stars', !isDark)
+        icon.classList.toggle('bi-sun', isDark)
+      }
+    }
+  }
+
+  const storedTheme = localStorage.getItem('site-theme')
+  const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  applyTheme(storedTheme || (preferredDark ? 'dark' : 'light'))
+
+  on('click', '.theme-toggle', function() {
+    const nextTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('site-theme', nextTheme)
+    applyTheme(nextTheme)
+  })
+
+  /**
    * Hero type effect
    */
   const typed = select('.typed')
