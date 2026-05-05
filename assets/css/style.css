@@ -1411,8 +1411,14 @@ section {
 }
 
 .hero-typed {
-  min-height: 34px;
+  min-height: 2.8em;
+  line-height: 1.4;
   margin-bottom: 14px;
+}
+
+.hero-typed .typed,
+.hero-typed .typed-cursor {
+  line-height: inherit;
 }
 
 #hero p,
@@ -1833,7 +1839,7 @@ section {
   }
 
   .hero-typed {
-    min-height: auto;
+    min-height: 4.2em;
   }
 
   .hero-actions,
