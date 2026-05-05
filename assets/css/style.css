@@ -1831,7 +1831,7 @@ section {
   }
 
   #hero {
-    padding: 110px 20px 64px;
+    padding: 96px 20px 40px;
     min-height: auto;
   }
 
@@ -1841,7 +1841,22 @@ section {
   }
 
   .hero-typed {
-    min-height: 4.2em;
+    min-height: 3.2em;
+    margin-bottom: 4px;
+  }
+
+  .hero-lead {
+    margin-top: 0;
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    margin-bottom: 16px;
+  }
+
+  .hero-highlights {
+    gap: 10px;
   }
 
   .hero-actions,
