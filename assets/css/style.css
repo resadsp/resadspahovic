@@ -1411,6 +1411,7 @@ section {
 }
 
 .hero-typed {
+  min-height: 34px;
   margin-bottom: 14px;
 }
 
@@ -1829,6 +1830,10 @@ section {
   #hero h1 {
     font-size: 40px;
     line-height: 1.05;
+  }
+
+  .hero-typed {
+    min-height: auto;
   }
 
   .hero-actions,
