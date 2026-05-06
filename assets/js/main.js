@@ -90,11 +90,30 @@
   /**
    * Mobile nav toggle
    */
+  const header = select('#header')
+  const updateMobileNavScrollState = () => {
+    if (!header) return
+
+    const scrollOverflow = header.scrollHeight - header.clientHeight
+    const hasOverflow = scrollOverflow > 24
+    const isNearBottom = header.scrollTop >= scrollOverflow - 12
+
+    header.classList.toggle('nav-scrollable', hasOverflow)
+    header.classList.toggle('nav-scroll-end', hasOverflow && isNearBottom)
+  }
+
   on('click', '.mobile-nav-toggle', function(e) {
     select('body').classList.toggle('mobile-nav-active')
     this.classList.toggle('bi-list')
     this.classList.toggle('bi-x')
+    updateMobileNavScrollState()
   })
+
+  if (header) {
+    onscroll(header, updateMobileNavScrollState)
+    window.addEventListener('load', updateMobileNavScrollState)
+    window.addEventListener('resize', updateMobileNavScrollState)
+  }
 
   /**
    * Scrool with ofset on links with a class name .scrollto
@@ -109,6 +128,7 @@
         let navbarToggle = select('.mobile-nav-toggle')
         navbarToggle.classList.toggle('bi-list')
         navbarToggle.classList.toggle('bi-x')
+        updateMobileNavScrollState()
       }
       scrollto(this.hash)
     }
@@ -136,9 +156,11 @@
       const icon = toggle.querySelector('i')
       const isDark = theme === 'dark'
       toggle.setAttribute('aria-pressed', String(isDark))
+      toggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme')
+      toggle.setAttribute('title', isDark ? 'Dark mode active' : 'Light mode active')
       if (icon) {
-        icon.classList.toggle('bi-moon-stars', !isDark)
-        icon.classList.toggle('bi-sun', isDark)
+        icon.classList.toggle('bi-moon-stars', isDark)
+        icon.classList.toggle('bi-sun', !isDark)
       }
     }
   }
