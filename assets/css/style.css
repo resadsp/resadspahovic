@@ -265,13 +265,14 @@ h6 {
     right: 18px;
     bottom: 10px;
     z-index: 2;
-    padding: 18px 14px 8px;
+    padding: 20px 16px 10px;
     border-radius: 0 0 18px 18px;
     background: linear-gradient(180deg, rgba(19, 47, 85, 0) 0%, rgba(19, 47, 85, 0.82) 52%, rgba(19, 47, 85, 0.98) 100%);
     color: rgba(227, 237, 247, 0.82);
     font-family: "Poppins", sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     text-align: center;
     text-transform: uppercase;
     pointer-events: none;
@@ -1904,21 +1905,21 @@ section {
   }
 
   #hero h1 {
-    font-size: 34px;
-    line-height: 1.05;
+    font-size: 48px;
+    line-height: 1;
     margin-bottom: 18px;
   }
 
   .hero-typed {
     min-height: 2.4em;
     margin-bottom: 20px;
-    font-size: 18px !important;
+    font-size: 23px !important;
   }
 
   .hero-lead {
     margin-top: 0;
     margin-bottom: 28px;
-    font-size: 15px !important;
+    font-size: 17px !important;
     line-height: 1.55;
   }
 
@@ -1939,15 +1940,16 @@ section {
     flex: 1 1 calc(50% - 5px);
     min-width: 0;
     width: auto;
-    padding: 11px 14px;
-    font-size: 13px;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   .hero-highlights span {
     width: 100%;
     min-width: 0;
-    padding: 7px 10px;
-    font-size: 11px;
+    padding: 10px 13px;
+    font-size: 13px;
     text-align: center;
   }
 
@@ -1966,20 +1968,27 @@ section {
   }
 
   #hero h1 {
-    font-size: 31px;
+    font-size: 42px;
   }
 
   .hero-typed {
     min-height: 2.2em;
-    font-size: 17px !important;
+    font-size: 21px !important;
   }
 
   .hero-lead {
-    font-size: 14px !important;
+    font-size: 16px !important;
+  }
+
+  .btn-hero,
+  .hero-actions a {
+    padding: 13px 15px;
+    font-size: 15px;
   }
 
   .hero-highlights span {
-    font-size: 10px;
+    font-size: 12px;
+    padding: 9px 11px;
   }
 }
 
