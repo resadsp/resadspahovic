@@ -5,15 +5,37 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Python Engineer | AI Systems Engineer | Backend, Data &amp; ML Infrastructure</title>
-  <meta content="Portfolio of Resad Spahovic, a Python Engineer building production-ready AI, backend, and data systems across healthcare, legal tech, agriculture, and analytics." name="description">
+  <title>Resad Spahovic — Python &amp; AI Systems Engineer</title>
+  <meta content="Python Engineer building production-ready AI, backend, and data systems across healthcare, legal tech, and analytics." name="description">
   <meta content="Resad Spahovic, Python Engineer, AI Systems, Backend Engineer, Data Engineer, FastAPI, Django, Flask, Machine Learning, portfolio" name="keywords">
+  <meta name="author" content="Resad Spahovic">
+  <link rel="canonical" href="https://resadspahovic.com/">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://resadspahovic.com/">
+  <meta property="og:title" content="Resad Spahovic — Python Engineer | AI Systems Engineer">
+  <meta property="og:description" content="Python Engineer building production-ready AI, backend, and data systems across healthcare, legal tech, agriculture, and analytics.">
+  <meta property="og:image" content="https://resadspahovic.com/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Resad Spahovic — Python & AI Systems Engineer">
+  <meta property="og:site_name" content="Resad Spahovic">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Resad Spahovic — Python & AI Systems Engineer">
+  <meta name="twitter:description" content="Python Engineer building production-ready AI, backend, and data systems across healthcare, legal tech, and analytics.">
+  <meta name="twitter:image" content="https://resadspahovic.com/assets/img/og-image.png">
 
   <!-- Favicons -->
   <link href="assets/img/logo.jpeg" rel="icon">
   <link href="assets/img/logo.jpeg" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
@@ -21,11 +43,35 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Structured data: Person (schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Resad Spahovic",
+    "url": "https://resadspahovic.com/",
+    "image": "https://resadspahovic.com/assets/img/reso.jpg",
+    "jobTitle": "Python Engineer | AI Systems Engineer",
+    "email": "mailto:resadspahovic94@gmail.com",
+    "telephone": "+381 62 266996",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Novi Pazar",
+      "addressCountry": "RS"
+    },
+    "sameAs": [
+      "https://linkedin.com/in/resad-spahovic-3a355b31a",
+      "https://github.com/resadsp/",
+      "https://www.instagram.com/spahovicresad/",
+      "https://www.facebook.com/resad.spahovic/"
+    ],
+    "knowsAbout": ["Python", "FastAPI", "Django", "Flask", "Machine Learning", "LLM", "RAG", "Data Engineering", "PostgreSQL", "Docker", "Kubernetes"]
+  }
+  </script>
 
   <!-- =======================================================
   * Template Name: iPortfolio - v3.8.1
@@ -54,13 +100,13 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src="assets/img/reso.jpg" alt="" class="img-fluid rounded-circle">
+        <img src="assets/img/reso.jpg" alt="Resad Spahovic" class="img-fluid rounded-circle">
         <h1 class="text-light"><a href="index.html">Resad Spahovic</a></h1>
         <div class="social-links mt-3 text-center">
-          <a href="https://linkedin.com/in/resad-spahovic-3a355b31a" class="twitter"><i class="bx bxl-linkedin"></i></a>
-          <a href="https://github.com/resadsp/" class="facebook"><i class="bx bxl-github"></i></a>
-          <a href="https://www.instagram.com/spahovicresad/" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="https://www.facebook.com/resad.spahovic/" class="google-plus"><i class="bx bxl-facebook"></i></a>
+          <a href="https://linkedin.com/in/resad-spahovic-3a355b31a" class="linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+          <a href="https://github.com/resadsp/" class="github" target="_blank" rel="noopener" aria-label="GitHub"><i class="bx bxl-github"></i></a>
+          <a href="https://www.instagram.com/spahovicresad/" class="instagram" target="_blank" rel="noopener" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="https://www.facebook.com/resad.spahovic/" class="facebook" target="_blank" rel="noopener" aria-label="Facebook"><i class="bx bxl-facebook"></i></a>
         </div>
         <div class="theme-toggle-wrap text-center">
           <button type="button" class="theme-toggle" aria-label="Toggle color theme" aria-pressed="false">
@@ -545,14 +591,9 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
