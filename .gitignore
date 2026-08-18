@@ -1,0 +1,9 @@
+# Radni folderi brenda — NE SMEJU na sajt.
+# Sve u ovom skladistu se objavljuje na resadspahovic.com, pa bi odavde postali
+# javni: snimci ekrana sa licnim imenom i fotografijom, spisak u slike/PROCITAJ.txt
+# sa brojem telefona, e-postom i datumom rodjenja, i tekstovi za LinkedIn.
+# Stranica firme se objavljuje iz maat-innovations/, ne odavde.
+brend/
+brend-maat/
+assets/img/_alat/
+assets/img/linkedin-banner-staro.png
