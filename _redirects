@@ -1,0 +1,6 @@
+# Radni alat NE sme da se otvara sa sajta.
+#
+# `assets/files/_alat/` drzi izvor CV-ja i propratnih pisama — te datoteke
+# ostaju u skladistu da se ne izgube (raniji alat za CV je nestao, pa se CV dve
+# godine nije mogao izmeniti), ali nemaju sta da rade na javnoj adresi.
+/assets/files/_alat/*   /404   404
