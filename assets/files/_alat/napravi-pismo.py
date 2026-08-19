@@ -21,7 +21,8 @@ Datoteka prijave (JSON):
       "primalac": "Hiring Team",            (opciono, podrazumeva se "Hiring Team")
       "grad":     "Belgrade, Serbia",       (opciono)
       "datum":    "19 August 2026",         (opciono, ostavi prazno pa upisi rukom)
-      "pozdrav":  "Kind regards,",          (opciono)
+      "jezik":    "sr",                     (opciono: "en" podrazumevano, ili "sr")
+      "pozdrav":  "S postovanjem,",         (opciono; bez njega ide po jeziku)
       "zvanje":   "Backend Engineer | ...",  (opciono; bez njega stoji red sa CV-ja)
       "pasusi":   ["prvi pasus", "drugi pasus", "..."]
     }
@@ -47,6 +48,33 @@ MESTA = [
 ]
 
 
+# Stalni delovi pisma po jeziku. Sve sto NIJE ovde menja se po prijavi.
+#
+# Postoji da srpsko pismo ne bi bilo englesko pismo sa prevedenim pasusima:
+# predmet, oslovljavanje, pozdrav i potpis su drugaciji, a `lang` dokumenta
+# odredjuje i kako citac za slepe izgovara tekst.
+JEZICI = {
+	"en": {
+		"lang": "en",
+		"zvanje": "Python Engineer | AI Systems Engineer | Backend, Data &amp; ML Infrastructure",
+		"predmet": "Application: {pozicija}",
+		"primalac": "Hiring Team",
+		"oslovljavanje": "Dear {primalac},",
+		"pozdrav": "Kind regards,",
+		"potpis_uz": "Founder &amp; Software Engineer, MAAT INNOVATIONS",
+	},
+	"sr": {
+		"lang": "sr",
+		"zvanje": "Python inženjer | Veštačka inteligencija | Backend, podaci i ML infrastruktura",
+		"predmet": "Prijava za poziciju: {pozicija}",
+		"primalac": "Ljudski resursi",
+		"oslovljavanje": "Poštovani,",
+		"pozdrav": "S poštovanjem,",
+		"potpis_uz": "Osnivač i softverski inženjer, MAAT INNOVATIONS",
+	},
+}
+
+
 def pregledac():
 	for p in MESTA:
 		if os.path.exists(p):
@@ -63,21 +91,31 @@ def napravi(put_json):
 		if not podaci.get(obavezno):
 			raise SystemExit(f"  {os.path.basename(put_json)}: fali polje '{obavezno}'")
 
+	jezik = (podaci.get("jezik") or "en").lower()
+	if jezik not in JEZICI:
+		raise SystemExit(f"  {os.path.basename(put_json)}: jezik '{jezik}' ne postoji "
+		                 f"(ima: {', '.join(JEZICI)})")
+	rec = JEZICI[jezik]
+
 	grad = podaci.get("grad", "").strip()
-	# Red sa zvanjem se PODRAZUMEVA isti kao na CV-ju — zaglavlje mora da se
-	# poklapa, inace dva dokumenta ne izgledaju kao komplet. Prijava sme da ga
-	# promeni kad se javljas na usko odredjenu poziciju: citalac tada odmah vidi
-	# da si pisao njima, a ne isto pismo na dvadeset mesta.
-	ZVANJE_SA_CVJA = "Python Engineer | AI Systems Engineer | Backend, Data &amp; ML Infrastructure"
+	primalac = podaci.get("primalac") or rec["primalac"]
+	# Red sa zvanjem se PODRAZUMEVA po jeziku, isti kao na CV-ju — zaglavlje mora
+	# da se poklapa, inace dva dokumenta ne izgledaju kao komplet. Prijava sme da
+	# ga promeni kad se javljas na usko odredjenu poziciju.
 	zamene = {
+		"lang": rec["lang"],
+		"oslovljavanje": html.escape(
+			podaci.get("oslovljavanje")
+			or rec["oslovljavanje"].format(primalac=primalac)),
+		"potpis_uz": rec["potpis_uz"],
 		"naslov": f"Resad Spahovic — {podaci['pozicija']} — {podaci['firma']}",
 		"datum": html.escape(podaci.get("datum", "")),
-		"primalac": html.escape(podaci.get("primalac") or "Hiring Team"),
+		"primalac": html.escape(primalac),
 		"firma": html.escape(podaci["firma"]),
 		"grad": ("<br>" + html.escape(grad)) if grad else "",
-		"zvanje": html.escape(podaci["zvanje"]) if podaci.get("zvanje") else ZVANJE_SA_CVJA,
-		"predmet": html.escape(f"Application: {podaci['pozicija']}"),
-		"pozdrav": html.escape(podaci.get("pozdrav") or "Kind regards,"),
+		"zvanje": html.escape(podaci["zvanje"]) if podaci.get("zvanje") else rec["zvanje"],
+		"predmet": html.escape(rec["predmet"].format(pozicija=podaci["pozicija"])),
+		"pozdrav": html.escape(podaci.get("pozdrav") or rec["pozdrav"]),
 		# Pasusi se ne escape-uju do kraja: dozvoljen je <b> unutar recenice.
 		"pasusi": "\n".join(f"<p>{p}</p>" for p in podaci["pasusi"]),
 	}

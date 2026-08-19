@@ -1,0 +1,19 @@
+{
+  "jezik": "sr",
+  "firma": "Primer tehnologije d.o.o.",
+  "pozicija": "Backend inženjer (Python)",
+  "primalac": "Ljudski resursi",
+  "grad": "Beograd",
+  "datum": "19. avgust 2026.",
+  "pasusi": [
+    "Javljam se na oglas za <b>backend inženjera</b>. Python pišem četiri godine, a poslednje dve sam projektovao i sam napisao ceo informacioni sistem za zdravstvene ustanove, koji sada vodim kroz svoju firmu MAAT INNOVATIONS.",
+
+    "Taj sistem je najkraći odgovor na pitanje šta umem. Pokriva celu ustanovu, ne jedno odeljenje — zakazivanje, karton, laboratoriju, hirurški blok, kućne posete, magacin, opremu i finansije — i svaki sloj je moj: šema baze i migracije, servisi u FastAPI-ju, prava pristupa za osam uloga, šifrovanje ličnih i medicinskih podataka u bazi uz slepe indekse da šifrovano polje ostane pretraživo, izveštaji u PDF-u, pošta i SMS, i integracije sa laboratorijskim analizatorima preko ASTM-a, FHIR izvoz i fiskalizacija.",
+
+    "Ono što bih doneo timu nije spisak funkcija nego navika iza njega. Svaka nađena greška dobije test koji mora da padne na starom kodu pre nego što ispravka uđe, a ceo skup se pušta na svako slanje koda. Isto važi i za novac i za karton: ništa se ne ispravlja tiho, nesaglasnost se prijavljuje čoveku, a svako otvaranje kartona ostavlja trag koji se iz aplikacije ne može obrisati.",
+
+    "Uz to radim u LINK Group-u na aplikacijama sa veštačkom inteligencijom koje opslužuju preko 50.000 korisnika dnevno, gde sam prepisao obradu podataka i spustio noćni prolaz sa četiri sata na četrdeset pet minuta, i vodio pet juniora.",
+
+    "Rado bih vam sistem pokazao uživo — pola sata je dovoljno da se vidi kako radi, umesto da se opisuje. CV je u prilogu, a proizvod je na resadspahovic.com/maat-innovations."
+  ]
+}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{lang}}">
 <head>
 <meta charset="utf-8">
 <title>{{naslov}}</title>
@@ -43,6 +43,7 @@
     font-weight: 700; color: #24405f; margin-bottom: 14px; font-size: 10pt;
   }
   p { margin: 0 0 10px; text-align: justify; }
+  .oslovljavanje { margin-bottom: 12px; }
   .pozdrav { margin-top: 18px; }
   .potpis { margin-top: 4px; font-weight: 700; color: #16233a; }
   .potpis-uz { font-size: 8.8pt; color: #5b7186; font-weight: 400; }
@@ -68,11 +69,13 @@
 
 <div class="predmet">{{predmet}}</div>
 
+<p class="oslovljavanje">{{oslovljavanje}}</p>
+
 {{pasusi}}
 
 <div class="pozdrav">{{pozdrav}}</div>
 <div class="potpis">Resad Spahovic<br>
-  <span class="potpis-uz">Founder &amp; Software Engineer, MAAT INNOVATIONS</span>
+  <span class="potpis-uz">{{potpis_uz}}</span>
 </div>
 
 </body>
