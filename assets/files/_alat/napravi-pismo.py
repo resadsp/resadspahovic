@@ -22,6 +22,7 @@ Datoteka prijave (JSON):
       "grad":     "Belgrade, Serbia",       (opciono)
       "datum":    "19 August 2026",         (opciono, ostavi prazno pa upisi rukom)
       "pozdrav":  "Kind regards,",          (opciono)
+      "zvanje":   "Backend Engineer | ...",  (opciono; bez njega stoji red sa CV-ja)
       "pasusi":   ["prvi pasus", "drugi pasus", "..."]
     }
 """
@@ -63,12 +64,18 @@ def napravi(put_json):
 			raise SystemExit(f"  {os.path.basename(put_json)}: fali polje '{obavezno}'")
 
 	grad = podaci.get("grad", "").strip()
+	# Red sa zvanjem se PODRAZUMEVA isti kao na CV-ju — zaglavlje mora da se
+	# poklapa, inace dva dokumenta ne izgledaju kao komplet. Prijava sme da ga
+	# promeni kad se javljas na usko odredjenu poziciju: citalac tada odmah vidi
+	# da si pisao njima, a ne isto pismo na dvadeset mesta.
+	ZVANJE_SA_CVJA = "Python Engineer | AI Systems Engineer | Backend, Data &amp; ML Infrastructure"
 	zamene = {
 		"naslov": f"Resad Spahovic — {podaci['pozicija']} — {podaci['firma']}",
 		"datum": html.escape(podaci.get("datum", "")),
 		"primalac": html.escape(podaci.get("primalac") or "Hiring Team"),
 		"firma": html.escape(podaci["firma"]),
 		"grad": ("<br>" + html.escape(grad)) if grad else "",
+		"zvanje": html.escape(podaci["zvanje"]) if podaci.get("zvanje") else ZVANJE_SA_CVJA,
 		"predmet": html.escape(f"Application: {podaci['pozicija']}"),
 		"pozdrav": html.escape(podaci.get("pozdrav") or "Kind regards,"),
 		# Pasusi se ne escape-uju do kraja: dozvoljen je <b> unutar recenice.
