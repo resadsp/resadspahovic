@@ -265,6 +265,9 @@ figure.snimak{margin:0}
 }
 .ram img{width:100%;height:100%;object-fit:cover;object-position:top left}
 .mesto{text-align:center;padding:22px;color:var(--tiho)}
+/* Snimak razgovora je uspravan — okvir 16:10 bi mu odsekao dve trecine. */
+.snimak.uspravan .ram{aspect-ratio:auto;max-width:392px;margin:0 auto}
+.snimak.uspravan .ram img{height:auto;object-fit:contain}
 .mesto .sifra{display:block;font-size:.74rem;letter-spacing:.12em;margin-bottom:8px;color:var(--tirkiz)}
 .mesto b{display:block;font-size:.95rem;color:var(--tekst);margin-bottom:4px}
 .mesto span{font-size:.83rem}
@@ -771,9 +774,9 @@ figcaption b{color:var(--tekst);font-weight:600}
       </article>
     </div>
 
-    <figure class="snimak" style="margin-top:26px">
+    <figure class="snimak uspravan" style="margin-top:26px">
       <div class="ram">
-        <img src="../slike/27-pomocnik.png" alt="Pomoćnik u portalu pacijenta" hidden
+        <img src="../slike/27-pomocnik.webp" alt="Pomoćnik u portalu pacijenta" hidden
              onload="this.hidden=false;this.nextElementSibling.hidden=true">
         <div class="mesto">
           <span class="sifra">SLIKA 27 · /</span>
