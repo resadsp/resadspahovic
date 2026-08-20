@@ -1,6 +1,7 @@
 # Radni alat NE sme da se otvara sa sajta.
 #
-# `assets/files/_alat/` drzi izvor CV-ja i propratnih pisama — te datoteke
-# ostaju u skladistu da se ne izgube (raniji alat za CV je nestao, pa se CV dve
-# godine nije mogao izmeniti), ali nemaju sta da rade na javnoj adresi.
+# Izvor CV-ja i propratnih pisama je preseljen u `Projekti/CV-i-pisma/`, van
+# ovog skladista — pisma nose imena firmi kojima se javljas i nemaju sta da
+# rade ni na GitHub-u ni na sajtu. Pravilo ostaje za slucaj da se `_alat` ikad
+# opet pojavi ovde.
 /assets/files/_alat/*   /404   404
