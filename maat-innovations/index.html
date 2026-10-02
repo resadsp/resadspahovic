@@ -349,7 +349,7 @@ figcaption b{color:var(--tekst);font-weight:600}
   .vizit dt{margin-top:10px}
   .vizit dl > dt:first-child{margin-top:0}
 }
-/* Dve kolone se drze do 430px — jedna kolona od sesnaest celina je predugacka. */
+/* Dve kolone se drze do 430px — jedna kolona od dvadeset celina je predugacka. */
 @media (max-width:560px){.moduli{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:430px){
   .moduli{grid-template-columns:1fr}
@@ -538,7 +538,7 @@ figcaption b{color:var(--tekst);font-weight:600}
   <div class="okvir">
     <div class="odeljak-glava uski">
       <p class="oznaka">What it covers</p>
-      <h2>Sixteen modules, one system</h2>
+      <h2>Twenty modules, one system</h2>
       <p>
         Every workstation sees what it needs, and nothing is entered twice. A small
         practice uses the first few; a clinic with a laboratory and a theatre uses all of
@@ -553,7 +553,7 @@ figcaption b{color:var(--tekst);font-weight:600}
           <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>
         </svg>
         <h3>Scheduling</h3>
-        <p>Online, by phone or at the front desk. Free slots come from the real doctor schedule and theatre availability.</p>
+        <p>Online, by phone or at the front desk. The patient picks the service and the slot lasts as long as that service takes — computed from the doctor's real schedule and theatre availability.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -561,7 +561,15 @@ figcaption b{color:var(--tekst);font-weight:600}
           <path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/>
         </svg>
         <h3>Clinical work</h3>
-        <p>Chart, findings, therapy and follow-up. The report comes out as a PDF with letterhead, stamp and signature.</p>
+        <p>Chart across every department, ICD-10 diagnoses, therapy, follow-up and referrals between doctors. The report comes out as a PDF with letterhead, stamp and signature — or on a screen in the consulting room.</p>
+      </article>
+      <article class="modul">
+        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M6 12.5h3l1.5-3.5 3 7 1.5-3.5h3"/>
+        </svg>
+        <h3>Specialist reports</h3>
+        <p>Structured forms where a blank page is not enough: cardiac ultrasound with 47 measurements, gynaecology and pregnancy, vein mapping of both legs entered by the technician who did the scan — with the images attached.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -569,7 +577,7 @@ figcaption b{color:var(--tekst);font-weight:600}
           <path d="M9 3v7L4.5 18a2.5 2.5 0 0 0 2.2 3.5h10.6A2.5 2.5 0 0 0 19.5 18L15 10V3"/><path d="M8 3h8M7.5 14h9"/>
         </svg>
         <h3>Laboratory</h3>
-        <p>Test catalogue, sample intake, results with reference ranges, and a finished PDF report.</p>
+        <p>A catalogue of 1,200+ tests with its own price list, a barcode label per tube and analyser, results with reference ranges — values from the analyser arrive as a proposal the technician confirms.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -585,7 +593,7 @@ figcaption b{color:var(--tekst);font-weight:600}
           <path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>
         </svg>
         <h3>Home visits</h3>
-        <p>Field orders, technician dispatch, materials issued from stock, and call-out settlement.</p>
+        <p>Field orders, technician dispatch, therapy taken from the patient's own report at booking, materials from stock or a contracted pharmacy, and call-out settlement.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -596,6 +604,14 @@ figcaption b{color:var(--tekst);font-weight:600}
         <p>Part payments, cash and card on the same invoice, discounts, and debt tracked over years.
            Money never passes through the system — the clinic takes payment at its own till and the
            system keeps the record.</p>
+      </article>
+      <article class="modul">
+        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="9" rx="1.5"/><path d="M7 11V5h10v6"/><path d="M10 8h4M10 15.5h4"/>
+        </svg>
+        <h3>Till by shift</h3>
+        <p>Each shift takes over the till by counting it and hands it over the same way. A difference is never corrected quietly — it needs a note. The change float never counts as revenue.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -611,7 +627,7 @@ figcaption b{color:var(--tekst);font-weight:600}
           <path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/>
         </svg>
         <h3>Management</h3>
-        <p>Revenue by source, earnings by doctor, fixed costs, and break-even per service.</p>
+        <p>Revenue by source, performance and earnings by doctor, fixed costs, pharmacy purchases as costs, and break-even per service.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -640,6 +656,14 @@ figcaption b{color:var(--tekst);font-weight:600}
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 3l4 4 4-4"/><path d="M7 12h4M7 15h7"/>
+        </svg>
+        <h3>Waiting-room screen</h3>
+        <p>A TV in the waiting room calls the patient to the room the moment it frees up. Shared rooms, a “hold” button for the doctor, first name and initial only — and no ticket machine.</p>
+      </article>
+      <article class="modul">
+        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/>
         </svg>
         <h3>Marketing</h3>
@@ -651,7 +675,15 @@ figcaption b{color:var(--tekst);font-weight:600}
           <rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M6 9h5M6 13h8"/>
         </svg>
         <h3>Patient portal</h3>
-        <p>Patients see their appointments and results, download the PDF, and book themselves — with two-factor sign-in.</p>
+        <p>Patients see their appointments, results and images, download the PDF and book themselves — with two-factor sign-in. Reminders go only with their consent, which they can withdraw at any time.</p>
+      </article>
+      <article class="modul">
+        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+        </svg>
+        <h3>Clinic website</h3>
+        <p>The price list, departments and doctors on the clinic's own website come straight from the system — a price changed in the app is the price on the site.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -808,7 +840,7 @@ figcaption b{color:var(--tekst);font-weight:600}
           <path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h3"/>
         </svg>
         <h3>Fiscal receipts and e-invoicing</h3>
-        <p>Fiscal receipts and e-invoices for corporate clients, with a record of what has been fiscalised and what has not.</p>
+        <p>Two registers — front desk and laboratory. A receipt for every payment, instalments and collections at the patient's door included; a refund is its own document, and a payment without a receipt stays listed until it gets one. E-invoices for corporate clients.</p>
       </article>
       <article class="modul">
         <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -832,13 +864,14 @@ figcaption b{color:var(--tekst);font-weight:600}
           <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M7 9h4M7 13h7M17 9v4"/>
         </svg>
         <h3>Laboratory analysers</h3>
-        <p>Results arrive from the analyser (ASTM) straight into the report — no retyping, no typing errors.</p>
+        <p>Two protocols, ASTM and HL7 (MLLP). A bridge beside the analyser keeps every result on disk until the server confirms it — nothing is lost when the internet drops, and no port is opened into the clinic. Results land in the order without retyping.</p>
       </article>
     </div>
 
     <p style="margin-top:20px;color:var(--tiho);font-size:.92rem;max-width:74ch">
       <span class="mono" style="color:var(--pazi);font-size:.78rem;letter-spacing:.1em">STATUS · </span>
-      All four connections are built and run in sandbox mode. Going live is
+      All four connections are built and run in sandbox mode; the analyser links are
+      tested against simulated instruments over a real network connection. Going live is
       configuration — endpoint, key and certificate — not a rewrite. If configuration is
       missing, the system will <b>not</b> quietly fall back to simulation: it raises an
       error, so an invoice is never shown as fiscalised when it is not.
@@ -858,27 +891,31 @@ figcaption b{color:var(--tekst);font-weight:600}
         <h3>The data is yours</h3>
         <p>
           The system is installed on your server and your domain, and stays there. We do not
-          hold your database or a copy of your data. You make the backups and you keep them.
+          hold your database or a copy of your data. Backups run on their own — encrypted,
+          the database and attachments together — and stay with you.
         </p>
       </div>
       <div class="karta">
         <h3>Encrypted at rest</h3>
         <p>
-          Personal and medical fields are stored encrypted. Anyone who gets hold of the
+          Personal and medical fields are stored encrypted — addresses and laboratory
+          results included. Anyone who gets hold of the
           database alone gets no names, no diagnoses and no phone numbers.
         </p>
       </div>
       <div class="karta">
         <h3>Access trail on charts</h3>
         <p>
-          Every chart opened leaves a record: who, what and when. Patient reviews are
-          visible to management only — not to doctors, not to the front desk.
+          Every chart opened leaves a record: who, what and when. A report can be written
+          only once the appointment has started; opening it earlier takes a written reason,
+          which stays in the trail. Patient reviews are visible to management only.
         </p>
       </div>
     </div>
     <p style="margin-top:20px;color:var(--tiho);font-size:.92rem;max-width:70ch">
       <span class="mono" style="color:var(--tirkiz);font-size:.78rem;letter-spacing:.1em">UPDATES · </span>
-      Over 470 automated checks run before any change ships. That does not mean bugs do
+      Over 2,400 automated checks run before any change ships, and each run counts every
+      table before and after, so testing leaves no data behind. That does not mean bugs do
       not exist — it means work done for one clinic does not break what already works at
       another.
     </p>

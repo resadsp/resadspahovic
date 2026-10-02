@@ -230,7 +230,7 @@
           </div>
           <div class="col-md-6 col-xl-3" data-aos="zoom-in" data-aos-delay="50">
             <div class="fact-card">
-              <span class="fact-number">8</span>
+              <span class="fact-number">20</span>
               <p>Clinic modules in one system — from booking to profit per department.</p>
             </div>
           </div>
@@ -242,8 +242,8 @@
           </div>
           <div class="col-md-6 col-xl-3" data-aos="zoom-in" data-aos-delay="150">
             <div class="fact-card">
-              <span class="fact-number">90+</span>
-              <p>Database migrations behind the clinic platform, every one reversible.</p>
+              <span class="fact-number">2,400+</span>
+              <p>Automated checks run before every change to the clinic platform ships.</p>
             </div>
           </div>
         </div>
@@ -263,7 +263,7 @@
           <div class="col-md-6 col-xl-4" data-aos="fade-up">
             <article class="stack-card">
               <h3>Programming &amp; Backend</h3>
-              <p>Python, SQL, JavaScript, FastAPI, Django, Flask, REST APIs, production backend architecture</p>
+              <p>Python, SQL, JavaScript, FastAPI, Django, Flask, REST APIs, SQLAlchemy, Alembic, production backend architecture</p>
             </article>
           </div>
           <div class="col-md-6 col-xl-4" data-aos="fade-up" data-aos-delay="50">
@@ -293,7 +293,7 @@
           <div class="col-md-6 col-xl-4" data-aos="fade-up" data-aos-delay="250">
             <article class="stack-card">
               <h3>Security &amp; Data</h3>
-              <p>JWT, RBAC, authentication/authorization, ETL pipelines, audit logs, rate limiting, automated testing, Qdrant</p>
+              <p>JWT, RBAC, 2FA (TOTP), CSRF, encryption at rest, blind indexes, ETL pipelines, audit logs, rate limiting, automated testing</p>
             </article>
           </div>
         </div>
@@ -314,11 +314,11 @@
               <h5>2026 - Present</h5>
               <p><em>MAAT INNOVATIONS, Novi Pazar</em></p>
               <ul>
-                <li>Design and write a clinic management system that covers the whole provider, not one department: scheduling, clinical records, laboratory (LIS), operating theatre, home visits, stock, equipment and finance. <a href="maat-innovations/">See it in use &rarr;</a></li>
+                <li>Design and write a clinic management system with twenty modules that covers the whole provider, not one department: scheduling, clinical records, laboratory (LIS), operating theatre, home visits, stock, equipment, finance and a waiting-room display. <a href="maat-innovations/">See it in use &rarr;</a></li>
                 <li>Own every layer: PostgreSQL schema and Alembic migrations, FastAPI services, access control across eight roles, encryption of personal and medical fields at rest with blind-index search, PDF reports, e-mail and SMS.</li>
-                <li>Integrations where they matter: laboratory analysers over ASTM, FHIR R4 export, fiscal receipts (ESIR / eFaktura).</li>
+                <li>Integrations where they matter: two laboratory analysers over ASTM and HL7 v2 (MLLP) through an on-site bridge that keeps results on disk through an internet outage, FHIR R4 export, a fiscal receipt for every payment (ESIR / eFaktura).</li>
                 <li>Built the in-house assistant that answers patients from the clinic's own data &mdash; local embeddings inside the provider's own database, no external LLM API, and no confident answer to a question the data cannot support.</li>
-                <li>Every defect found becomes a regression test that must fail on the old code before the fix lands; the suite runs in CI on every push.</li>
+                <li>Every defect found becomes a regression test that must fail on the old code before the fix lands; 2,400+ checks run in CI on every push, and every run proves it left no test data behind.</li>
               </ul>
             </div>
 
@@ -341,7 +341,6 @@
               <p><em>Center NIT</em></p>
               <ul>
                 <li>Designed and delivered Python and Machine Learning curriculum for 200+ students.</li>
-                <li>Built hands-on projects simulating real-world industry challenges across Python, ML, and data workflows.</li>
                 <li>Created an automated assessment tool that took routine grading off the instructors.</li>
                 <li>Built hands-on projects modelled on real industry work across Python, ML and data workflows.</li>
               </ul>
@@ -366,7 +365,6 @@
               <ul>
                 <li>Provided personalized instruction to 100+ students in advanced mathematics and programming.</li>
                 <li>Developed custom learning materials and interactive coding exercises.</li>
-                <li>Developed custom learning materials and interactive coding exercises.</li>
               </ul>
             </div>
           </div>
@@ -378,7 +376,7 @@
               <h3>Founder at MAAT INNOVATIONS, and a Python engineer building AI systems and backend services</h3>
               <p>My own product is a clinic management system covering an entire healthcare provider. Alongside it: production-ready Python services, predictive analytics, ML deployment and retrieval workflows.</p>
               <ul>
-                <li>Own product: eight clinic modules, eight roles, encryption at rest, an in-house RAG assistant, ASTM and FHIR integrations.</li>
+                <li>Own product: twenty clinic modules, eight roles, encryption at rest, an in-house RAG assistant, ASTM, HL7 and FHIR integrations.</li>
                 <li>Trusted retrieval workflows, analytics platforms, ETL delivery, and automated testing.</li>
                 <li>Strong mentoring background from technical instruction and team guidance.</li>
               </ul>
@@ -410,8 +408,8 @@
               <h3>Clinic Management System — MAAT INNOVATIONS</h3>
               <p>One system for an entire healthcare provider rather than one department: scheduling, clinical records, laboratory, operating theatre, home visits, stock, equipment and finance — my own product, sold as <a href="maat-innovations/">MAAT INNOVATIONS</a>.</p>
               <ul>
-                <li>Access control across eight roles, patient data encrypted at rest and searched through blind indexes, an append-only audit trail on every read of a medical record, and integrations over ASTM, FHIR and fiscal receipts.</li>
-                <li>Key technologies: FastAPI, PostgreSQL, SQLAlchemy, Alembic, JWT, Docker, HTML, CSS, JavaScript, pgvector, Qdrant.</li>
+                <li>Access control across eight roles, patient data encrypted at rest and searched through blind indexes, an append-only audit trail on every read of a medical record, and integrations over ASTM, HL7, FHIR and fiscal receipts.</li>
+                <li>Key technologies: FastAPI, PostgreSQL, pgvector, SQLAlchemy, Alembic, Docker, ReportLab, HL7 v2, ASTM, FHIR R4, JWT, RBAC.</li>
                 <li>Business value: one set of numbers across reception, doctors, laboratory and management — nothing entered twice, nothing corrected silently.</li>
               </ul>
             </article>
