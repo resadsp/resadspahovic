@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="sr">
-<!-- Srpska verzija. Engleska je glavna, u nadređenoj fascikli. -->
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- DEMO: upisite adresu dema (npr. https://demo.vasdomen.rs/demo) i dugmad „Probajte demo" se pojave. -->
-<meta name="maat-demo" content="">
-<title>MAAT INNOVATIONS — softver za vođenje klinike</title>
-<meta name="description" content="Termini, lekari, laboratorija, hirurški blok, kućne posete i naplata u jednom sistemu. Ako je pregled naplaćen, naplaćen je na svakom ekranu.">
-<meta property="og:title" content="MAAT INNOVATIONS — softver za vođenje klinike">
-<meta property="og:description" content="Jedan sistem za celu kliniku — i jedan tačan broj.">
+<!-- Ne menjati rucno: stranicu pravi skripta maat_stranica.py (MAAT-demo-alati), obe jezicke verzije iz istog izvora. -->
+<title>MAAT INNOVATIONS — program za vođenje klinike</title>
+<meta name="description" content="Zakazivanje, ordinacija, laboratorija sa aparatima, naplata sa fiskalnim računom, čekaonica i uprava — jedan program za privatnu kliniku. Probajte demo bez instalacije.">
+<meta property="og:title" content="MAAT INNOVATIONS — program za vođenje klinike">
+<meta property="og:description" content="Cela klinika u jednom programu.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://resadspahovic.com/maat-innovations/sr/">
 <meta property="og:site_name" content="MAAT INNOVATIONS">
@@ -23,1420 +21,793 @@
 <link rel="canonical" href="https://resadspahovic.com/maat-innovations/sr/">
 <link rel="alternate" hreflang="en" href="https://resadspahovic.com/maat-innovations/">
 <link rel="alternate" hreflang="sr" href="https://resadspahovic.com/maat-innovations/sr/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%230C1A2E'/%3E%3Cg transform='translate%2812.0 78.9%29 scale%280.372%29' fill='none' stroke='%2396D6FA' stroke-width='17.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8.6 58.6 L54.6 58.6 L88.6 8.6 L128.6 104.6 L168.6 8.6 L208.6 104.6 L248.6 8.6 L288.6 104.6 L328.6 8.6 L368.6 104.6 L408.6 8.6 L464.6 8.6'/%3E%3Cpath d='M374.6 8.6 L408.6 8.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='-2%20-36%20472%20180'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='0'%3E%3Cstop%20offset='0'%20stop-color='%2318ae9f'/%3E%3Cstop%20offset='1'%20stop-color='%230d8178'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg%20fill='none'%20stroke='url(%23g)'%20stroke-width='16'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6.2%2056.2%20L52.2%2056.2%20L86.2%206.2%20L126.2%20102.2%20L166.2%206.2%20L206.2%20102.2%20L246.2%206.2%20L286.2%20102.2%20L326.2%206.2%20L366.2%20102.2%20L406.2%206.2%20L462.2%206.2'/%3E%3C/g%3E%3C/svg%3E">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ══ Tokeni ═══════════════════════════════════════════════════════════════
-   Svetla tema je „papir": svet nalaza i računa. Tamna je svet radnog ekrana.
-   Sve boje se definišu OVDE i nigde drugde — komponente ispod koriste samo
-   tokene, da nijedna boja ne ostane zaključana u jednoj temi. */
-:root{
-  --mastilo:#0C1A2E;
-  --tirkiz:#1F6FC4;
-  --plava:#3A8DE8;
-  --papir:#F4F8FB;
-  --povrsina:#FFFFFF;
-  --povrsina-2:#EDF3F8;
-  --linija:#DAE6EF;
-  --tekst:#16304A;
-  --tiho:#5C7690;
-  --pazi:#A8501C;
-  --pazi-tlo:#FDF3EC;
-  --dobro:#12734F;
-  --traka:#0C1A2E;
-  --traka-tekst:#EAF3F8;
-  --traka-tiho:#93B2C9;
-  --traka-linija:#1D3B5E;
-  --senka:0 1px 2px rgba(11,35,64,.05), 0 8px 28px rgba(11,35,64,.06);
-  --r:14px;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --papir:#08172A;
-    --povrsina:#0F2340;
-    --povrsina-2:#163055;
-    --linija:#20416E;
-    --tekst:#E4EFF6;
-    --tiho:#93B2C9;
-    --tirkiz:#9BD8FB;
-    --plava:#6CC4F6;
-    --pazi:#E9A574;
-    --pazi-tlo:#2A1B10;
-    --dobro:#5FD4A2;
-    --traka:#070F1F;
-    --traka-linija:#1B3760;
-    --senka:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.34);
-  }
-}
-:root[data-theme="dark"]{
-  --papir:#08172A;
-  --povrsina:#0F2340;
-  --povrsina-2:#163055;
-  --linija:#20416E;
-  --tekst:#E4EFF6;
-  --tiho:#93B2C9;
-  --tirkiz:#9BD8FB;
-  --plava:#6CC4F6;
-  --pazi:#E9A574;
-  --pazi-tlo:#2A1B10;
-  --dobro:#5FD4A2;
-  --traka:#070F1F;
-  --traka-linija:#1B3760;
-  --senka:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.34);
-}
+    :root {
+      --title: #1e293b; --text: #334155; --text-2: #475569; --muted: #64748b; --faint: #94a3b8;
+      --line: #e6ebf1; --line-2: #d5dde6; --canvas: #f4f7fa; --subtle: #f8fafc;
+      --accent: #0f9890; --accent-h: #0c8079; --accent-t: #0d8178; --accent-50: #e7f6f4; --accent-100: #c8ece7;
+      --ok: #16a34a; --warn: #ea8a1a; --info: #3b82f6;
+      --sans: Inter, system-ui, "Segoe UI", Arial, sans-serif;
+      --senka: 0 1px 2px rgba(16, 24, 40, .04), 0 1px 3px rgba(16, 24, 40, .04);
+      --senka-slika: 0 24px 60px rgba(30, 41, 59, .14), 0 4px 14px rgba(30, 41, 59, .06);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #fff; color: var(--text); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--accent-t); text-decoration: none; }
+    [id] { scroll-margin-top: 76px; }
+    .sirina { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    h1, h2, h3 { color: var(--title); letter-spacing: -0.025em; margin: 0; }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.15; font-weight: 800; }
+    h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.015em; }
+    .nadnaslov { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-t); background: var(--accent-50);
+      border: 1px solid var(--accent-100); border-radius: 999px; padding: 6px 14px; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .uvod { color: var(--text-2); font-size: 1.08rem; max-width: 62ch; margin: 14px 0 0; }
+    .dugme { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 12px; padding: 14px 22px; font-weight: 700; font-size: 1rem;
+      border: 1px solid transparent; transition: background .15s, border-color .15s, color .15s; }
+    .dugme.glavno { background: var(--accent); color: #fff; }
+    .dugme.glavno:hover { background: var(--accent-h); }
+    .dugme.sporedno { background: #fff; color: var(--title); border-color: var(--line-2); }
+    .dugme.sporedno:hover { background: var(--subtle); }
 
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;
-  background:var(--papir);
-  color:var(--tekst);
-  font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
-  font-size:17px;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-/* Brojevi, oznake i datumi idu monospaceom. Aplikacija je puna iznosa i
-   referentnih vrednosti — stranica govori istim jezikom kao proizvod. */
-.mono,.oznaka,.iznos,.sifra{
-  font-family:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
-  font-variant-numeric:tabular-nums;
-}
-h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.022em;line-height:1.15;font-weight:650}
-p{margin:0}
-a{color:inherit}
-img{max-width:100%;display:block}
-/* MORA posle pravila iznad: `img{display:block}` nadjačava `display:none`
-   koji pregledač daje atributu `hidden`, pa se slika koja nije stigla
-   prikazivala kao polomljena sa `alt` tekstom preko praznog polja. */
-img[hidden]{display:none}
+    /* meni */
+    .meni { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .94); backdrop-filter: saturate(160%) blur(8px); border-bottom: 1px solid var(--line); }
+    .meni .sirina { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+    /* MAAT INNOVATIONS: znak (talas „MAAT") i ime — u zelenoj boji stranice, da logo i dugmad budu jedna celina */
+    .znak { display: inline-flex; align-items: center; gap: 14px; color: var(--title); }
+    .maat-talas { width: 92px; height: auto; display: block; flex: none; overflow: visible; }
+    .znak-ime { display: block; font-weight: 800; letter-spacing: .14em; font-size: .92rem; line-height: 1.15; white-space: nowrap; }
+    .znak-ime em { font-style: normal; color: var(--accent-t); }
+    .znak small { display: block; font-weight: 500; letter-spacing: .02em; font-size: .72rem; color: var(--muted); margin-top: 2px; }
+    .meni nav { display: flex; align-items: center; gap: 24px; }
+    .meni nav a { color: var(--text-2); font-weight: 600; font-size: .92rem; white-space: nowrap; }
+    .meni nav a:hover { color: var(--title); }
+    .meni nav a.dugme { color: #fff; padding: 10px 18px; font-size: .92rem; }
+    .meni nav a.sajt-veza { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); border-radius: 10px; padding: 8px 14px; }
+    .meni nav a.sajt-veza:hover { background: var(--subtle); }
+    .meni nav a.jezik { border: 1px solid var(--line-2); border-radius: 8px; padding: 4px 9px; font-size: .78rem; letter-spacing: .06em; }
+    .meni nav a.jezik:hover { background: var(--subtle); }
+    .sajt-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: .92rem; font-weight: 600; color: var(--accent-t); }
+    .sajt-link:hover { text-decoration: underline; }
 
-.okvir{width:min(1140px,100% - 44px);margin-inline:auto}
-.uski{max-width:64ch}
+    /* vrh */
+    .vrh { background: #fff; overflow: hidden; }
+    .vrh .sirina { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 56px; align-items: center; padding-top: 64px; padding-bottom: 72px; }
+    .vrh h1 { font-size: clamp(2.3rem, 4.6vw, 3.6rem); line-height: 1.04; font-weight: 800; letter-spacing: -0.035em; margin: 20px 0 0; }
+    .vrh h1 span { color: var(--accent-t); }
+    .vrh .dugmad { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .vrh .napomena { margin-top: 18px; font-size: .88rem; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+    .vrh .napomena i { color: var(--ok); }
+    .cipovi { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .cipovi span { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 12px; font-size: .8rem; font-weight: 600; color: var(--text-2); }
+    .cipovi i { color: var(--accent); }
+    .prizor { position: relative; padding: 0 28px 34px 0; }
+    .prozor { background: #fff; border: 1px solid var(--line-2); border-radius: 14px; overflow: hidden; box-shadow: var(--senka-slika); }
+    .prozor::before { content: ""; display: block; height: 30px; border-bottom: 1px solid var(--line);
+      background: radial-gradient(circle at 16px 15px, #f3b4ae 4px, transparent 5px), radial-gradient(circle at 32px 15px, #f6d79b 4px, transparent 5px),
+                  radial-gradient(circle at 48px 15px, #a8dcb3 4px, transparent 5px), var(--subtle); }
+    .prozor img { width: 100%; height: auto; cursor: zoom-in; }
+    .telefon { background: #fff; border: 1px solid var(--line-2); border-radius: 30px; padding: 9px; box-shadow: var(--senka-slika); }
+    .telefon img { border-radius: 22px; border: 1px solid var(--line); cursor: zoom-in; }
+    .prizor .telefon { position: absolute; right: 0; bottom: 0; width: 25%; padding: 6px; border-radius: 22px; }
+    .prizor .telefon img { border-radius: 16px; }
 
-.oznaka{
-  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--tirkiz);font-weight:600;
-}
+    /* brojke */
+    .brojke { background: var(--canvas); padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .brojke .sirina { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .brojka { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; box-shadow: var(--senka); }
+    .brojka strong { display: block; font-size: 1.9rem; font-weight: 800; color: var(--title); letter-spacing: -0.03em; line-height: 1.1; }
+    .brojka span { font-size: .9rem; color: var(--muted); }
 
-/* ── Zaglavlje ───────────────────────────────────────────────────────── */
-.vrh{
-  position:sticky;top:0;z-index:20;
-  background:color-mix(in srgb, var(--papir) 88%, transparent);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--linija);
-}
-.vrh-red{display:flex;align-items:center;gap:26px;padding:14px 0}
-.znak{display:flex;align-items:center;gap:12px;text-decoration:none;flex:1}
-.znak svg{height:34px;width:auto;display:block}
-.znak-ime{font-weight:800;letter-spacing:.16em;font-size:.82rem;color:var(--plava);
-  white-space:nowrap}
-.veze{display:flex;gap:24px;align-items:center}
-.veze a{color:var(--tiho);text-decoration:none;font-size:.94rem}
-.veze a:hover{color:var(--tekst)}
-@media (max-width:760px){.veze{display:none}}
+    /* odeljci */
+    .odeljak { padding: 88px 0; }
+    .odeljak.siv { background: var(--canvas); }
+    .zaglavlje { max-width: 760px; margin-bottom: 44px; }
+    .zaglavlje.sredina { margin-left: auto; margin-right: auto; text-align: center; }
+    .zaglavlje.sredina .uvod { margin-left: auto; margin-right: auto; }
+    .zaglavlje h2 { margin-top: 14px; }
 
-.dugme{
-  display:inline-flex;align-items:center;gap:9px;
-  background:var(--mastilo);color:#fff;text-decoration:none;
-  padding:12px 22px;border-radius:999px;font-weight:600;font-size:.95rem;
-  border:1px solid var(--mastilo);
-  transition:transform .14s ease, box-shadow .14s ease;
-}
-.dugme:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(11,35,64,.22)}
-.dugme.tiho{background:transparent;color:var(--tekst);border-color:var(--linija)}
-.dugme.tiho:hover{border-color:var(--tiho);box-shadow:none}
-a:focus-visible,button:focus-visible{outline:2px solid var(--plava);outline-offset:3px;border-radius:6px}
-.jezik{
-  font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--tiho);text-decoration:none;padding:7px 12px;border-radius:8px;
-  border:1px solid var(--linija);white-space:nowrap;
-}
-.jezik:hover{color:var(--tekst);border-color:var(--tiho)}
+    .koristi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .korist { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; box-shadow: var(--senka); }
+    .korist i { width: 46px; height: 46px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 16px; }
+    .korist:nth-child(6n+1) i { background: #e8f7ee; color: #16a34a; }
+    .korist:nth-child(6n+2) i { background: #eaf2fe; color: #3b82f6; }
+    .korist:nth-child(6n+3) i { background: #e7f6f4; color: #0f9890; }
+    .korist:nth-child(6n+4) i { background: #fff3e5; color: #ea8a1a; }
+    .korist:nth-child(6n+5) i { background: #f3effe; color: #7c5cf0; }
+    .korist:nth-child(6n+6) i { background: #fdecee; color: #e5484d; }
+    .korist p { margin: 8px 0 0; color: var(--text-2); font-size: .97rem; }
 
-/* ── Naslovna ────────────────────────────────────────────────────────── */
-.naslovna{padding:74px 0 64px}
-.naslovna-mreza{display:flex;flex-direction:column;gap:40px}
-.naslovna-tekst{max-width:64ch}
-@media (max-width:940px){.naslovna{padding:48px 0 40px}}
-.naslovna h1{font-size:clamp(2.1rem,4.6vw,3.35rem);margin:16px 0 20px}
-.naslovna .uvod{color:var(--tiho);font-size:1.09rem;max-width:60ch}
-.akcije{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.pod-akcija{margin-top:16px;color:var(--tiho);font-size:.88rem}
+    .uloga { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr); gap: 56px; align-items: center; padding: 44px 0; }
+    .uloga + .uloga { border-top: 1px solid var(--line); }
+    .uloga.obrnuto { grid-template-columns: minmax(0, 1.25fr) minmax(0, .9fr); }
+    .uloga.obrnuto .tekst { order: 2; }
+    .uloga .oznaka { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-t); }
+    .uloga .oznaka i { width: 30px; height: 30px; border-radius: 9px; background: var(--accent-50); display: inline-flex; align-items: center; justify-content: center; font-size: .95rem; }
+    .uloga h3 { font-size: clamp(1.4rem, 2.2vw, 1.75rem); margin: 12px 0 0; letter-spacing: -0.025em; font-weight: 800; }
+    .spisak { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 11px; }
+    .spisak li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; color: var(--text); font-size: .97rem; line-height: 1.5; }
+    .spisak li::before { content: "\F26E"; font-family: "bootstrap-icons"; color: var(--accent); font-size: 1.05rem; line-height: 1.4; }
+    .slike-dve { position: relative; padding-bottom: 46px; }
+    .slike-dve .mala { position: absolute; right: -10px; bottom: 0; width: 46%; }
+    .slike-dve.levo .mala { right: auto; left: -10px; }
 
-/* Živ prikaz panela iz proizvoda — ne slika. Isti jezik kao radni ekran:
-   ista zaobljenja, iste pločice, isti tabelarni brojevi. */
-.prikaz{
-  background:var(--povrsina);border:1px solid var(--linija);border-radius:var(--r);
-  box-shadow:var(--senka);overflow:hidden;
-}
-.prikaz-vrh{
-  display:flex;align-items:center;gap:10px;
-  padding:12px 16px;border-bottom:1px solid var(--linija);background:var(--povrsina-2);
-}
-.tacke{display:flex;gap:6px}
-.tacke i{width:9px;height:9px;border-radius:50%;background:var(--linija);display:block}
-.prikaz-vrh .put{font-size:.76rem;color:var(--tiho)}
-.prikaz-telo{padding:20px 18px}
-.prikaz-naslov{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px}
-.prikaz-naslov h3{font-size:1.02rem}
-/* Cetiri broja dana, pa cetiri reda rasporeda — dovoljno da se vidi da
-   recepcija, laboratorija i hirurgija stoje u istom spisku. */
-.brojevi{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--linija);
-  border-block:1px solid var(--linija)}
-.broj-polje{background:var(--povrsina);padding:15px 16px;display:flex;flex-direction:column;
-  justify-content:flex-start;gap:3px;min-height:78px}
-.broj-polje .v{font-size:1.42rem;font-weight:700;letter-spacing:-.02em;display:block;line-height:1.1}
-.broj-polje .n{font-size:.72rem;color:var(--tiho);letter-spacing:.03em;line-height:1.35}
-.broj-polje .v.novac{color:var(--dobro)}
-.broj-polje .v.pazi{color:var(--pazi)}
-.redovi{display:flex;flex-direction:column;overflow-x:auto}
-.zaglavlje-tabele{
-  display:grid;grid-template-columns:76px minmax(0,1.6fr) 118px 108px 176px;gap:14px;
-  padding:9px 18px;background:var(--povrsina-2);border-bottom:1px solid var(--linija);
-  font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--tiho);font-weight:700;
-}
-.red{display:grid;grid-template-columns:76px minmax(0,1.6fr) 118px 108px 176px;gap:14px;
-  align-items:center;padding:12px 18px;border-bottom:1px solid var(--linija)}
-.red:last-child{border-bottom:0}
-.red .kada{font-size:.84rem;color:var(--tiho)}
-.red .sta{font-size:.92rem;min-width:0}
-.red .sta i{font-style:normal;color:var(--tiho);font-size:.86rem}
-.red .gde{font-size:.84rem;color:var(--tiho)}
-.red .para{font-size:.88rem;font-weight:600;text-align:right}
-.red .para.duguje{color:var(--pazi)}
-.stanje{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  padding:3px 9px;border-radius:999px;border:1px solid transparent;
-  /* NE `nowrap`: natpis duži od kolone je izlazio iz okvira. Sme da se
-     prelomi u dva reda — tako nijedan budući natpis ne može da iscuri. */
-  white-space:normal;text-align:center;line-height:1.3;max-width:100%}
-.stanje.gotovo{background:color-mix(in srgb, var(--dobro) 12%, transparent);color:var(--dobro);
-  border-color:color-mix(in srgb, var(--dobro) 28%, transparent)}
-.stanje.utoku{background:color-mix(in srgb, var(--plava) 12%, transparent);color:var(--plava);
-  border-color:color-mix(in srgb, var(--plava) 28%, transparent)}
-.stanje.ceka{background:var(--pazi-tlo);color:var(--pazi);
-  border-color:color-mix(in srgb, var(--pazi) 28%, transparent)}
+    .istaknuto { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+    .istaknuto .ekran { background: #fff; border: 10px solid #e9eef4; border-radius: 18px; box-shadow: var(--senka-slika); overflow: hidden; }
+    .istaknuto .ekran img { cursor: zoom-in; }
 
-/* ── Traka sa problemom ──────────────────────────────────────────────── */
-.odeljak{padding:66px 0;border-top:1px solid var(--linija)}
-.odeljak-glava{margin-bottom:34px}
-.odeljak-glava h2{font-size:clamp(1.5rem,2.8vw,2.05rem);margin:10px 0 12px}
-.odeljak-glava p{color:var(--tiho);max-width:60ch}
+    .bezbednost { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .bezbednost div { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .bezbednost i { color: var(--accent); font-size: 1.4rem; }
+    .bezbednost h3 { margin-top: 12px; font-size: 1.05rem; }
+    .bezbednost p { margin: 8px 0 0; color: var(--text-2); font-size: .95rem; }
 
-.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media (max-width:860px){.tri{grid-template-columns:1fr}}
-.karta{
-  background:var(--povrsina);border:1px solid var(--linija);border-radius:var(--r);
-  padding:22px 20px;
-}
-.karta h3{font-size:1.02rem;margin-bottom:8px}
-.karta p{color:var(--tiho);font-size:.93rem}
+    .telefoni { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; max-width: 900px; margin: 0 auto; }
+    .telefoni figure { margin: 0; }
+    .telefoni figcaption { text-align: center; margin-top: 16px; font-weight: 600; color: var(--title); font-size: .95rem; }
+    .telefoni figcaption span { display: block; font-weight: 400; color: var(--muted); font-size: .88rem; margin-top: 2px; }
 
-/* ── Moduli ──────────────────────────────────────────────────────────── */
-.moduli{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--linija);
-  border:1px solid var(--linija);border-radius:var(--r);overflow:hidden}
-@media (max-width:980px){.moduli{grid-template-columns:repeat(2,1fr)}}
-.modul{background:var(--povrsina);padding:24px 20px;display:flex;flex-direction:column;gap:8px}
-.modul .ikona{width:26px;height:26px;color:var(--tirkiz)}
-.modul h3{font-size:.99rem}
-.modul p{font-size:.88rem;color:var(--tiho)}
+    .koraci { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; counter-reset: korak; }
+    .korak { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; position: relative; }
+    .korak::before { counter-increment: korak; content: counter(korak); width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 14px; }
+    .korak p { margin: 8px 0 0; color: var(--text-2); font-size: .97rem; }
+    .obilazak { margin-top: 22px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); gap: 32px; }
+    .obilazak ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+    .obilazak li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; align-items: baseline; font-size: .97rem; }
+    .obilazak li b { color: var(--accent-t); font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; }
+    .obilazak .vazno { margin-top: 16px; font-size: .9rem; color: var(--muted); }
 
-/* ── Tamna traka: zašto ──────────────────────────────────────────────── */
-.tamna{background:var(--traka);color:var(--traka-tekst);padding:70px 0;border:0}
-.tamna h2{font-size:clamp(1.5rem,2.8vw,2.05rem);margin:10px 0 12px}
-.tamna .oznaka{color:var(--plava)}
-.tamna .uvodni{color:var(--traka-tiho);max-width:60ch;margin-bottom:36px}
-.razlozi{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--traka-linija);
-  border:1px solid var(--traka-linija);border-radius:var(--r);overflow:hidden}
-@media (max-width:820px){.razlozi{grid-template-columns:1fr}}
-.razlog{background:var(--traka);padding:26px 24px}
-.razlog h3{font-size:1.04rem;margin-bottom:9px;color:#fff}
-.razlog p{color:var(--traka-tiho);font-size:.93rem}
-.razlog .broj{
-  font-size:1.9rem;font-weight:700;color:var(--plava);display:block;margin-bottom:2px;
-  font-family:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,monospace;
-  font-variant-numeric:tabular-nums;letter-spacing:-.02em;
-}
+    .uvodjenje { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 40px; margin-top: 8px; }
+    .uvodjenje > div { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
+    .uvodjenje i { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-50); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+    .uvodjenje p { margin: 4px 0 0; color: var(--text-2); font-size: .95rem; }
 
-/* ── Slike ekrana ────────────────────────────────────────────────────── */
-.snimci{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-@media (max-width:860px){.snimci{grid-template-columns:1fr}}
-figure.snimak{margin:0}
-.ram{
-  aspect-ratio:16/10;border:1px solid var(--linija);border-radius:12px;overflow:hidden;
-  background:var(--povrsina-2);display:flex;align-items:center;justify-content:center;
-}
-.ram img{width:100%;height:100%;object-fit:cover;object-position:top left}
-.mesto{text-align:center;padding:22px;color:var(--tiho)}
-/* Snimak razgovora je uspravan — okvir 16:10 bi mu odsekao dve trecine. */
-.snimak.uspravan .ram{aspect-ratio:auto;max-width:392px;margin:0 auto}
-.snimak.uspravan .ram img{height:auto;object-fit:contain}
-.mesto .sifra{display:block;font-size:.74rem;letter-spacing:.12em;margin-bottom:8px;color:var(--tirkiz)}
-.mesto b{display:block;font-size:.95rem;color:var(--tekst);margin-bottom:4px}
-.mesto span{font-size:.83rem}
-figcaption{margin-top:11px;font-size:.9rem;color:var(--tiho)}
-figcaption b{color:var(--tekst);font-weight:600}
+    .poziv { background: var(--accent-50); border: 1px solid var(--accent-100); border-radius: 22px; padding: 48px; display: grid; grid-template-columns: minmax(0, 1.4fr) auto; gap: 32px; align-items: center; }
+    .poziv h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+    .poziv p { margin: 10px 0 0; color: var(--text-2); }
+    .poziv .dugmad { display: flex; flex-direction: column; gap: 10px; }
+    .kontakt { margin: 24px 0 0; display: grid; gap: 8px; }
+    .kontakt div { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 12px; font-size: .95rem; }
+    .kontakt dt { color: var(--muted); font-weight: 600; }
+    .kontakt dd { margin: 0; color: var(--title); overflow-wrap: anywhere; }
 
-/* ── Kontakt ─────────────────────────────────────────────────────────── */
-.kontakt{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
-@media (max-width:860px){.kontakt{grid-template-columns:1fr;gap:28px}}
-.vizit{
-  background:var(--povrsina);border:1px solid var(--linija);border-radius:var(--r);
-  padding:26px 24px;box-shadow:var(--senka);
-}
-.vizit dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0}
-.vizit dt{color:var(--tiho);font-size:.83rem;letter-spacing:.04em;text-transform:uppercase;
-  font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace}
-.vizit dd{margin:0;font-size:.97rem}
-.vizit dd a{color:var(--plava);text-decoration:none}
-.vizit dd a:hover{text-decoration:underline}
+    footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: .88rem; }
+    footer .sirina { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .podnozje-znak { display: inline-flex; align-items: center; gap: 12px; }
+    .maat-talas.mali { width: 52px; }
 
-/* ── Podnožje ────────────────────────────────────────────────────────── */
-.dno{border-top:1px solid var(--linija);padding:26px 0 40px;color:var(--tiho);font-size:.86rem}
-.dno-red{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+    /* uvecana slika */
+    dialog.uvecano { border: 0; padding: 0; background: transparent; max-width: min(1440px, 96vw); max-height: 94vh; }
+    dialog.uvecano::backdrop { background: rgba(241, 245, 249, .94); }
+    dialog.uvecano img { max-width: min(1440px, 96vw); max-height: 90vh; width: auto; height: auto; border-radius: 12px; border: 1px solid var(--line-2); box-shadow: var(--senka-slika); cursor: zoom-out; }
+    dialog.uvecano p { text-align: center; color: var(--text-2); font-size: .92rem; margin: 10px 0 0; }
 
-.poverenje{
-  display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;padding:18px 0 0;margin:22px 0 0;
-  border-top:1px solid var(--linija);
-  font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:var(--tiho);
-}
-.poverenje li{display:flex;align-items:center;gap:8px}
-.poverenje li::before{
-  content:"";width:5px;height:5px;border-radius:50%;background:var(--tirkiz);flex:none;
-}
+    /* problem */
+    .problemi { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .problem { background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--warn); border-radius: 14px; padding: 22px; box-shadow: var(--senka); }
+    .problem i { color: var(--warn); font-size: 1.3rem; }
+    .problem h3 { margin-top: 12px; font-size: 1.02rem; }
+    .problem p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
+    /* sve celine */
+    .celine { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .celina { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .celina h3 { font-size: .97rem; display: flex; align-items: center; gap: 10px; }
+    .celina h3 i { width: 32px; height: 32px; border-radius: 9px; background: var(--accent-50); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-size: .95rem; flex: none; }
+    .celina p { margin: 8px 0 0; font-size: .88rem; color: var(--text-2); line-height: 1.5; }
+    /* zasto MAAT */
+    .razlozi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .razlog { background: var(--accent-50); border: 1px solid var(--accent-100); border-radius: 16px; padding: 26px 28px; }
+    .razlog i { color: var(--accent); font-size: 1.4rem; }
+    .razlog h3 { margin-top: 12px; }
+    .razlog p { margin: 8px 0 0; color: var(--text-2); }
+    /* pomocnik */
+    .pomocnik { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 48px; align-items: center; }
+    .pomocnik-kartice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .pomocnik-kartice > div { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+    .pomocnik-kartice i { color: var(--accent); font-size: 1.35rem; }
+    .pomocnik-kartice h3 { margin-top: 10px; font-size: 1.02rem; }
+    .pomocnik-kartice p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
+    .pomocnik figure { margin: 0; }
+    .pomocnik figcaption { margin-top: 14px; font-size: .88rem; color: var(--muted); text-align: center; }
+    /* integracije */
+    .integracije { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .integracija { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .integracija i { color: var(--accent); font-size: 1.4rem; }
+    .integracija h3 { margin-top: 12px; font-size: 1.05rem; }
+    .integracija p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
+    .beleska { margin-top: 18px; background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 16px 20px; color: var(--text-2); font-size: .93rem; }
+    .beleska b { color: var(--accent-t); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; }
+    /* galerija, po grupama; bez skripte se vide sve grupe jedna ispod druge */
+    .grupe { display: flex; flex-wrap: wrap; gap: 8px; margin: -12px 0 30px; }
+    .grupe button { font: inherit; font-size: .9rem; font-weight: 600; color: var(--text-2); background: #fff; border: 1px solid var(--line-2); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+    .grupe button:hover { border-color: var(--accent-100); color: var(--title); }
+    .grupe button span { color: var(--faint); font-weight: 500; margin-left: 4px; }
+    .grupe button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .grupe button[aria-selected="true"] span { color: rgba(255, 255, 255, .8); }
+    .galerija-grupa + .galerija-grupa { margin-top: 48px; }
+    .galerija-grupa > h3 { margin-bottom: 18px; }
+    .ima-grupe .galerija-grupa > h3 { display: none; }
+    .ima-grupe .galerija-grupa + .galerija-grupa { margin-top: 0; }
+    .galerija { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 22px; }
+    .galerija figure { margin: 0; }
+    .galerija .prozor::before { height: 22px; background-size: auto; }
+    .galerija figcaption { margin-top: 12px; font-size: .9rem; color: var(--text-2); line-height: 1.5; }
+    .galerija figcaption b { display: block; color: var(--title); margin-bottom: 2px; }
+    /* cena */
+    .cene { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .cena { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .cena i { color: var(--accent); font-size: 1.35rem; }
+    .cena h3 { margin-top: 12px; font-size: 1.05rem; }
+    .cena p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
 
-/* ── Telefon ──────────────────────────────────────────────────────────────
-   Prvi utisak se najcesce stice na telefonu, pa se ovde ne stedi. */
-@media (max-width:720px){
-  body{font-size:16px}
-  .okvir{width:min(1140px,100% - 32px)}
-  .vrh-red{padding:10px 0;gap:10px}
-  .znak svg{height:25px}
-  .znak-ime{font-size:.7rem;letter-spacing:.13em}
-  /* Zaglavlje na telefonu nosi SAMO logo i jezik. Dugme se prelivalo preko
-     ivice, a isto to dugme stoji odmah ispod, u naslovnoj. */
-  .vrh-red > .dugme{display:none}
-  .jezik{font-size:.7rem;padding:6px 10px;letter-spacing:.06em}
-  .naslovna{padding:34px 0 36px}
-  .naslovna h1{font-size:clamp(1.85rem,7.4vw,2.5rem);margin:12px 0 14px}
-  .naslovna .uvod{font-size:1rem}
-  .odeljak{padding:46px 0}
-  .odeljak-glava{margin-bottom:24px}
-  .tamna{padding:48px 0}
-  /* Dugmad preko cele sirine — palac ih tako pogadja iz prve. */
-  .akcije{gap:10px}
-  .akcije .dugme{flex:1 1 100%;justify-content:center;padding:14px 20px}
-  .vrh-red .dugme{padding:9px 15px;font-size:.86rem}
-  .poverenje{gap:7px 16px;font-size:.68rem;margin-top:18px;padding-top:14px}
-  /* Pet brojeva u jednom redu na telefonu postaju necitljivi — idu 2 u red,
-     a poslednji se rasteže preko cele širine da ne ostane prazno polje. */
-  .brojevi{grid-template-columns:repeat(2,1fr)}
-  .broj-polje{padding:13px 14px;min-height:0}
-  .broj-polje:last-child{grid-column:1 / -1}
-  .broj-polje .v{font-size:1.3rem}
-  /* Široka tabela se na telefonu prelama u dva reda po stavci: gore vreme,
-     pacijent i iznos, dole mesto i stanje. Vodoravno klizanje na telefonu
-     niko ne primeti, pa se sadržaj ne sme skrivati iza njega. */
-  .zaglavlje-tabele{display:none}
-  .redovi{overflow-x:visible}
-  .red{grid-template-columns:auto minmax(0,1fr) auto;row-gap:8px;padding:13px 14px;align-items:start}
-  .red .sta{white-space:normal}
-  .red .gde{grid-column:2;font-size:.8rem;margin-top:-4px}
-  .red .stanje{grid-column:2 / -1;justify-self:start}
-  .red .para{align-self:start}
-  .modul{padding:20px 18px}
-  .karta{padding:20px 18px}
-  .razlog{padding:22px 20px}
-  .vizit{padding:22px 20px}
-  .vizit dl{grid-template-columns:1fr;gap:3px}
-  .vizit dt{margin-top:10px}
-  .vizit dl > dt:first-child{margin-top:0}
-}
-/* Dve kolone se drze do 430px — jedna kolona od dvadeset celina je predugacka. */
-@media (max-width:560px){.moduli{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:430px){
-  .moduli{grid-template-columns:1fr}
-  .brojevi{grid-template-columns:1fr}
-  .broj-polje{flex-direction:row;align-items:baseline;gap:10px}
-  .broj-polje .v{font-size:1.15rem}
-  .red{grid-template-columns:auto minmax(0,1fr);}
-  .red .para{grid-column:2;text-align:left;color:var(--tekst)}
-  .poverenje{flex-direction:column;gap:6px}
-}
-
-@media (prefers-reduced-motion:reduce){
-  *{animation:none !important;transition:none !important}
-}
-
-/* ── 04.10.2026: svetlo — bez tamnih traka i skoro crne dugmadi (za klinike: „nikako crna").
-   Tamna tema koju posetilac izabere na svom racunaru ostaje. ─────────────────────────── */
-:root{--traka:#EAF2FA;--traka-tekst:#16304A;--traka-tiho:#5C7690;--traka-linija:#DAE6EF;--dugme:#1F6FC4;--dugme-h:#185BA3}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){--traka:#070F1F;--traka-tekst:#EAF3F8;--traka-tiho:#93B2C9;--traka-linija:#1B3760;--dugme:#3A8DE8;--dugme-h:#5AA2EE}
-}
-:root[data-theme="dark"]{--traka:#070F1F;--traka-tekst:#EAF3F8;--traka-tiho:#93B2C9;--traka-linija:#1B3760;--dugme:#3A8DE8;--dugme-h:#5AA2EE}
-.razlog h3{color:var(--traka-tekst)}
-.dugme{background:var(--dugme);border-color:var(--dugme)}
-.dugme:hover{background:var(--dugme-h)}
-.dugme.tiho{background:transparent}
-[data-demo][hidden]{display:none!important}
-
-/* ── Na telefonu ──────────────────────────────────────────────────────── */
-.telefoni-glava{margin:54px 0 22px;max-width:62ch}
-.telefoni-glava h3{font-size:1.3rem;margin:8px 0 8px}
-.telefoni-glava p{color:var(--tiho)}
-.telefoni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;max-width:900px}
-.telefoni figure{margin:0}
-.telefon-ram{background:var(--povrsina);border:1px solid var(--linija);border-radius:30px;padding:9px;box-shadow:var(--senka)}
-.telefon-ram img{display:block;width:100%;height:auto;border-radius:22px;border:1px solid var(--linija)}
-.telefoni figcaption{margin-top:14px;font-size:.92rem;color:var(--tiho)}
-.telefoni figcaption b{color:var(--tekst)}
-@media (max-width:760px){.telefoni{grid-template-columns:minmax(0,1fr);max-width:320px}}
+    @media (max-width: 1140px) {
+      .meni nav { gap: 18px; }
+      .meni nav a.manje { display: none; }
+    }
+    @media (max-width: 980px) {
+      .meni nav a:not(.dugme):not(.jezik) { display: none; }
+      .vrh .sirina, .uloga, .uloga.obrnuto, .istaknuto, .obilazak, .poziv, .pomocnik { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+      .uloga.obrnuto .tekst { order: 0; }
+      .brojke .sirina { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .koristi, .bezbednost, .koraci, .problemi, .celine, .integracije, .galerija { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cene { grid-template-columns: minmax(0, 1fr); }
+      .pomocnik figure { max-width: 290px; margin: 0 auto; }
+      .odeljak { padding: 64px 0; }
+    }
+    @media (max-width: 640px) {
+      .sirina { padding: 0 16px; }
+      .vrh .sirina { padding-top: 40px; padding-bottom: 48px; }
+      .vrh .dugmad .dugme { flex: 1 1 100%; }
+      .koristi, .bezbednost, .koraci, .uvodjenje, .problemi, .celine, .integracije, .galerija, .razlozi, .pomocnik-kartice { grid-template-columns: minmax(0, 1fr); }
+      .telefoni { grid-template-columns: minmax(0, 1fr); max-width: 300px; }
+      .obilazak { padding: 20px; }
+      .obilazak li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+      .poziv { padding: 28px 22px; }
+      .kontakt div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+      .prizor .telefon { width: 30%; }
+      .slike-dve .mala { width: 52%; }
+      .znak small { display: none; }
+      .meni .sirina { height: 60px; gap: 10px; }
+      .meni nav { gap: 10px; }
+      .znak { gap: 10px; }
+      .maat-talas { width: 58px; }
+      .znak-ime { font-size: .78rem; letter-spacing: .1em; }
+      .meni nav a.dugme { padding: 9px 14px; font-size: .85rem; }
+    }
+    @media (max-width: 400px) {
+      /* uzan telefon: ime u dva reda, da znak, jezik i dugme stanu u jednu traku */
+      .maat-talas { width: 44px; }
+      .znak-ime { font-size: .74rem; letter-spacing: .08em; }
+      .znak-ime em { display: block; }
+      .meni nav a.dugme { padding: 8px 11px; }
+    }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="maatPlava" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#18ae9f"/><stop offset="1" stop-color="#0d8178"/></linearGradient></defs></svg>
 
-<header class="vrh">
-  <div class="okvir vrh-red">
-    <a class="znak" href="#" aria-label="MAAT INNOVATIONS — početak">
-      <!-- Znak iz brend-maat/svg/maat-znak.svg — iste koordinate kao na logotipu,
-           crta ih isti kod. `currentColor` znaci da znak uzima boju teksta oko
-           sebe, pa prati temu posetioca bez druge datoteke za tamnu temu. -->
-      <svg viewBox="0 0 468.5 108.5" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MAAT">
-        <g fill="none" stroke="currentColor" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6.2 56.2 L52.2 56.2 L86.2 6.2 L126.2 102.2 L166.2 6.2 L206.2 102.2 L246.2 6.2 L286.2 102.2 L326.2 6.2 L366.2 102.2 L406.2 6.2 L462.2 6.2"/>
-          <path d="M372.2 6.2 L406.2 6.2"/>
-        </g>
-      </svg>
-      <span class="znak-ime">INNOVATIONS</span>
-    </a>
-    <nav class="veze" aria-label="Glavna navigacija">
-      <a href="#pokriva">Šta pokriva</a>
-      <a href="#zasto">Zašto MAAT</a>
-      <a href="#pomocnik">Pomoćnik</a>
-      <a href="#integracije">Integracije</a>
-      <a href="#ekrani">Ekrani</a>
-      <a data-demo hidden>Demo</a>
-      <a href="#placanje">Kako se plaća</a>
+<header class="meni">
+  <div class="sirina">
+    <a class="znak" href="#" aria-label="MAAT INNOVATIONS — program za vođenje klinike"><svg class="maat-talas" viewBox="0 0 468.5 108.5" aria-hidden="true"><g fill="none" stroke="url(#maatPlava)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 56.2 L52.2 56.2 L86.2 6.2 L126.2 102.2 L166.2 6.2 L206.2 102.2 L246.2 6.2 L286.2 102.2 L326.2 6.2 L366.2 102.2 L406.2 6.2 L462.2 6.2"/></g></svg><span><span class="znak-ime">MAAT <em>INNOVATIONS</em></span><small>program za vođenje klinike</small></span></a>
+    <nav aria-label="Delovi stranice">
+      <a href="#moduli">Šta radi</a>
+      <a href="#celine">Sve celine</a>
+      <a href="#bezbednost" class="manje">Bezbednost</a>
+      <a href="#ekrani" class="manje">Ekrani</a>
+      <a href="#cena">Cena</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="jezik" href="../" hreflang="en" lang="en" title="English">EN</a>
+      <a class="dugme glavno" href="http://localhost:8090/demo">Probajte demo</a>
     </nav>
-    <a class="jezik" href="../" hreflang="en">English</a>
-    <a class="dugme" href="#kontakt">Zakažite prikaz</a>
   </div>
 </header>
 
-<main>
-
-<section class="naslovna">
-  <div class="okvir naslovna-mreza">
-    <div class="naslovna-tekst">
-      <p class="oznaka">Softver za zdravstvene ustanove</p>
-      <h1>Cela klinika u jednom sistemu — od zakazivanja do naplaćenog računa.</h1>
-      <p class="uvod">
-        Termini i lekari, laboratorija, hirurški blok, kućne posete, magacin, oprema,
-        kvalitet i finansije — uz fiskalizaciju i eZdravlje. I pomoćnik koji odgovara
-        iz Vaših podataka umesto da izmišlja.
-      </p>
-      <div class="akcije">
-        <a class="dugme" data-demo hidden>Probajte demo &rarr;</a>
-        <a class="dugme tiho" data-bez-demoa-glavno href="#kontakt">Zakažite prikaz</a>
+<section class="vrh">
+  <div class="sirina">
+    <div>
+      <span class="nadnaslov"><i class="bi bi-hospital"></i>Za privatne klinike i poliklinike</span>
+      <h1>Cela klinika u <span>jednom programu.</span></h1>
+      <p class="uvod">Zakazivanje, ordinacija, laboratorija sa aparatima, naplata sa fiskalnim računom, čekaonica i uprava — povezani tako da se podatak upiše jednom, a vidi svuda gde treba. Radi u pregledaču, na računaru, tabletu i telefonu.</p>
+      <div class="dugmad">
+        <a class="dugme glavno" href="http://localhost:8090/demo"><i class="bi bi-play-circle"></i>Probajte demo</a>
+        <a class="dugme sporedno" href="#moduli">Pogledajte šta sve radi</a>
       </div>
-      <p class="pod-akcija">Prikaz traje pola sata, na Vašim podacima ili na demo bazi.</p>
-      <ul class="poverenje mono" aria-label="Standardi i propisi">
-        <li>Kvalitet i CAPA</li>
-        <li>FHIR / eZdravlje</li>
-        <li>Fiskalizacija</li>
-        <li>Šifrovani podaci</li>
-      </ul>
+      <div class="napomena"><i class="bi bi-check-circle-fill"></i>Bez instalacije i registracije — izmišljena klinika, sve funkcije otključane.</div>
+      <div class="cipovi">
+        <span><i class="bi bi-receipt"></i>Fiskalizacija</span>
+        <span><i class="bi bi-hospital"></i>FHIR / eZdravlje</span>
+        <span><i class="bi bi-patch-check"></i>Kvalitet i CAPA</span>
+        <span><i class="bi bi-shield-lock"></i>Šifrovani podaci</span>
+      </div>
+      <a class="sajt-link" href="http://localhost:8090/"><i class="bi bi-globe2"></i>Pogledajte i sajt te klinike, kako ga vidi pacijent<i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="prizor">
+      <div class="prozor"><img src="../slike/ponuda/finansije.webp" width="1440" height="900" alt="Finansije klinike: prihod, troškovi i dobit po odeljenju"></div>
+      <div class="telefon"><img src="../slike/31-telefon-laboratorija.webp" width="780" height="1688" alt="Laboratorija na telefonu: nalozi sa stanjem i naplatom"></div>
+    </div>
+  </div>
+</section>
+
+<section class="brojke" aria-label="Demo klinika u brojkama">
+  <div class="sirina">
+    <div class="brojka"><strong>9</strong><span>odeljenja sa cenovnicima</span></div>
+    <div class="brojka"><strong>8</strong><span>uloga — od recepcije do uprave</span></div>
+    <div class="brojka"><strong>1.000+</strong><span>termina u probnoj klinici</span></div>
+    <div class="brojka"><strong>0</strong><span>instalacija na računarima osoblja</span></div>
+  </div>
+</section>
+
+<section class="odeljak">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Problem</span>
+      <h2>Posao koji se vodi na četiri mesta.</h2>
+      <p class="uvod">Termini u jednom programu, laboratorija u drugom, finansije u tabeli, a magacin u svesci. Svaki radi svoj deo, ali se ništa ne spaja samo od sebe.</p>
+    </div>
+    <div class="problemi">
+      <div class="problem"><i class="bi bi-door-open"></i><h3>Pacijent ode bez plaćanja</h3><p>Doplatiće kad dođe po nalaz. Dođe posle tri nedelje, druga smena, i niko ne zna koliko je ostao dužan — ni da li je uopšte ostao.</p></div>
+      <div class="problem"><i class="bi bi-telephone-inbound"></i><h3>Nalaz se traži po telefonu</h3><p>Pacijent zove da pita da li je gotov. Niko ne zna da li je poslat, kome i kada, pa se šalje ponovo — ili se ne šalje uopšte.</p></div>
+      <div class="problem"><i class="bi bi-calculator"></i><h3>Zarada po lekaru napamet</h3><p>Na kraju meseca neko sabira iz tabele, uz procenu koliko je od toga materijal i koliko ide lekaru. Uvek ispadne drugačije nego što se mislilo.</p></div>
+      <div class="problem"><i class="bi bi-journal-x"></i><h3>Magacin u svesci</h3><p>Šta je potrošeno, gde i ko je uzeo — zna se tek na popisu, kad je već kasno da se išta ispravi.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="odeljak siv">
+  <div class="sirina">
+    <div class="zaglavlje sredina">
+      <span class="nadnaslov">Šta se menja</span>
+      <h2>Manje traženja, prepisivanja i propuštene naplate.</h2>
+      <p class="uvod">Svaka funkcija postoji zato što je u radu klinike negde zapinjalo — i sada više ne zapinje.</p>
+    </div>
+    <div class="koristi">
+      <div class="korist"><i class="bi bi-cash-coin"></i><h3>Nijedan pregled bez naplate</h3><p>Završen, a nenaplaćen pregled ne prolazi neprimećeno: recepcija ga vidi na spisku sa brojem dana koliko kasni, uprava u alarmu.</p></div>
+      <div class="korist"><i class="bi bi-calendar2-check"></i><h3>Termini se ne preklapaju</h3><p>Svaka usluga ima svoje trajanje, pa program nudi samo zaista slobodna vremena — i pacijentu na sajtu, i recepciji na telefonu.</p></div>
+      <div class="korist"><i class="bi bi-upc-scan"></i><h3>Laboratorija bez prepisivanja</h3><p>Bar kod na svakoj epruveti, rezultati sa aparata stižu sami u nalog, a laborant ih samo proverava i potvrđuje.</p></div>
+      <div class="korist"><i class="bi bi-receipt"></i><h3>Fiskalni račun za svaku uplatu</h3><p>I za delimičnu uplatu, i u laboratoriji, i kod pacijenta kući. Račun koji nije izdat ostaje na spisku dok se ne izda.</p></div>
+      <div class="korist"><i class="bi bi-tv"></i><h3>Čekaonica bez prozivanja</h3><p>Televizor u čekaonici poziva pacijenta po imenu u sobu. Lekar jednim klikom zadrži poziv ili pozove ranije.</p></div>
+      <div class="korist"><i class="bi bi-graph-up-arrow"></i><h3>Uprava vidi kliniku u brojkama</h3><p>Prihod po odeljenju, lekaru i usluzi, honorari, zalihe i alarmi — svakog jutra, bez prepisivanja u tabele.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="odeljak" id="moduli">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Po ulogama</span>
+      <h2>Svako dobija ekran za svoj posao.</h2>
+      <p class="uvod">Recepcija, lekari, laboratorija, terenski tehničari i uprava rade u istom programu — ali svako vidi samo ono što mu treba.</p>
     </div>
 
-    <!-- Jedan dan klinike, preko cele širine. Pokazuje ono što naslov i tvrdi:
-         recepcija, laboratorija, hirurgija i teren stoje u ISTOM spisku, sa
-         istim iznosima. Pacijenti su samo inicijali — tako izgleda i u
-         stvarnosti kad se ekran deli sa nekim ko ne treba da vidi imena. -->
-    <div class="prikaz" aria-label="Primer: dan u klinici">
-      <div class="prikaz-vrh">
-        <span class="tacke" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="put mono">/pocetna · petak, 15.08.2026</span>
+    <article class="uloga">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-telephone"></i>Recepcija</span>
+        <h3>Ceo dan na jednom ekranu</h3>
+        <ul class="spisak">
+          <li>Raspored svih lekara po sobama — odmah se vidi ko je slobodan i kada.</li>
+          <li>Zakazivanje telefonom za par klikova, i za člana porodice.</li>
+          <li>Naplata sa popustima i kodovima, gotovinom ili karticom, u celosti ili na rate.</li>
+          <li>Kasa po smenama: preuzimanje i predaja sa prebrojavanjem, svaka razlika uz objašnjenje.</li>
+          <li>Uputi koje su lekari napisali čekaju zakazivanje na jednom mestu.</li>
+        </ul>
       </div>
+      <div class="prozor"><img src="../slike/ponuda/recepcija.webp" width="1440" height="900" loading="lazy" alt="Recepcija: raspored lekara po odeljenjima i sobama za ceo dan"></div>
+    </article>
 
-      <div class="brojevi">
-        <div class="broj-polje"><span class="v mono">18</span><span class="n">termina danas</span></div>
-        <div class="broj-polje"><span class="v mono">3</span><span class="n">u čekaonici</span></div>
-        <div class="broj-polje"><span class="v mono">5</span><span class="n">nalaza u radu</span></div>
-        <div class="broj-polje"><span class="v mono novac">84.600</span><span class="n">RSD naplaćeno danas</span></div>
-        <div class="broj-polje"><span class="v mono pazi">12.400</span><span class="n">RSD nenaplaćeno</span></div>
+    <article class="uloga obrnuto">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-heart-pulse"></i>Lekar</span>
+        <h3>Ordinacija bez papira</h3>
+        <ul class="spisak">
+          <li>Dnevni spisak pacijenata; poziv u sobu ide na televizor u čekaonici.</li>
+          <li>Izveštaj po obrascu — opšti pregled, ehokardiografija, ginekologija, pregled trudnice, vene — sa potpisom i pečatom.</li>
+          <li>Nalaz kao PDF ili preko celog ekrana u ordinaciji, da ga pacijent vidi.</li>
+          <li>Karton pacijenta sa ranijim nalazima sa svih odeljenja.</li>
+          <li>Laboratorija i uput kolegi pravo iz termina; usluge i cene se povlače iz cenovnika.</li>
+        </ul>
       </div>
+      <div class="slike-dve levo">
+        <div class="prozor"><img src="../slike/ponuda/lekar.webp" width="1440" height="900" loading="lazy" alt="Lekar: termini po danu sa stanjem izveštaja i isplatom"></div>
+        <div class="prozor mala"><img src="../slike/ponuda/nalaz.webp" width="1440" height="900" loading="lazy" alt="Izveštaj pregleda prikazan preko celog ekrana"></div>
+      </div>
+    </article>
 
-      <div class="zaglavlje-tabele mono" role="presentation">
-        <span>Vreme</span><span>Pacijent i usluga</span><span>Mesto</span>
-        <span style="text-align:right">Iznos</span><span>Stanje</span>
+    <article class="uloga" id="laboratorija">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-eyedropper"></i>Laboratorija</span>
+        <h3>Od epruvete do nalaza</h3>
+        <ul class="spisak">
+          <li>Prijem i naplata na šalteru laboratorije, sa sopstvenom fiskalnom kasom.</li>
+          <li>Nalepnica sa bar kodom za svaku epruvetu i aparat; oštećena se štampa ponovo, sama.</li>
+          <li>Skeniranje epruvete odmah otvara nalog.</li>
+          <li>Rezultati sa aparata stižu sami (HL7 i ASTM), sa referentnim vrednostima — laborant potvrđuje.</li>
+          <li>Nalaz u PDF-u i slanje pacijentu mejlom; uzorkovanje i na kućnoj adresi.</li>
+        </ul>
       </div>
+      <div class="slike-dve">
+        <div class="prozor"><img src="../slike/ponuda/lab-aparat.webp" width="1440" height="900" loading="lazy" alt="Unos rezultata: vrednosti krvne slike stigle sa aparata"></div>
+        <div class="prozor mala"><img src="../slike/ponuda/nalepnice.webp" width="793" height="938" loading="lazy" alt="Nalepnice za epruvete sa bar kodom i QR kodom"></div>
+      </div>
+    </article>
 
-      <div class="redovi">
-        <div class="red">
-          <span class="kada mono">08:00</span>
-          <span class="sta">M. P.<br><i>Kardiologija · dr Kovačević</i></span>
-          <span class="gde">Ordinacija 3</span>
-          <span class="para mono">6.000</span>
-          <span class="stanje gotovo">Naplaćeno</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">08:30</span>
-          <span class="sta">S. B.<br><i>Laboratorija · 4 analize</i></span>
-          <span class="gde">Laboratorija</span>
-          <span class="para mono">3.400</span>
-          <span class="stanje utoku">Uzorak primljen</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">09:00</span>
-          <span class="sta">A. H.<br><i>Interna · dr Stojanović</i></span>
-          <span class="gde">Ordinacija 1</span>
-          <span class="para mono">4.800</span>
-          <span class="stanje utoku">Pregled u toku</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">09:30</span>
-          <span class="sta">N. K.<br><i>Hirurgija · ablacija vena</i></span>
-          <span class="gde">Sala 2</span>
-          <span class="para mono">96.000</span>
-          <span class="stanje ceka">Čeka anesteziologa</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">10:00</span>
-          <span class="sta">E. M.<br><i>Kućna poseta · infuzija</i></span>
-          <span class="gde">Teren</span>
-          <span class="para mono">5.200</span>
-          <span class="stanje ceka">Tehničar na putu</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">10:30</span>
-          <span class="sta">J. R.<br><i>Ultrazvuk vena · dr Lukić</i></span>
-          <span class="gde">Ordinacija 2</span>
-          <span class="para mono duguje">3.600</span>
-          <span class="stanje ceka">Doplata pri odlasku</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">11:00</span>
-          <span class="sta">D. S.<br><i>Laboratorija · KKS i CRP</i></span>
-          <span class="gde">Laboratorija</span>
-          <span class="para mono">1.900</span>
-          <span class="stanje gotovo">Nalaz gotov</span>
-        </div>
+    <article class="uloga obrnuto">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-speedometer2"></i>Uprava</span>
+        <h3>Klinika u brojkama, svakog jutra</h3>
+        <ul class="spisak">
+          <li>Komandni centar: nenaplaćeni pregledi, zalihe ispod minimuma, kašnjenja u laboratoriji — po važnosti.</li>
+          <li>Finansije po odeljenju: prihod, materijal, honorari, dobit.</li>
+          <li>Honorari lekara po procentu, sa bonusima — obračun bez tabela.</li>
+          <li>Cenovnici, katalog analiza, magacin, nabavka, oprema i kvalitet.</li>
+          <li>Nalozi osoblja i evidencija svake izmene: ko, šta i kada.</li>
+        </ul>
       </div>
+      <div class="slike-dve levo">
+        <div class="prozor"><img src="../slike/ponuda/finansije.webp" width="1440" height="900" loading="lazy" alt="Finansije po odeljenju: prihod, materijal, honorari i dobit"></div>
+        <div class="prozor mala"><img src="../slike/ponuda/komandni.webp" width="1176" height="380" loading="lazy" alt="Komandni centar: aktivni alarmi i jutarnji izveštaj"></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="odeljak siv">
+  <div class="sirina istaknuto">
+    <div class="ekran"><img src="../slike/ponuda/cekaonica.webp" width="1600" height="900" loading="lazy" alt="Televizor u čekaonici: sobe, lekari i pozvani pacijenti"></div>
+    <div>
+      <span class="nadnaslov">Čekaonica</span>
+      <h2 style="margin-top:14px">Pacijent zna kada je na redu.</h2>
+      <p class="uvod">Televizor u čekaonici prikazuje svaku sobu: ko je pozvan, gde je pregled u toku, kada je sledeći termin. Poziv se sam šalje kada se soba oslobodi, uz zvučni signal.</p>
+      <ul class="spisak">
+        <li>Na ekranu je samo ime i inicijal prezimena — bez ikakvih drugih podataka.</li>
+        <li>Lekar zadrži poziv ili pozove ranije jednim klikom.</li>
+        <li>Radi na običnom televizoru, položenom ili uspravnom, bez posebne opreme.</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <section class="odeljak">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Problem</p>
-      <h2>Posao koji se vodi na četiri mesta</h2>
-      <p>
-        Termini u jednom programu, laboratorija u drugom, finansije u tabeli, a magacin
-        u svesci. Svaki radi svoj deo, ali se ništa ne spaja samo od sebe.
-      </p>
+  <div class="sirina">
+    <div class="zaglavlje sredina">
+      <span class="nadnaslov">Na terenu i kod pacijenta</span>
+      <h2>Radi i na telefonu.</h2>
+      <p class="uvod">Terenski tehničar vodi kućne posete sa telefona, a pacijent na sajtu klinike zakazuje i vidi svoje nalaze.</p>
     </div>
-    <div class="tri">
-      <div class="karta">
-        <h3>Pacijent ode bez plaćanja</h3>
-        <p>
-          Doplatiće kad dođe po nalaz. Dođe posle tri nedelje, druga smena, i niko ne zna
-          koliko je ostao dužan — ni da li je uopšte ostao.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Nalaz se traži po telefonu</h3>
-        <p>
-          Pacijent zove da pita da li je gotov. Niko ne zna da li je poslat, kome i kada,
-          pa se šalje ponovo — ili se ne šalje uopšte.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Zarada po lekaru se računa napamet</h3>
-        <p>
-          Na kraju meseca neko sabira iz tabele, uz procenu koliko je od toga materijal
-          i koliko ide lekaru. Uvek ispadne drugačije nego što se mislilo.
-        </p>
-      </div>
+    <div class="telefoni">
+      <figure><div class="telefon"><img src="../slike/33-telefon-tehnicar.webp" width="780" height="1688" loading="lazy" alt="Terenski tehničar na telefonu: trenutna kućna poseta"></div>
+        <figcaption>Kućne posete<span>misije, materijal, naplata na vratima</span></figcaption></figure>
+      <figure><div class="telefon"><img src="../slike/32-telefon-pacijent.webp" width="780" height="1688" loading="lazy" alt="Profil pacijenta: termini, izveštaji i otkazivanje"></div>
+        <figcaption>Pacijent<span>termini, izveštaji, nalazi, otkazivanje</span></figcaption></figure>
+      <figure><div class="telefon"><img src="../slike/31-telefon-laboratorija.webp" width="780" height="1688" loading="lazy" alt="Laboratorijski nalozi na telefonu"></div>
+        <figcaption>Laboratorija<span>nalozi, naplata, slanje nalaza</span></figcaption></figure>
     </div>
   </div>
 </section>
 
-<section class="odeljak" id="pokriva">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Šta pokriva</p>
-      <h2>Dvadeset celina, jedan sistem</h2>
-      <p>
-        Svako radno mesto vidi ono što mu treba, a nijedan podatak se ne unosi dvaput.
-        Manja ordinacija koristi prvih nekoliko; ustanova sa laboratorijom i salom
-        koristi sve.
-      </p>
+<section class="odeljak siv" id="celine">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Šta pokriva</span>
+      <h2>Dvadeset celina, jedan sistem.</h2>
+      <p class="uvod">Svako radno mesto vidi ono što mu treba, a nijedan podatak se ne unosi dvaput. Manja ordinacija koristi prvih nekoliko; ustanova sa laboratorijom i salom koristi sve.</p>
     </div>
-
-    <div class="moduli">
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>
-        </svg>
-        <h3>Zakazivanje</h3>
-        <p>Preko sajta, telefonom ili na recepciji. Pacijent bira uslugu, a termin traje koliko i ta usluga — računa se iz stvarnog rasporeda lekara i zauzetosti sale.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/>
-        </svg>
-        <h3>Rad lekara</h3>
-        <p>Karton kroz sva odeljenja, dijagnoze po MKB-10, terapija, kontrola i uput drugom lekaru. Izveštaj izlazi kao PDF sa memorandumom, pečatom i potpisom — ili na ekranu u ordinaciji.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M6 12.5h3l1.5-3.5 3 7 1.5-3.5h3"/>
-        </svg>
-        <h3>Specijalistički nalazi</h3>
-        <p>Strukturisani obrasci gde prazan list nije dovoljan: ultrazvuk srca sa 47 mera, ginekološki pregled i pregled trudnice, ultrazvuk vena obe noge koji unosi tehničar koji je snimao — uz priložene slike.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M9 3v7L4.5 18a2.5 2.5 0 0 0 2.2 3.5h10.6A2.5 2.5 0 0 0 19.5 18L15 10V3"/><path d="M8 3h8M7.5 14h9"/>
-        </svg>
-        <h3>Laboratorija</h3>
-        <p>Katalog od preko 1.200 analiza sa sopstvenim cenovnikom, bar kod nalepnica po epruveti i aparatu, rezultati sa referentnim vrednostima — vrednosti sa aparata stižu kao predlog koji laborant potvrđuje.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/>
-        </svg>
-        <h3>Hirurški blok</h3>
-        <p>Raspored sala i obavezno odobrenje anesteziologa pre prijema pacijenta.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>
-        </svg>
-        <h3>Kućne posete</h3>
-        <p>Nalozi za teren, raspoređivanje tehničara, terapija preuzeta iz pacijentovog nalaza pri zakazivanju, materijal iz magacina ili iz apoteke sa kojom postoji ugovor, i obračun izlaska.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 11h20M6 15h4"/>
-        </svg>
-        <h3>Naplata</h3>
-        <p>Delimično plaćanje, gotovina i kartica u istom računu, popusti i dugovanja kroz vreme.
-           Novac ne prolazi kroz sistem — klinika naplaćuje svojom kasom, a sistem vodi evidenciju.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="11" width="18" height="9" rx="1.5"/><path d="M7 11V5h10v6"/><path d="M10 8h4M10 15.5h4"/>
-        </svg>
-        <h3>Kasa u smeni</h3>
-        <p>Smena preuzima kasu brojanjem i isto tako je predaje. Razlika se nikad ne ispravlja tiho — traži napomenu. Novac za kusur se ne računa kao prihod.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/>
-        </svg>
-        <h3>Magacin</h3>
-        <p>Zalihe i prijem robe, sa automatskim razduženjem pri svakoj usluzi — i imenom ko je robu skinuo.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/>
-        </svg>
-        <h3>Uprava</h3>
-        <p>Promet po izvorima, učinak i zarada po lekaru, fiksni troškovi, nabavka iz apoteka kao trošak i tačka pokrića po usluzi.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>
-        </svg>
-        <h3>Oprema</h3>
-        <p>Servis i kalibracija sa rokovima, amortizacija i isplativost po aparatu.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M9 11l2 2 4-4"/><path d="M20 12a8 8 0 1 1-3.2-6.4"/>
-        </svg>
-        <h3>Kvalitet</h3>
-        <p>Incidenti i korektivne mere, kontrola kvaliteta u laboratoriji. Zapis se ne briše — traži se pri proveri.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 5a2 2 0 0 1 2-2h2l2 4-2 2a12 12 0 0 0 6 6l2-2 4 2v2a2 2 0 0 1-2 2A16 16 0 0 1 4 5z"/>
-        </svg>
-        <h3>Pozivi i zakazivanje</h3>
-        <p>Evidencija poziva, propušteni pozivi, koliko poziva postane termin i lista čekanja.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 3l4 4 4-4"/><path d="M7 12h4M7 15h7"/>
-        </svg>
-        <h3>Ekran čekaonice</h3>
-        <p>Televizor u čekaonici poziva pacijenta u sobu čim se ona oslobodi. Zajedničke sobe, dugme „Zadrži” za lekara, samo ime i inicijal prezimena — i bez aparata za brojeve.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/>
-        </svg>
-        <h3>Marketing</h3>
-        <p>Koliko koji kanal donese prihoda i koliko košta jedan novi pacijent — iz stvarnog prometa, ne iz procene.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M6 9h5M6 13h8"/>
-        </svg>
-        <h3>Pacijentski portal</h3>
-        <p>Pacijent vidi svoje termine, nalaze i slike, preuzima PDF i zakazuje sam — uz dvostepenu prijavu. Podsetnici idu samo uz njegovu saglasnost, koju može da povuče kad god hoće.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
-        </svg>
-        <h3>Sajt klinike</h3>
-        <p>Cenovnik, odeljenja i lekari na sajtu klinike dolaze direktno iz sistema — cena promenjena u aplikaciji je cena na sajtu.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 3l8 4v6c0 4.5-3.2 7.4-8 8-4.8-.6-8-3.5-8-8V7z"/><path d="M12 9v4M12 16h.01"/>
-        </svg>
-        <h3>Komandni centar</h3>
-        <p>Objedinjeni alarmi i jutarnji izveštaj: šta je zapelo juče i šta traži odluku danas.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 6h16l-1.5 9H5.5z"/><circle cx="8" cy="19" r="1.6"/><circle cx="16" cy="19" r="1.6"/><path d="M2 3h2l.6 3"/>
-        </svg>
-        <h3>Nabavka</h3>
-        <p>Dobavljači, porudžbine i računica da li je jeftinije raditi kod sebe ili poslati napolje.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 15a3 3 0 0 1-3 3H8l-4 3V6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3z"/><path d="M9 9h6M9 12.5h4"/>
-        </svg>
-        <h3>Chatbot koji ne izmišlja</h3>
-        <p>Odgovara iz Vaših podataka — usluge, lekari, termini, pacijentov nalaz. Kad nema pokriće,
-           kaže da ne zna i uputi na kontakt. Ne generiše rečenice i ne zove nijedan spoljni
-           servis: radi na Vašem serveru.</p>
-      </article>
+    <div class="celine">
+      <div class="celina"><h3><i class="bi bi-calendar2-check"></i>Zakazivanje</h3><p>Preko sajta, telefonom ili na recepciji. Pacijent bira uslugu, a termin traje koliko i ta usluga — računa se iz stvarnog rasporeda lekara i zauzetosti sale.</p></div>
+      <div class="celina"><h3><i class="bi bi-heart-pulse"></i>Rad lekara</h3><p>Karton kroz sva odeljenja, dijagnoze po MKB-10, terapija, kontrola i uput drugom lekaru. Izveštaj izlazi kao PDF sa memorandumom, pečatom i potpisom — ili na ekranu u ordinaciji.</p></div>
+      <div class="celina"><h3><i class="bi bi-file-earmark-medical"></i>Specijalistički nalazi</h3><p>Strukturisani obrasci gde prazan list nije dovoljan: ultrazvuk srca sa 47 mera, ginekološki pregled i pregled trudnice, ultrazvuk vena obe noge koji unosi tehničar koji je snimao — uz priložene slike.</p></div>
+      <div class="celina"><h3><i class="bi bi-eyedropper"></i>Laboratorija</h3><p>Katalog od preko 1.200 analiza sa sopstvenim cenovnikom, bar kod nalepnica po epruveti i aparatu, rezultati sa referentnim vrednostima — vrednosti sa aparata stižu kao predlog koji laborant potvrđuje.</p></div>
+      <div class="celina"><h3><i class="bi bi-hospital"></i>Hirurški blok</h3><p>Raspored sala i obavezno odobrenje anesteziologa pre prijema pacijenta.</p></div>
+      <div class="celina"><h3><i class="bi bi-house-heart"></i>Kućne posete</h3><p>Nalozi za teren, raspoređivanje tehničara, terapija preuzeta iz pacijentovog nalaza pri zakazivanju, materijal iz magacina ili iz apoteke sa kojom postoji ugovor, i obračun izlaska.</p></div>
+      <div class="celina"><h3><i class="bi bi-cash-coin"></i>Naplata</h3><p>Delimično plaćanje, gotovina i kartica u istom računu, popusti i dugovanja kroz vreme. Novac ne prolazi kroz sistem — klinika naplaćuje svojom kasom, a sistem vodi evidenciju.</p></div>
+      <div class="celina"><h3><i class="bi bi-receipt"></i>Fiskalni računi</h3><p>Dve kase — recepcija i laboratorija. Račun za svaku uplatu, i za ratu i na vratima pacijenta; refundacija je poseban dokument.</p></div>
+      <div class="celina"><h3><i class="bi bi-safe"></i>Kasa u smeni</h3><p>Smena preuzima kasu brojanjem i isto tako je predaje. Razlika se nikad ne ispravlja tiho — traži napomenu. Novac za kusur se ne računa kao prihod.</p></div>
+      <div class="celina"><h3><i class="bi bi-box-seam"></i>Magacin</h3><p>Zalihe i prijem robe, sa automatskim razduženjem pri svakoj usluzi — i imenom ko je robu skinuo.</p></div>
+      <div class="celina"><h3><i class="bi bi-graph-up-arrow"></i>Uprava i finansije</h3><p>Promet po izvorima, učinak i zarada po lekaru, fiksni troškovi, nabavka iz apoteka kao trošak i tačka pokrića po usluzi.</p></div>
+      <div class="celina"><h3><i class="bi bi-tools"></i>Oprema</h3><p>Servis i kalibracija sa rokovima, amortizacija i isplativost po aparatu.</p></div>
+      <div class="celina"><h3><i class="bi bi-patch-check"></i>Kvalitet</h3><p>Incidenti i korektivne mere, kontrola kvaliteta u laboratoriji. Zapis se ne briše — traži se pri proveri.</p></div>
+      <div class="celina"><h3><i class="bi bi-telephone"></i>Pozivi i lista čekanja</h3><p>Evidencija poziva, propušteni pozivi, koliko poziva postane termin i lista čekanja.</p></div>
+      <div class="celina"><h3><i class="bi bi-tv"></i>Ekran čekaonice</h3><p>Televizor u čekaonici poziva pacijenta u sobu čim se ona oslobodi. Zajedničke sobe, dugme „Zadrži“ za lekara, samo ime i inicijal prezimena — i bez aparata za brojeve.</p></div>
+      <div class="celina"><h3><i class="bi bi-megaphone"></i>Marketing</h3><p>Koliko koji kanal donese prihoda i koliko košta jedan novi pacijent — iz stvarnog prometa, ne iz procene.</p></div>
+      <div class="celina"><h3><i class="bi bi-person-circle"></i>Pacijentski portal</h3><p>Pacijent vidi svoje termine, nalaze i slike, preuzima PDF i zakazuje sam — uz dvostepenu prijavu. Podsetnici idu samo uz njegovu saglasnost, koju može da povuče kad god hoće.</p></div>
+      <div class="celina"><h3><i class="bi bi-globe2"></i>Sajt klinike</h3><p>Cenovnik, odeljenja i lekari na sajtu klinike dolaze direktno iz sistema — cena promenjena u aplikaciji je cena na sajtu.</p></div>
+      <div class="celina"><h3><i class="bi bi-speedometer2"></i>Komandni centar</h3><p>Objedinjeni alarmi i jutarnji izveštaj: šta je zapelo juče i šta traži odluku danas.</p></div>
+      <div class="celina"><h3><i class="bi bi-cart3"></i>Nabavka</h3><p>Dobavljači, porudžbine i računica da li je jeftinije raditi kod sebe ili poslati napolje.</p></div>
     </div>
   </div>
 </section>
 
-<section class="tamna" id="zasto">
-  <div class="okvir">
-    <div class="uski">
-      <p class="oznaka">Zašto MAAT</p>
-      <h2>Ono što druga rešenja ne pokrivaju</h2>
-      <p class="uvodni">
-        Da brojevi budu tačni i da svi ekrani govore isto — to je obaveza, ne prednost.
-        Razlika je u ovome.
-      </p>
+<section class="odeljak" id="zasto">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Zašto MAAT</span>
+      <h2>Ono što druga rešenja ne pokrivaju.</h2>
+      <p class="uvod">Da brojevi budu tačni i da svi ekrani govore isto — to je obaveza, ne prednost. Razlika je u ovome.</p>
     </div>
     <div class="razlozi">
-      <article class="razlog">
-        <h3>Ceo posao klinike, ne samo termini</h3>
-        <p>
-          Zakazivanje, karton, laboratorija, hirurški blok, kućne posete, magacin i
-          finansije. Isto se inače sklapa od tri programa koja se ne razumeju međusobno,
-          pa se podaci prepisuju ručno.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Kućne posete kao pun modul</h3>
-        <p>
-          Nalog za teren, raspoređivanje tehničara, materijal koji se skida sa magacina i
-          obračun naknade za izlazak. Klinike koje rade teren obično to vode odvojeno,
-          na papiru.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Naplata kakva se stvarno dešava</h3>
-        <p>
-          Deo gotovinom, deo karticom, ostatak kad pacijent dođe po nalaz. Popusti,
-          uputioci, dugovanja kroz godine. Laboratorija naplaćuje samostalno, i za
-          pacijente koji nisu bili kod lekara.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Izmena za dan, ne za kvartal</h3>
-        <p>
-          Pišete direktno čoveku koji piše kod. Nema prijave na sistem podrške, nema
-          čekanja na sledeće izdanje — ono što je klinici potrebno drugačije, uradi se
-          drugačije.
-        </p>
-      </article>
+      <div class="razlog"><i class="bi bi-diagram-3"></i><h3>Ceo posao klinike, ne samo termini</h3><p>Zakazivanje, karton, laboratorija, hirurški blok, kućne posete, magacin i finansije. Isto se inače sklapa od tri programa koja se ne razumeju međusobno, pa se podaci prepisuju ručno.</p></div>
+      <div class="razlog"><i class="bi bi-house-heart"></i><h3>Kućne posete kao pun modul</h3><p>Nalog za teren, raspoređivanje tehničara, materijal koji se skida sa magacina i obračun naknade za izlazak. Klinike koje rade teren obično to vode odvojeno, na papiru.</p></div>
+      <div class="razlog"><i class="bi bi-wallet2"></i><h3>Naplata kakva se stvarno dešava</h3><p>Deo gotovinom, deo karticom, ostatak kad pacijent dođe po nalaz. Popusti, uputioci, dugovanja kroz godine. Laboratorija naplaćuje samostalno, i za pacijente koji nisu bili kod lekara.</p></div>
+      <div class="razlog"><i class="bi bi-lightning-charge"></i><h3>Izmena za dan, ne za kvartal</h3><p>Pišete direktno čoveku koji piše kod. Nema prijave na sistem podrške ni čekanja na sledeće izdanje — ono što je klinici potrebno drugačije, uradi se drugačije.</p></div>
     </div>
   </div>
 </section>
 
-<section class="odeljak" id="pomocnik">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Pomoćnik</p>
-      <h2>Odgovara iz vaših podataka — ili kaže da ne zna</h2>
-      <p class="uvodni">
-        Pacijent koji je dobio nalaz obično zove recepciju da pita šta znači jedan
-        broj. Sada pita sistem, u isto ono vreme kad mu je nalaz i stigao.
-      </p>
+<section class="odeljak siv" id="pomocnik">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Pomoćnik</span>
+      <h2>Odgovara iz vaših podataka — ili kaže da ne zna.</h2>
+      <p class="uvod">Pacijent koji je dobio nalaz obično zove recepciju da pita šta znači jedan broj. Sada pita sistem, u isto ono vreme kad mu je nalaz i stigao.</p>
     </div>
-
-    <div class="razlozi">
-      <article class="razlog">
-        <h3>Ne izmišlja</h3>
-        <p>
-          Odgovara samo iz onoga što ustanova ima: usluge, cenovnik, lekari,
-          termini tog pacijenta i njegovi nalazi. Kad podatak ne postoji, kaže da
-          ne zna i uputi na recepciju — umesto da smisli odgovor koji zvuči tačno.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Objašnjava nalaz</h3>
-        <p>
-          Pacijent otvori svoj PDF nalaz i dobije ga prepričanog običnim jezikom,
-          uz referentne vrednosti. Ne postavlja dijagnozu i ne daje savet — kaže
-          šta koji parametar znači i kada se javlja lekaru.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Ne izlazi iz ustanove</h3>
-        <p>
-          Radi na sopstvenim ugrađivanjima, u bazi same ustanove. Nema poziva ka
-          spoljnom modelu, nema pretplate po pitanju, i nijedan podatak pacijenta
-          ne napušta server klinike.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Radi i za osoblje</h3>
-        <p>
-          Isti pomoćnik odgovara i na pitanja o radu ustanove — koje usluge
-          postoje, koliko koštaju, kada radi koji lekar — pa recepcija ne mora da
-          pamti cenovnik napamet.
-        </p>
-      </article>
-    </div>
-
-    <figure class="snimak uspravan" style="margin-top:26px">
-      <div class="ram">
-        <img src="../slike/27-pomocnik.webp" alt="Pomoćnik u portalu pacijenta" hidden
-             onload="this.hidden=false;this.nextElementSibling.hidden=true">
-        <div class="mesto">
-          <span class="sifra">SLIKA 27 · /</span>
-          <b>Pomoćnik u razgovoru</b>
-          <span>Pitanje pacijenta i odgovor iz podataka ustanove</span>
-        </div>
+    <div class="pomocnik">
+      <div class="pomocnik-kartice">
+        <div><i class="bi bi-patch-question"></i><h3>Ne izmišlja</h3><p>Odgovara samo iz onoga što ustanova ima: usluge, cenovnik, lekari, termini tog pacijenta i njegovi nalazi. Kad podatak ne postoji, kaže da ne zna i uputi na recepciju — umesto da smisli odgovor koji zvuči tačno.</p></div>
+        <div><i class="bi bi-file-earmark-text"></i><h3>Objašnjava nalaz</h3><p>Pacijent otvori svoj PDF nalaz i dobije ga prepričanog običnim jezikom, uz referentne vrednosti. Ne postavlja dijagnozu i ne daje savet — kaže šta koji parametar znači i kada se javlja lekaru.</p></div>
+        <div><i class="bi bi-hdd-rack"></i><h3>Ne izlazi iz ustanove</h3><p>Radi na sopstvenim ugrađivanjima, u bazi same ustanove. Nema poziva ka spoljnom modelu, nema pretplate po pitanju, i nijedan podatak pacijenta ne napušta server klinike.</p></div>
+        <div><i class="bi bi-people"></i><h3>Radi i za osoblje</h3><p>Isti pomoćnik odgovara i na pitanja o radu ustanove — koje usluge postoje, koliko koštaju, kada radi koji lekar — pa recepcija ne mora da pamti cenovnik napamet.</p></div>
       </div>
-      <figcaption><b>Odgovor uvek stoji na nečemu</b> — na usluzi iz cenovnika, na terminu tog pacijenta ili na njegovom nalazu; ni na čemu drugom.</figcaption>
-    </figure>
+      <figure>
+        <div class="telefon"><img src="../slike/27-pomocnik.webp" width="778" height="1366" loading="lazy" alt="Pomoćnik u portalu pacijenta"></div>
+        <figcaption>Odgovor uvek stoji na nečemu — na usluzi iz cenovnika, na terminu tog pacijenta ili na njegovom nalazu; ni na čemu drugom.</figcaption>
+      </figure>
+    </div>
+    <div class="beleska"><b>Stanje</b>Pomoćnik je u završnoj proveri i u demou još nije uključen; slika je iz ranije probe.</div>
   </div>
 </section>
 
 <section class="odeljak" id="integracije">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Integracije i propisi</p>
-      <h2>Ono što ustanova mora, a ne bira</h2>
-      <p>
-        Fiskalni račun, eZdravlje, provera osiguranja, analizatori u laboratoriji. Sve je
-        ugrađeno i radi — o stanju spremnosti pišemo bez uvijanja, ispod.
-      </p>
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Integracije i propisi</span>
+      <h2>Ono što ustanova mora, a ne bira.</h2>
+      <p class="uvod">Fiskalni račun, eZdravlje, provera osiguranja i analizatori u laboratoriji — sve je ugrađeno i radi. O stanju spremnosti pišemo bez uvijanja, ispod.</p>
     </div>
-
-    <div class="moduli">
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h3"/>
-        </svg>
-        <h3>Fiskalizacija i e-fakture</h3>
-        <p>Dve kase — recepcija i laboratorija. Račun za svaku uplatu, i za ratu i za naplatu na vratima pacijenta; refundacija je poseban dokument, a uplata bez računa stoji na spisku dok ga ne dobije. E-fakture za pravna lica.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 6h16v12H4z"/><path d="M4 10h16M9 14h6"/>
-        </svg>
-        <h3>eZdravlje (FHIR)</h3>
-        <p>Izvoz podataka u FHIR obliku, koji državni sistemi i druge ustanove razumeju.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>
-        </svg>
-        <h3>Provera osiguranja</h3>
-        <p>Provera pokrivenosti pacijenta pre pregleda, da se ne naplati ono što ide preko osiguranja.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M7 9h4M7 13h7M17 9v4"/>
-        </svg>
-        <h3>Analizatori u laboratoriji</h3>
-        <p>Dva protokola, ASTM i HL7 (MLLP). Posrednik pored aparata čuva svaki rezultat na disku dok ga server ne potvrdi — ništa se ne gubi kad padne internet, a u kliniku se ne otvara nijedan port. Rezultat stiže u nalog bez prepisivanja.</p>
-      </article>
+    <div class="integracije">
+      <div class="integracija"><i class="bi bi-receipt-cutoff"></i><h3>Fiskalizacija i e-fakture</h3><p>Dve kase — recepcija i laboratorija. Račun za svaku uplatu, i za ratu i za naplatu na vratima pacijenta; refundacija je poseban dokument, a uplata bez računa stoji na spisku dok ga ne dobije. E-fakture za pravna lica.</p></div>
+      <div class="integracija"><i class="bi bi-hospital"></i><h3>eZdravlje (FHIR)</h3><p>Izvoz podataka u FHIR obliku, koji državni sistemi i druge ustanove razumeju.</p></div>
+      <div class="integracija"><i class="bi bi-shield-check"></i><h3>Provera osiguranja</h3><p>Pokrivenost pacijenta proverava se pre pregleda, da se ne naplati ono što ide preko osiguranja.</p></div>
+      <div class="integracija"><i class="bi bi-cpu"></i><h3>Analizatori u laboratoriji</h3><p>Dva protokola, ASTM i HL7 (MLLP). Posrednik pored aparata čuva svaki rezultat na disku dok ga server ne potvrdi — ništa se ne gubi kad padne internet, a u kliniku se ne otvara nijedan port. Rezultat stiže u nalog bez prepisivanja.</p></div>
     </div>
-
-    <p style="margin-top:20px;color:var(--tiho);font-size:.92rem;max-width:74ch">
-      <span class="mono" style="color:var(--pazi);font-size:.78rem;letter-spacing:.1em">STANJE · </span>
-      Sve četiri veze su napravljene i rade u probnom režimu; veza sa analizatorima je
-      isprobana na simuliranim aparatima, preko prave mrežne veze. Prelazak na pravi
-      servis je podešavanje — adresa, ključ i sertifikat — a ne prepravka sistema.
-      Ako podešavanje nedostaje, sistem <b>neće</b> tiho preći na simulaciju: prijaviće
-      grešku, da se račun nikad ne prikaže kao fiskalizovan ako nije.
-    </p>
+    <div class="beleska"><b>Stanje</b>Sve četiri veze su napravljene i rade u probnom režimu; veza sa analizatorima je isprobana na simuliranim aparatima, preko prave mrežne veze. Prelazak na pravi servis je podešavanje — adresa, ključ i sertifikat — a ne prepravka sistema. Ako podešavanje nedostaje, sistem neće tiho preći na simulaciju: prijaviće grešku, da se račun nikad ne prikaže kao fiskalizovan ako nije.</div>
   </div>
 </section>
 
-<section class="odeljak">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Podaci i bezbednost</p>
-      <h2>Šta se dešava sa podacima pacijenata</h2>
-      <p>Ovo su stvari koje ustanova pita prva. Odgovori bez uvijanja.</p>
+<section class="odeljak siv" id="bezbednost">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Bezbednost i poverljivost</span>
+      <h2>Medicinski podaci ostaju poverljivi.</h2>
+      <p class="uvod">Zdravstveni podaci su najosetljiviji podaci koje klinika ima. Zato su zaštićeni na svakom koraku, a ne samo lozinkom.</p>
     </div>
-    <div class="tri">
-      <div class="karta">
-        <h3>Podaci su Vaši</h3>
-        <p>
-          Sistem se postavlja na Vaš server i Vaš domen, i tu ostaje. Mi ne držimo Vašu bazu
-          niti kopiju Vaših podataka. Rezervne kopije se prave same — šifrovane, baza i
-          prilozi zajedno — i ostaju kod Vas.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Šifrovano u bazi</h3>
-        <p>
-          Lični i medicinski podaci se čuvaju šifrovano — i adrese i laboratorijski
-          rezultati. Ko dobije samu bazu, ne dobija
-          imena, dijagnoze ni brojeve telefona.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Trag pristupa kartonu</h3>
-        <p>
-          Svako otvaranje kartona ostavlja zapis: ko, šta i kada. Izveštaj se piše tek
-          kad termin počne; ranije otvaranje traži pisani razlog, koji ostaje u zapisu.
-          Ocene pacijenata vidi isključivo uprava.
-        </p>
-      </div>
+    <div class="bezbednost">
+      <div><i class="bi bi-shield-lock"></i><h3>Šifrovano u bazi</h3><p>Imena, adrese, kontakti, dijagnoze i laboratorijski rezultati čuvaju se šifrovani — ko dobije samu bazu, ne dobija imena, dijagnoze ni brojeve telefona.</p></div>
+      <div><i class="bi bi-person-badge"></i><h3>Svako vidi svoje</h3><p>Prava po ulozi: laborant ne vidi finansije, recepcija ne menja lekarske izveštaje, pacijent vidi samo svoje termine i nalaze.</p></div>
+      <div><i class="bi bi-phone-vibrate"></i><h3>Dvofaktorska prijava</h3><p>Kod iz aplikacije na telefonu uz lozinku, i automatska odjava kada se program ne koristi.</p></div>
+      <div><i class="bi bi-journal-check"></i><h3>Trag pristupa kartonu</h3><p>Svako otvaranje kartona ostavlja zapis: ko, šta i kada. Izveštaj se piše tek kad termin počne; ranije otvaranje traži pisani razlog, koji ostaje u zapisu. Ocene pacijenata vidi isključivo uprava.</p></div>
+      <div><i class="bi bi-cloud-check"></i><h3>Rezervne kopije</h3><p>Prave se same — šifrovane, baza i prilozi zajedno — i ostaju kod vas. Oporavak ne dira postojeće podatke dok se kopija ne proveri.</p></div>
+      <div><i class="bi bi-hdd-network"></i><h3>Podaci su vaši</h3><p>Sistem se postavlja na vaš server i vaš domen, i tu ostaje. Mi ne držimo vašu bazu niti kopiju vaših podataka.</p></div>
     </div>
-    <p style="margin-top:20px;color:var(--tiho);font-size:.92rem;max-width:70ch">
-      <span class="mono" style="color:var(--tirkiz);font-size:.78rem;letter-spacing:.1em">NADOGRADNJA · </span>
-      Pre svake izmene sistema pokrene se preko 2.500 automatskih provera, a svako
-      pokretanje prebroji svaku tabelu pre i posle, pa provera ne ostavlja podatke za
-      sobom. To ne znači da greške ne postoje — znači da izmena rađena za jednu ustanovu ne obara ono što već
-      radi kod druge.
-    </p>
+    <div class="beleska"><b>Nadogradnja</b>Pre svake izmene sistema pokrene se preko 2.500 automatskih provera, a svako pokretanje prebroji svaku tabelu pre i posle, pa provera ne ostavlja podatke za sobom. To ne znači da greške ne postoje — znači da izmena rađena za jednu ustanovu ne obara ono što već radi kod druge.</div>
   </div>
 </section>
 
 <section class="odeljak" id="ekrani">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Ekrani</p>
-      <h2>Kako to izgleda u radu</h2>
-      <p>Slike iz demo klinike — isti sistem, sa izmišljenim lekarima i pacijentima.</p>
-      <p class="pod-akcija">Na snimcima stoji ime ustanove, a ne naše: sistem se
-        postavlja pod znakom klinike, na njenom serveru i njenom adresom.</p>
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Ekrani</span>
+      <h2>Kako izgleda u radu.</h2>
+      <p class="uvod">Slike iz demo klinike — isti program, sa izmišljenim lekarima i pacijentima. Na snimcima stoji ime ustanove, a ne naše: sistem se postavlja pod znakom klinike, na njenom serveru i njenoj adresi.</p>
     </div>
-
-    <!-- ═══ SLIKE ═══════════════════════════════════════════════════════
-         Ovde se NIŠTA ne menja. Snimci se samo prekopiraju u maat-innovations/slike/
-         pod imenima koja su upisana ispod i sami se pojave.
-
-         Slika stoji sakrivena dok se ne učita; tek onda sakrije prazno polje
-         ispod sebe. Ako datoteka još nije prekopirana, ostane uredno prazno
-         polje umesto polomljene sličice.
-
-         Šta tačno snimiti je u brend/slike-uputstvo.md                   -->
-
-    <div class="snimci">
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/01-naplata-po-izvorima.webp" alt="Naplata po izvorima" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 01 · /finansije</span>
-            <b>Naplata po izvorima</b>
-            <span>Tabela sa svim redovima i ukupnim iznosom</span>
-          </div>
-        </div>
-        <figcaption><b>Ceo promet klinike na jednom mestu</b> — po izvoru, po načinu plaćanja, sa dugovanjima.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/02-trazi-vasu-odluku.webp" alt="Traži Vašu odluku" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 02 · /finansije</span>
-            <b>Traži Vašu odluku</b>
-            <span>Panel sa nesaglasnostima</span>
-          </div>
-        </div>
-        <figcaption><b>Sistem sam proverava svoje brojeve</b> — i javlja kad novac stoji na termin koji nije zatvoren.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/03-recepcija-dan.webp" alt="Recepcija — dan u toku" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 03 · /service-dashboard</span>
-            <b>Recepcija — dan u toku</b>
-            <span>Termini sa stanjem naplate</span>
-          </div>
-        </div>
-        <figcaption><b>Recepcija vidi ceo dan</b> — ko je došao, ko čeka, ko je platio i koliko.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/04-recepcija-naplata.webp" alt="Naplata na recepciji" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 04 · /service-dashboard</span>
-            <b>Naplata na recepciji</b>
-            <span>Popust, način plaćanja, delimično</span>
-          </div>
-        </div>
-        <figcaption><b>Naplata kakva se stvarno dešava</b> — deo gotovinom, deo karticom, ostatak kad dođe po nalaz.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/05-lekar-termini.webp" alt="Lekar — dan i nalazi" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 05 · /doctor-dashboard</span>
-            <b>Lekar — dan i nalazi</b>
-            <span>Termini po danu sa zaključanom isplatom</span>
-          </div>
-        </div>
-        <figcaption><b>Lekar upisuje nalaz i terapiju</b>, a izveštaj odlazi pacijentu jednim klikom.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/06-lekar-lab-trend.webp" alt="Laboratorijski trend pacijenta" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 06 · /doctor-dashboard</span>
-            <b>Laboratorijski trend</b>
-            <span>Isti parametar kroz više nalaza</span>
-          </div>
-        </div>
-        <figcaption><b>Vrednost kroz vreme, ne jedan broj</b> — holesterol kroz tri nalaza, sa referentnim opsegom.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/07-laboratorija-nalozi.webp" alt="Laboratorija — red naloga" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 07 · /lab-dashboard</span>
-            <b>Laboratorija — red naloga</b>
-            <span>Nalozi, uzorci i stanje naplate</span>
-          </div>
-        </div>
-        <figcaption><b>Laboratorija radi i naplaćuje samostalno</b> — i za pacijente koji nisu bili kod lekara.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/08-laboratorija-naplata.webp" alt="Delimična naplata u laboratoriji" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 08 · /lab-dashboard</span>
-            <b>Delimična naplata</b>
-            <span>Avans pri vađenju, ostatak po nalaz</span>
-          </div>
-        </div>
-        <figcaption><b>Avans pri vađenju krvi, ostatak kad dođe po rezultat</b> — nalog stoji kao delimično naplaćen.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/09-teren-misija.webp" alt="Teren — aktivna poseta" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 09 · /technician</span>
-            <b>Teren — aktivna poseta</b>
-            <span>Zaduženje terapije i obračun izlaska</span>
-          </div>
-        </div>
-        <figcaption><b>Tehničar na terenu vidi jednu posetu</b> — šta primenjuje, šta je zadužio i koliko mu pripada.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/10-portal-pacijenta.webp" alt="Portal pacijenta" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 10 · /</span>
-            <b>Portal pacijenta</b>
-            <span>Termini, nalazi i zakazivanje</span>
-          </div>
-        </div>
-        <figcaption><b>Pacijent ima svoj nalog</b> — istorija termina, nalazi i PDF izveštaji, bez zvanja recepcije.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/11-zakazivanje.webp" alt="Zakazivanje na sajtu" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 11 · /booking</span>
-            <b>Zakazivanje na sajtu</b>
-            <span>Očima pacijenta, sa telefona</span>
-          </div>
-        </div>
-        <figcaption><b>Pacijent zakazuje sam</b> — slobodni termini se računaju iz stvarnog rasporeda lekara.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/12-potvrda-mejlom.webp" alt="Potvrda termina e-poštom" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 12 · e-pošta</span>
-            <b>Potvrda termina</b>
-            <span>Sa kalendarom i otkazivanjem</span>
-          </div>
-        </div>
-        <figcaption><b>Potvrda stiže odmah</b> — sa dugmetom za kalendar i otkazivanjem u jednom kliku, bez prijave.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/13-komandni-centar.webp" alt="Komandni centar" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 13 · /komandni-centar</span>
-            <b>Komandni centar</b>
-            <span>Ceo dan ustanove na jednom ekranu</span>
-          </div>
-        </div>
-        <figcaption><b>Uprava vidi ustanovu, ne izveštaj o njoj</b> — dan u toku, po odeljenjima, dok traje.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/14-finansije-pl.webp" alt="Dobit po odeljenju" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 14 · /finansije</span>
-            <b>Dobit po odeljenju</b>
-            <span>Prihod, trošak i razlika</span>
-          </div>
-        </div>
-        <figcaption><b>Ne samo koliko je naplaćeno, nego i šta je ostalo</b> — po odeljenju, sa troškom rada i materijala.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/15-hirurski-blok.webp" alt="Hirurški blok" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 15 · /hirurgija</span>
-            <b>Hirurški blok</b>
-            <span>Raspored sala i koraci slučaja</span>
-          </div>
-        </div>
-        <figcaption><b>Bez odobrenja anesteziologa nema prijema</b> — sistem to ne dozvoljava, ne oslanja se na dogovor.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/16-magacin.webp" alt="Magacin i zalihe" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 16 · /magacin</span>
-            <b>Magacin i zalihe</b>
-            <span>Stanje, zaduženja i utrošak</span>
-          </div>
-        </div>
-        <figcaption><b>Materijal se skida sa stanja tamo gde je potrošen</b> — u sali, u laboratoriji i na terenu.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/17-oprema.webp" alt="Oprema i kalibracija" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 17 · /oprema</span>
-            <b>Oprema i kalibracija</b>
-            <span>Servisni rokovi i nalazi</span>
-          </div>
-        </div>
-        <figcaption><b>Aparat kome je istekla kalibracija se vidi pre nego što inspekcija dođe</b> — sa datumom i nalazom.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/18-audit-trag.webp" alt="Evidencija pristupa" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 18 · /audit-trag</span>
-            <b>Evidencija pristupa</b>
-            <span>Ko je i kada otvorio karton</span>
-          </div>
-        </div>
-        <figcaption><b>Svako gledanje u karton ostavlja trag</b> — ime, vreme i šta je otvoreno. Trag se ne može obrisati iz aplikacije.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/19-ocene-pacijenata.webp" alt="Ocene pacijenata" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 19 · /ocene</span>
-            <b>Ocene pacijenata</b>
-            <span>Klinika i lekar odvojeno</span>
-          </div>
-        </div>
-        <figcaption><b>Ocenu vidi uprava, ne lekar o kome je reč</b> — klinika i lekar se ocenjuju odvojeno, poređenje ide po periodima.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/20-integracije.webp" alt="Integracije" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 20 · /integracije</span>
-            <b>Integracije</b>
-            <span>Analizator (ASTM), FHIR, fiskalizacija</span>
-          </div>
-        </div>
-        <figcaption><b>Rezultat sa analizatora ulazi sam</b> — bez prepisivanja, uz FHIR izvoz i fiskalni račun.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/21-sajt-klinike.webp" alt="Sajt klinike" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 21 · /</span>
-            <b>Sajt klinike</b>
-            <span>Zakazivanje, cenovnik i portal</span>
-          </div>
-        </div>
-        <figcaption><b>Pacijent vidi kliniku, ne nas</b> — sajt, zakazivanje i portal nose znak ustanove i stoje na njenoj adresi.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/22-telefonsko-zakazivanje.webp" alt="Telefonsko zakazivanje" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 22 · /service-dashboard</span>
-            <b>Telefonsko zakazivanje</b>
-            <span>Slobodni termini pred recepcijom</span>
-          </div>
-        </div>
-        <figcaption><b>Ko zove telefonom nije izuzetak</b> — recepcija zakazuje iz istog rasporeda iz kog i sajt, pa dvostrukog termina nema.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/23-zakazivanje-podaci.webp" alt="Zakazivanje — podaci" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 23 · /booking</span>
-            <b>Zakazivanje — podaci</b>
-            <span>Poslednji korak, bez naloga</span>
-          </div>
-        </div>
-        <figcaption><b>Pacijent bez naloga zakazuje isto</b> — podaci se unose u poslednjem koraku, registracija nije uslov.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/24-obrazac-za-ocenu.webp" alt="Obrazac za ocenu" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 24 · /ocena</span>
-            <b>Obrazac za ocenu</b>
-            <span>Ono što pacijent dobija posle pregleda</span>
-          </div>
-        </div>
-        <figcaption><b>Poziv za ocenu stiže sam, posle pregleda</b> — otvara se jednim klikom, bez prijave; odgovor vidi samo uprava.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/25-gotov-nalaz.webp" alt="Gotov nalaz" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 25 · PDF</span>
-            <b>Gotov nalaz</b>
-            <span>Memorandum, pečat i potpis lekara</span>
-          </div>
-        </div>
-        <figcaption><b>Nalaz izlazi kao gotov dokument</b> — sa pečatom klinike, potpisom lekara i našim slovima, spreman da se pošalje.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/26-zatvaranje-termina.webp" alt="Zatvaranje termina" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 26 · /doctor-dashboard</span>
-            <b>Zatvaranje termina</b>
-            <span>Izbor usluga i isplata lekara</span>
-          </div>
-        </div>
-        <figcaption><b>Lekar bira šta je uradio, sistem računa ostalo</b> — njegova isplata se zaključava, naplatu klinike vodi recepcija.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/28-cekaonica.webp" alt="Ekran čekaonice" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 28 · /cekaonica</span>
-            <b>Ekran čekaonice</b>
-            <span>Televizor poziva pacijente u sobe</span>
-          </div>
-        </div>
-        <figcaption><b>Pacijent vidi svoje ime i sobu</b> — televizor poziva sledećeg čim se soba oslobodi; samo ime i inicijal prezimena.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/29-nalaz-na-ekranu.webp" alt="Nalaz ultrazvuka srca na ekranu" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 29 · /nalaz-na-ekranu</span>
-            <b>Nalaz na ekranu</b>
-            <span>Ultrazvuk srca, čitljiv sa tri metra</span>
-          </div>
-        </div>
-        <figcaption><b>Gotov nalaz na ekranu u ordinaciji</b> — isti izvor kao PDF, dovoljno krupno da ga lekar i pacijent čitaju zajedno.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="../slike/30-kasa-smena.webp" alt="Predaja kase na kraju smene" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SLIKA 30 · /service-dashboard</span>
-            <b>Predaja kase</b>
-            <span>Izbrojano, ostavljeno, predato</span>
-          </div>
-        </div>
-        <figcaption><b>Smena predaje kasu brojanjem</b> — sistem zna koliko treba da bude, a razlika traži pisano objašnjenje.</figcaption>
-      </figure>
+    <div class="grupe" role="tablist" aria-label="Ekrani po delovima klinike" hidden>
+      <button type="button" role="tab" data-grupa="recepcija">Recepcija i zakazivanje<span>5</span></button>
+      <button type="button" role="tab" data-grupa="lekar">Lekar<span>5</span></button>
+      <button type="button" role="tab" data-grupa="laboratorija">Laboratorija i teren<span>4</span></button>
+      <button type="button" role="tab" data-grupa="pacijent">Pacijent i sajt<span>6</span></button>
+      <button type="button" role="tab" data-grupa="uprava">Uprava<span>6</span></button>
+      <button type="button" role="tab" data-grupa="ostalo">Sala, magacin, oprema<span>3</span></button>
     </div>
-
-    <div class="telefoni-glava">
-      <p class="oznaka">Na telefonu</p>
-      <h3>Isti sistem u džepu</h3>
-      <p>Terenski tehničar vodi kućne posete sa telefona; ni laboratoriji ni pacijentu ne treba računar.</p>
-    </div>
-    <div class="telefoni">
-      <figure>
-        <div class="telefon-ram"><img src="../slike/33-telefon-tehnicar.webp" alt="Terenski tehničar na telefonu: trenutna kućna poseta" loading="lazy" width="780" height="1688"></div>
-        <figcaption><b>Kućne posete</b> — ruta, šta se daje i šta se naplaćuje na vratima.</figcaption>
-      </figure>
-      <figure>
-        <div class="telefon-ram"><img src="../slike/31-telefon-laboratorija.webp" alt="Laboratorijski nalozi na telefonu" loading="lazy" width="780" height="1688"></div>
-        <figcaption><b>Laboratorija</b> — nalozi, naplata i slanje nalaza, jedno dugme po koraku.</figcaption>
-      </figure>
-      <figure>
-        <div class="telefon-ram"><img src="../slike/32-telefon-pacijent.webp" alt="Profil pacijenta na telefonu: termini i izveštaji" loading="lazy" width="780" height="1688"></div>
-        <figcaption><b>Pacijent</b> — termini, izveštaji i otkazivanje bez poziva.</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section class="odeljak" id="placanje">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Kako se plaća</p>
-      <h2>Licenca za softver, i ništa više od toga</h2>
-      <p>
-        Bez procenta od Vašeg prometa i bez skrivenih naknada po transakciji.
-        Znate unapred koliko plaćate, bez obzira koliko pacijenata primite.
-      </p>
-    </div>
-    <div class="tri">
-      <div class="karta">
-        <h3>Mesečno ili godišnje</h3>
-        <p>
-          Licenca po ustanovi, plaćena mesečno ili godišnje. Cena zavisi od toga koje
-          celine koristite, a ne od toga koliko ste zaradili.
-        </p>
+    <div class="galerija-grupa" data-grupa="recepcija" role="tabpanel">
+      <h3>Recepcija i zakazivanje</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="../slike/03-recepcija-dan.webp" width="1600" height="1000" loading="lazy" alt="Recepcija — dan u toku"></div><figcaption><b>Recepcija — dan u toku</b>Recepcija vidi ceo dan — ko je došao, ko čeka, ko je platio i koliko.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/22-telefonsko-zakazivanje.webp" width="1600" height="1000" loading="lazy" alt="Telefonsko zakazivanje"></div><figcaption><b>Telefonsko zakazivanje</b>Ko zove telefonom nije izuzetak — recepcija zakazuje iz istog rasporeda iz kog i sajt, pa dvostrukog termina nema.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/04-recepcija-naplata.webp" width="1600" height="1000" loading="lazy" alt="Naplata na recepciji"></div><figcaption><b>Naplata na recepciji</b>Naplata kakva se stvarno dešava — deo gotovinom, deo karticom, ostatak kad dođe po nalaz.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/30-kasa-smena.webp" width="1600" height="1000" loading="lazy" alt="Predaja kase na kraju smene"></div><figcaption><b>Predaja kase na kraju smene</b>Smena predaje kasu brojanjem — sistem zna koliko treba da bude, a razlika traži pisano objašnjenje.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/12-potvrda-mejlom.webp" width="1600" height="1000" loading="lazy" alt="Potvrda termina e-poštom"></div><figcaption><b>Potvrda termina e-poštom</b>Potvrda stiže odmah — sa dugmetom za kalendar i otkazivanjem u jednom kliku, bez prijave.</figcaption></figure>
       </div>
-      <div class="karta">
-        <h3>Bez procenta od prometa</h3>
-        <p>
-          Ne uzimamo udeo u Vašem prihodu i ne naplaćujemo po pregledu, nalazu ni računu.
-          Više posla kod Vas ne znači veći račun kod nas.
-        </p>
+    </div>
+    <div class="galerija-grupa" data-grupa="lekar" role="tabpanel">
+      <h3>Lekar</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="../slike/05-lekar-termini.webp" width="1600" height="1000" loading="lazy" alt="Lekar — dan i nalazi"></div><figcaption><b>Lekar — dan i nalazi</b>Lekar upisuje nalaz i terapiju, a izveštaj odlazi pacijentu jednim klikom.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/26-zatvaranje-termina.webp" width="1600" height="1000" loading="lazy" alt="Zatvaranje termina"></div><figcaption><b>Zatvaranje termina</b>Lekar bira šta je uradio, sistem računa ostalo — njegova isplata se zaključava, naplatu klinike vodi recepcija.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/25-gotov-nalaz.webp" width="1600" height="1000" loading="lazy" alt="Gotov nalaz"></div><figcaption><b>Gotov nalaz</b>Nalaz izlazi kao gotov dokument — sa pečatom klinike, potpisom lekara i našim slovima, spreman da se pošalje.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/29-nalaz-na-ekranu.webp" width="1600" height="1000" loading="lazy" alt="Nalaz ultrazvuka srca na ekranu"></div><figcaption><b>Nalaz ultrazvuka srca na ekranu</b>Gotov nalaz na ekranu u ordinaciji — isti izvor kao PDF, dovoljno krupno da ga lekar i pacijent čitaju zajedno.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/06-lekar-lab-trend.webp" width="1600" height="1000" loading="lazy" alt="Laboratorijski trend pacijenta"></div><figcaption><b>Laboratorijski trend pacijenta</b>Vrednost kroz vreme, ne jedan broj — holesterol kroz tri nalaza, sa referentnim opsegom.</figcaption></figure>
       </div>
-      <div class="karta">
-        <h3>Novac ne prolazi kroz nas</h3>
-        <p>
-          Pacijent plaća Vama, Vašom kasom i Vašim terminalom. Sistem samo vodi evidenciju
-          ko je koliko platio, čime i kada. Ne diramo Vaš novac ni Vaš račun u banci.
-        </p>
+    </div>
+    <div class="galerija-grupa" data-grupa="laboratorija" role="tabpanel">
+      <h3>Laboratorija i teren</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="../slike/07-laboratorija-nalozi.webp" width="1600" height="1000" loading="lazy" alt="Laboratorija — red naloga"></div><figcaption><b>Laboratorija — red naloga</b>Laboratorija radi i naplaćuje samostalno — i za pacijente koji nisu bili kod lekara.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/08-laboratorija-naplata.webp" width="1600" height="1000" loading="lazy" alt="Delimična naplata u laboratoriji"></div><figcaption><b>Delimična naplata u laboratoriji</b>Avans pri vađenju krvi, ostatak kad dođe po rezultat — nalog stoji kao delimično naplaćen.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/20-integracije.webp" width="1600" height="1000" loading="lazy" alt="Integracije"></div><figcaption><b>Integracije</b>Rezultat sa analizatora ulazi sam — bez prepisivanja, uz FHIR izvoz i fiskalni račun.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/09-teren-misija.webp" width="1600" height="1000" loading="lazy" alt="Teren — aktivna poseta"></div><figcaption><b>Teren — aktivna poseta</b>Tehničar na terenu vidi jednu posetu — šta primenjuje, šta je zadužio i koliko mu pripada.</figcaption></figure>
+      </div>
+    </div>
+    <div class="galerija-grupa" data-grupa="pacijent" role="tabpanel">
+      <h3>Pacijent i sajt</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="../slike/21-sajt-klinike.webp" width="1600" height="1000" loading="lazy" alt="Sajt klinike"></div><figcaption><b>Sajt klinike</b>Pacijent vidi kliniku, ne nas — sajt, zakazivanje i portal nose znak ustanove i stoje na njenoj adresi.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/11-zakazivanje.webp" width="1600" height="1000" loading="lazy" alt="Zakazivanje na sajtu"></div><figcaption><b>Zakazivanje na sajtu</b>Pacijent zakazuje sam — slobodni termini se računaju iz stvarnog rasporeda lekara.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/23-zakazivanje-podaci.webp" width="1600" height="1000" loading="lazy" alt="Zakazivanje — podaci"></div><figcaption><b>Zakazivanje — podaci</b>Pacijent bez naloga zakazuje isto — podaci se unose u poslednjem koraku, registracija nije uslov.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/10-portal-pacijenta.webp" width="1600" height="1000" loading="lazy" alt="Portal pacijenta"></div><figcaption><b>Portal pacijenta</b>Pacijent ima svoj nalog — istorija termina, nalazi i PDF izveštaji, bez zvanja recepcije.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/24-obrazac-za-ocenu.webp" width="1600" height="1000" loading="lazy" alt="Obrazac za ocenu"></div><figcaption><b>Obrazac za ocenu</b>Poziv za ocenu stiže sam, posle pregleda — otvara se jednim klikom, bez prijave; odgovor vidi samo uprava.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/28-cekaonica.webp" width="1600" height="1000" loading="lazy" alt="Ekran čekaonice"></div><figcaption><b>Ekran čekaonice</b>Pacijent vidi svoje ime i sobu — televizor poziva sledećeg čim se soba oslobodi; samo ime i inicijal prezimena.</figcaption></figure>
+      </div>
+    </div>
+    <div class="galerija-grupa" data-grupa="uprava" role="tabpanel">
+      <h3>Uprava</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="../slike/13-komandni-centar.webp" width="1600" height="1000" loading="lazy" alt="Komandni centar"></div><figcaption><b>Komandni centar</b>Uprava vidi ustanovu, ne izveštaj o njoj — dan u toku, po odeljenjima, dok traje.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/01-naplata-po-izvorima.webp" width="1600" height="1000" loading="lazy" alt="Naplata po izvorima"></div><figcaption><b>Naplata po izvorima</b>Ceo promet klinike na jednom mestu — po izvoru, po načinu plaćanja, sa dugovanjima.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/02-trazi-vasu-odluku.webp" width="1600" height="1000" loading="lazy" alt="Traži vašu odluku"></div><figcaption><b>Traži vašu odluku</b>Sistem sam proverava svoje brojeve — i javlja kad novac stoji na termin koji nije zatvoren.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/14-finansije-pl.webp" width="1600" height="1000" loading="lazy" alt="Dobit po odeljenju"></div><figcaption><b>Dobit po odeljenju</b>Ne samo koliko je naplaćeno, nego i šta je ostalo — po odeljenju, sa troškom rada i materijala.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/19-ocene-pacijenata.webp" width="1600" height="1000" loading="lazy" alt="Ocene pacijenata"></div><figcaption><b>Ocene pacijenata</b>Ocenu vidi uprava, ne lekar o kome je reč — klinika i lekar se ocenjuju odvojeno, poređenje ide po periodima.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/18-audit-trag.webp" width="1600" height="1000" loading="lazy" alt="Evidencija pristupa"></div><figcaption><b>Evidencija pristupa</b>Svako gledanje u karton ostavlja trag — ime, vreme i šta je otvoreno. Trag se ne može obrisati iz aplikacije.</figcaption></figure>
+      </div>
+    </div>
+    <div class="galerija-grupa" data-grupa="ostalo" role="tabpanel">
+      <h3>Sala, magacin, oprema</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="../slike/15-hirurski-blok.webp" width="1600" height="1000" loading="lazy" alt="Hirurški blok"></div><figcaption><b>Hirurški blok</b>Bez odobrenja anesteziologa nema prijema — sistem to ne dozvoljava, ne oslanja se na dogovor.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/16-magacin.webp" width="1600" height="1000" loading="lazy" alt="Magacin i zalihe"></div><figcaption><b>Magacin i zalihe</b>Materijal se skida sa stanja tamo gde je potrošen — u sali, u laboratoriji i na terenu.</figcaption></figure>
+        <figure><div class="prozor"><img src="../slike/17-oprema.webp" width="1600" height="1000" loading="lazy" alt="Oprema i kalibracija"></div><figcaption><b>Oprema i kalibracija</b>Aparat kome je istekla kalibracija se vidi pre nego što inspekcija dođe — sa datumom i nalazom.</figcaption></figure>
       </div>
     </div>
   </div>
 </section>
 
-<section class="odeljak" id="kontakt">
-  <div class="okvir kontakt">
-    <div>
-      <p class="oznaka">Kontakt</p>
-      <h2 style="font-size:clamp(1.5rem,2.8vw,2.05rem);margin:10px 0 12px">Pogledajte sistem na svojim podacima</h2>
-      <p style="color:var(--tiho);max-width:56ch">
-        Prikaz traje pola sata. Ako želite, pre toga uvezemo Vaš spisak usluga i cenovnik,
-        pa gledate sopstvene brojeve, a ne demo primer.
-      </p>
-      <div class="akcije">
-        <!-- Kad kupite domen, zamenite adresu sa resad@maat-innovations.com -->
-        <a class="dugme" href="mailto:resadspahovic94@gmail.com?subject=MAAT%20INNOVATIONS%20%E2%80%94%20zakazivanje%20prikaza">
-          Pošaljite poruku
-        </a>
-        <a class="dugme tiho" data-demo hidden>Probajte demo</a>
-        <a class="dugme tiho" href="https://resadspahovic.com">resadspahovic.com</a>
-      </div>
+<section class="odeljak siv" id="proba">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Kako probati</span>
+      <h2>Uđite u kliniku kao bilo ko od zaposlenih.</h2>
+      <p class="uvod">Demo je potpuna klinika sa izmišljenim lekarima i pacijentima. Probajte slobodno — sve se svake noći vraća na početak.</p>
     </div>
-
-    <aside class="vizit">
-      <dl>
-        <dt>Ko</dt>
-        <dd>Rešad Spahović<br><span style="color:var(--tiho);font-size:.88rem">MAAT INNOVATIONS — softver za zdravstvene ustanove</span></dd>
-        <dt>E-pošta</dt>
-        <dd><a href="mailto:resadspahovic94@gmail.com">resadspahovic94@gmail.com</a></dd>
-        <dt>Sajt</dt>
-        <dd><a href="https://resadspahovic.com">resadspahovic.com</a></dd>
-        <dt>Postavljanje</dt>
-        <dd>Na Vašem serveru i Vašem domenu — podatke ne držimo kod sebe</dd>
-      </dl>
-    </aside>
+    <div class="koraci">
+      <div class="korak"><h3>Otvorite demo</h3><p>Na stranici <a href="http://localhost:8090/demo">demo</a> stoje svi probni nalozi i lozinka. Nema registracije ni instalacije.</p></div>
+      <div class="korak"><h3>Izaberite ulogu</h3><p>Recepcija, lekar, laboratorija, tehničar, uprava ili pacijent — jedan klik i unutra ste.</p></div>
+      <div class="korak"><h3>Zakažite kao pacijent</h3><p>Na <a href="http://localhost:8090/">sajtu klinike</a> cenovnik dolazi iz programa, a termin se zakazuje sam — i odmah se vidi kod recepcije i lekara.</p></div>
+      <div class="korak"><h3>Pogledajte i poštu</h3><p>Dugme „Otvori sanduče“ pokazuje mejlove koje bi pacijent dobio: potvrde, podsetnike, nalaze.</p></div>
+    </div>
+    <div class="obilazak">
+      <div>
+        <h3>Predlog obilaska od 10 minuta</h3>
+        <p class="vazno">Izveštaj se piše u vreme termina, kao u stvarnoj ordinaciji — izaberite termin koji je već počeo. U istom trenutku demo mogu da probaju i drugi.</p>
+      </div>
+      <ol>
+        <li><b>Recepcija</b><span>„Telefonsko zakazivanje“ — zakažite pacijenta kod kardiologa.</span></li>
+        <li><b>Lekar</b><span>Otvorite današnji termin, napišite izveštaj i pošaljite pacijenta u laboratoriju.</span></li>
+        <li><b>Laboratorija</b><span>Otvorite nalog, odštampajte nalepnicu i potvrdite rezultate sa aparata.</span></li>
+        <li><b>Recepcija</b><span>„Neplaćeni pregledi“ — naplatite pregled; uplata dobija fiskalni račun.</span></li>
+        <li><b>Uprava</b><span>Komandni centar i finansije — vidite isti dan iz ugla vlasnika.</span></li>
+      </ol>
+    </div>
   </div>
 </section>
 
-</main>
+<section class="odeljak">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Uvođenje</span>
+      <h2>Vaša klinika, vaši podaci.</h2>
+    </div>
+    <div class="uvodjenje">
+      <div><i class="bi bi-file-earmark-spreadsheet"></i><div><h3>Cenovnici iz vaših tabela</h3><p>Usluge, cene i trajanja prenose se iz vaših Excel tabela — ništa se ne prekucava.</p></div></div>
+      <div><i class="bi bi-sliders"></i><div><h3>Podešeno po vama</h3><p>Odeljenja, lekari, sobe, radno vreme, honorari i poreske oznake podešavaju se u samom programu.</p></div></div>
+      <div><i class="bi bi-cpu"></i><div><h3>Aparati u laboratoriji</h3><p>Povezuju se preko malog programa na računaru uz aparat, koji rezultate čuva i kad nestane interneta.</p></div></div>
+      <div><i class="bi bi-window"></i><div><h3>Bez instalacije</h3><p>Program radi u pregledaču, na računarima, tabletima i telefonima koje klinika već ima.</p></div></div>
+    </div>
+    <div class="zaglavlje" style="margin-top:72px" id="cena">
+      <span class="nadnaslov">Kako se plaća</span>
+      <h2>Licenca za softver, i ništa više od toga.</h2>
+      <p class="uvod">Bez procenta od vašeg prometa i bez skrivenih naknada po transakciji. Znate unapred koliko plaćate, bez obzira koliko pacijenata primite.</p>
+    </div>
+    <div class="cene">
+      <div class="cena"><i class="bi bi-calendar-month"></i><h3>Mesečno ili godišnje</h3><p>Licenca po ustanovi, plaćena mesečno ili godišnje. Cena zavisi od toga koje celine koristite, a ne od toga koliko ste zaradili.</p></div>
+      <div class="cena"><i class="bi bi-percent"></i><h3>Bez procenta od prometa</h3><p>Ne uzimamo udeo u vašem prihodu i ne naplaćujemo po pregledu, nalazu ni računu. Više posla kod vas ne znači veći račun kod nas.</p></div>
+      <div class="cena"><i class="bi bi-bank"></i><h3>Novac ne prolazi kroz nas</h3><p>Pacijent plaća vama, vašom kasom i vašim terminalom. Sistem samo vodi evidenciju ko je koliko platio, čime i kada. Ne diramo vaš novac ni vaš račun u banci.</p></div>
+    </div>
+  </div>
+</section>
 
-<footer class="dno">
-  <div class="okvir dno-red">
-    <span>© 2026 MAAT INNOVATIONS · Rešad Spahović</span>
-    <span class="mono">softver za vođenje klinike</span>
+<section class="odeljak siv" id="kontakt">
+  <div class="sirina">
+    <div class="poziv">
+      <div>
+        <span class="nadnaslov">Kontakt</span>
+        <h2 style="margin-top:14px">Pogledajte sistem na svojim podacima.</h2>
+        <p>Prikaz traje pola sata. Ako želite, pre toga uvezemo vaš spisak usluga i cenovnik, pa gledate sopstvene brojeve, a ne demo primer.</p>
+        <dl class="kontakt">
+          <div><dt>Ko</dt><dd>Rešad Spahović, MAAT INNOVATIONS — softver za zdravstvene ustanove</dd></div>
+          <div><dt>E-pošta</dt><dd><a href="mailto:resadspahovic94@gmail.com">resadspahovic94@gmail.com</a></dd></div>
+          <div><dt>Sajt</dt><dd><a href="https://resadspahovic.com">resadspahovic.com</a></dd></div>
+          <div><dt>Postavljanje</dt><dd>na vašem serveru i vašem domenu</dd></div>
+        </dl>
+      </div>
+      <div class="dugmad">
+        <a class="dugme glavno" href="mailto:resadspahovic94@gmail.com?subject=MAAT%20INNOVATIONS%20%E2%80%94%20zakazivanje%20prikaza"><i class="bi bi-envelope"></i>Pošaljite poruku</a>
+        <a class="dugme sporedno" href="http://localhost:8090/demo"><i class="bi bi-play-circle"></i>Probajte demo</a>
+        <a class="dugme sporedno" href="http://localhost:8090/"><i class="bi bi-globe2"></i>Sajt demo klinike</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="sirina">
+    <span class="podnozje-znak"><svg class="maat-talas mali" viewBox="0 0 468.5 108.5" aria-hidden="true"><g fill="none" stroke="url(#maatPlava)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 56.2 L52.2 56.2 L86.2 6.2 L126.2 102.2 L166.2 6.2 L206.2 102.2 L246.2 6.2 L286.2 102.2 L326.2 6.2 L366.2 102.2 L406.2 6.2 L462.2 6.2"/></g></svg><span>© 2026 MAAT INNOVATIONS · Rešad Spahović · <a href="http://localhost:8090/demo">Demo</a> · <a href="https://resadspahovic.com">resadspahovic.com</a></span></span>
+    <span>„Demo Klinika“ je izmišljena; lekari, pacijenti i podaci u demou nisu stvarni.</span>
   </div>
 </footer>
 
+<dialog class="uvecano" id="uvecano" aria-label="Uvećana slika ekrana">
+  <img alt="">
+  <p></p>
+</dialog>
 
 <script>
-  /* DEMO: adresa se upisuje SAMO u <meta name="maat-demo"> u zaglavlju (obe jezicke verzije).
-     Dok je prazna, dugmad za demo se ne prikazuju, a „Zakažite prikaz" ostaje glavno dugme. */
+  // Galerija po grupama: dugmad iznad, vidi se jedna grupa. Bez skripte — sve grupe jedna ispod druge.
   (function () {
-    var meta = document.querySelector('meta[name="maat-demo"]');
-    var adresa = meta ? meta.getAttribute('content').trim() : '';
-    if (!adresa) {
-      document.querySelectorAll('[data-bez-demoa-glavno]').forEach(function (el) { el.classList.remove('tiho'); });
-      return;
+    var traka = document.querySelector('.grupe');
+    if (!traka) { return; }
+    var dugmad = Array.prototype.slice.call(traka.querySelectorAll('button'));
+    var grupe = document.querySelectorAll('.galerija-grupa');
+    function pokazi(ime) {
+      dugmad.forEach(function (d) {
+        var izabrano = d.getAttribute('data-grupa') === ime;
+        d.setAttribute('aria-selected', izabrano ? 'true' : 'false');
+        d.tabIndex = izabrano ? 0 : -1;
+      });
+      grupe.forEach(function (g) { g.hidden = g.getAttribute('data-grupa') !== ime; });
     }
-    document.querySelectorAll('[data-demo]').forEach(function (el) {
-      el.hidden = false;
-      if (el.tagName === 'A') { el.href = adresa; el.target = '_blank'; el.rel = 'noopener'; }
+    dugmad.forEach(function (d, i) {
+      d.addEventListener('click', function () { pokazi(d.getAttribute('data-grupa')); });
+      d.addEventListener('keydown', function (e) {
+        var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!k) { return; }
+        var sledece = dugmad[(i + k + dugmad.length) % dugmad.length];
+        sledece.focus();
+        pokazi(sledece.getAttribute('data-grupa'));
+      });
     });
+    traka.hidden = false;
+    document.getElementById('ekrani').classList.add('ima-grupe');
+    pokazi(dugmad[0].getAttribute('data-grupa'));
+  })();
+
+  // Klik na sliku ekrana — uvećano preko cele strane; klik ili Esc zatvara.
+  (function () {
+    var prozor = document.getElementById('uvecano');
+    if (!prozor || typeof prozor.showModal !== 'function') { return; }
+    var slika = prozor.querySelector('img');
+    var opis = prozor.querySelector('p');
+    document.querySelectorAll('.prozor img, .telefon img, .ekran img').forEach(function (img) {
+      img.addEventListener('click', function () {
+        slika.src = img.currentSrc || img.src;
+        slika.alt = img.alt;
+        opis.textContent = img.alt;
+        prozor.showModal();
+      });
+    });
+    prozor.addEventListener('click', function () { prozor.close(); });
   })();
 </script>
 </body>

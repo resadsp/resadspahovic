@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- English is the primary version. Serbian lives in /sr/. -->
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- DEMO: upisite adresu dema (npr. https://demo.vasdomen.rs/demo) i dugmad „Probajte demo" se pojave. -->
-<meta name="maat-demo" content="">
+<!-- Ne menjati rucno: stranicu pravi skripta maat_stranica.py (MAAT-demo-alati), obe jezicke verzije iz istog izvora. -->
 <title>MAAT INNOVATIONS — clinic management software</title>
-<meta name="description" content="Appointments, doctors, laboratory, surgical unit, home visits and billing in one system. Built for clinics that run more than a schedule.">
+<meta name="description" content="Booking, consulting rooms, a laboratory wired to its analysers, billing with fiscal receipts, the waiting room and management — one program for a private clinic. Try the demo, nothing to install.">
 <meta property="og:title" content="MAAT INNOVATIONS — clinic management software">
-<meta property="og:description" content="One system for the whole clinic.">
+<meta property="og:description" content="The whole clinic in one program.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://resadspahovic.com/maat-innovations/">
 <meta property="og:site_name" content="MAAT INNOVATIONS">
@@ -23,1421 +21,793 @@
 <link rel="canonical" href="https://resadspahovic.com/maat-innovations/">
 <link rel="alternate" hreflang="en" href="https://resadspahovic.com/maat-innovations/">
 <link rel="alternate" hreflang="sr" href="https://resadspahovic.com/maat-innovations/sr/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%230C1A2E'/%3E%3Cg transform='translate%2812.0 78.9%29 scale%280.372%29' fill='none' stroke='%2396D6FA' stroke-width='17.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8.6 58.6 L54.6 58.6 L88.6 8.6 L128.6 104.6 L168.6 8.6 L208.6 104.6 L248.6 8.6 L288.6 104.6 L328.6 8.6 L368.6 104.6 L408.6 8.6 L464.6 8.6'/%3E%3Cpath d='M374.6 8.6 L408.6 8.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='-2%20-36%20472%20180'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='0'%3E%3Cstop%20offset='0'%20stop-color='%2318ae9f'/%3E%3Cstop%20offset='1'%20stop-color='%230d8178'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg%20fill='none'%20stroke='url(%23g)'%20stroke-width='16'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6.2%2056.2%20L52.2%2056.2%20L86.2%206.2%20L126.2%20102.2%20L166.2%206.2%20L206.2%20102.2%20L246.2%206.2%20L286.2%20102.2%20L326.2%206.2%20L366.2%20102.2%20L406.2%206.2%20L462.2%206.2'/%3E%3C/g%3E%3C/svg%3E">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ══ Tokeni ═══════════════════════════════════════════════════════════════
-   Svetla tema je „papir": svet nalaza i računa. Tamna je svet radnog ekrana.
-   Sve boje se definišu OVDE i nigde drugde — komponente ispod koriste samo
-   tokene, da nijedna boja ne ostane zaključana u jednoj temi. */
-:root{
-  --mastilo:#0C1A2E;
-  --tirkiz:#1F6FC4;
-  --plava:#3A8DE8;
-  --papir:#F4F8FB;
-  --povrsina:#FFFFFF;
-  --povrsina-2:#EDF3F8;
-  --linija:#DAE6EF;
-  --tekst:#16304A;
-  --tiho:#5C7690;
-  --pazi:#A8501C;
-  --pazi-tlo:#FDF3EC;
-  --dobro:#12734F;
-  --traka:#0C1A2E;
-  --traka-tekst:#EAF3F8;
-  --traka-tiho:#93B2C9;
-  --traka-linija:#1D3B5E;
-  --senka:0 1px 2px rgba(11,35,64,.05), 0 8px 28px rgba(11,35,64,.06);
-  --r:14px;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --papir:#08172A;
-    --povrsina:#0F2340;
-    --povrsina-2:#163055;
-    --linija:#20416E;
-    --tekst:#E4EFF6;
-    --tiho:#93B2C9;
-    --tirkiz:#9BD8FB;
-    --plava:#6CC4F6;
-    --pazi:#E9A574;
-    --pazi-tlo:#2A1B10;
-    --dobro:#5FD4A2;
-    --traka:#070F1F;
-    --traka-linija:#1B3760;
-    --senka:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.34);
-  }
-}
-:root[data-theme="dark"]{
-  --papir:#08172A;
-  --povrsina:#0F2340;
-  --povrsina-2:#163055;
-  --linija:#20416E;
-  --tekst:#E4EFF6;
-  --tiho:#93B2C9;
-  --tirkiz:#9BD8FB;
-  --plava:#6CC4F6;
-  --pazi:#E9A574;
-  --pazi-tlo:#2A1B10;
-  --dobro:#5FD4A2;
-  --traka:#070F1F;
-  --traka-linija:#1B3760;
-  --senka:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.34);
-}
+    :root {
+      --title: #1e293b; --text: #334155; --text-2: #475569; --muted: #64748b; --faint: #94a3b8;
+      --line: #e6ebf1; --line-2: #d5dde6; --canvas: #f4f7fa; --subtle: #f8fafc;
+      --accent: #0f9890; --accent-h: #0c8079; --accent-t: #0d8178; --accent-50: #e7f6f4; --accent-100: #c8ece7;
+      --ok: #16a34a; --warn: #ea8a1a; --info: #3b82f6;
+      --sans: Inter, system-ui, "Segoe UI", Arial, sans-serif;
+      --senka: 0 1px 2px rgba(16, 24, 40, .04), 0 1px 3px rgba(16, 24, 40, .04);
+      --senka-slika: 0 24px 60px rgba(30, 41, 59, .14), 0 4px 14px rgba(30, 41, 59, .06);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #fff; color: var(--text); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--accent-t); text-decoration: none; }
+    [id] { scroll-margin-top: 76px; }
+    .sirina { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    h1, h2, h3 { color: var(--title); letter-spacing: -0.025em; margin: 0; }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.15; font-weight: 800; }
+    h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.015em; }
+    .nadnaslov { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-t); background: var(--accent-50);
+      border: 1px solid var(--accent-100); border-radius: 999px; padding: 6px 14px; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .uvod { color: var(--text-2); font-size: 1.08rem; max-width: 62ch; margin: 14px 0 0; }
+    .dugme { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 12px; padding: 14px 22px; font-weight: 700; font-size: 1rem;
+      border: 1px solid transparent; transition: background .15s, border-color .15s, color .15s; }
+    .dugme.glavno { background: var(--accent); color: #fff; }
+    .dugme.glavno:hover { background: var(--accent-h); }
+    .dugme.sporedno { background: #fff; color: var(--title); border-color: var(--line-2); }
+    .dugme.sporedno:hover { background: var(--subtle); }
 
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;
-  background:var(--papir);
-  color:var(--tekst);
-  font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
-  font-size:17px;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-/* Brojevi, oznake i datumi idu monospaceom. Aplikacija je puna iznosa i
-   referentnih vrednosti — stranica govori istim jezikom kao proizvod. */
-.mono,.oznaka,.iznos,.sifra{
-  font-family:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
-  font-variant-numeric:tabular-nums;
-}
-h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.022em;line-height:1.15;font-weight:650}
-p{margin:0}
-a{color:inherit}
-img{max-width:100%;display:block}
-/* MORA posle pravila iznad: `img{display:block}` nadjačava `display:none`
-   koji pregledač daje atributu `hidden`, pa se slika koja nije stigla
-   prikazivala kao polomljena sa `alt` tekstom preko praznog polja. */
-img[hidden]{display:none}
+    /* meni */
+    .meni { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .94); backdrop-filter: saturate(160%) blur(8px); border-bottom: 1px solid var(--line); }
+    .meni .sirina { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+    /* MAAT INNOVATIONS: znak (talas „MAAT") i ime — u zelenoj boji stranice, da logo i dugmad budu jedna celina */
+    .znak { display: inline-flex; align-items: center; gap: 14px; color: var(--title); }
+    .maat-talas { width: 92px; height: auto; display: block; flex: none; overflow: visible; }
+    .znak-ime { display: block; font-weight: 800; letter-spacing: .14em; font-size: .92rem; line-height: 1.15; white-space: nowrap; }
+    .znak-ime em { font-style: normal; color: var(--accent-t); }
+    .znak small { display: block; font-weight: 500; letter-spacing: .02em; font-size: .72rem; color: var(--muted); margin-top: 2px; }
+    .meni nav { display: flex; align-items: center; gap: 24px; }
+    .meni nav a { color: var(--text-2); font-weight: 600; font-size: .92rem; white-space: nowrap; }
+    .meni nav a:hover { color: var(--title); }
+    .meni nav a.dugme { color: #fff; padding: 10px 18px; font-size: .92rem; }
+    .meni nav a.sajt-veza { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); border-radius: 10px; padding: 8px 14px; }
+    .meni nav a.sajt-veza:hover { background: var(--subtle); }
+    .meni nav a.jezik { border: 1px solid var(--line-2); border-radius: 8px; padding: 4px 9px; font-size: .78rem; letter-spacing: .06em; }
+    .meni nav a.jezik:hover { background: var(--subtle); }
+    .sajt-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: .92rem; font-weight: 600; color: var(--accent-t); }
+    .sajt-link:hover { text-decoration: underline; }
 
-.okvir{width:min(1140px,100% - 44px);margin-inline:auto}
-.uski{max-width:64ch}
+    /* vrh */
+    .vrh { background: #fff; overflow: hidden; }
+    .vrh .sirina { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 56px; align-items: center; padding-top: 64px; padding-bottom: 72px; }
+    .vrh h1 { font-size: clamp(2.3rem, 4.6vw, 3.6rem); line-height: 1.04; font-weight: 800; letter-spacing: -0.035em; margin: 20px 0 0; }
+    .vrh h1 span { color: var(--accent-t); }
+    .vrh .dugmad { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .vrh .napomena { margin-top: 18px; font-size: .88rem; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+    .vrh .napomena i { color: var(--ok); }
+    .cipovi { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .cipovi span { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 12px; font-size: .8rem; font-weight: 600; color: var(--text-2); }
+    .cipovi i { color: var(--accent); }
+    .prizor { position: relative; padding: 0 28px 34px 0; }
+    .prozor { background: #fff; border: 1px solid var(--line-2); border-radius: 14px; overflow: hidden; box-shadow: var(--senka-slika); }
+    .prozor::before { content: ""; display: block; height: 30px; border-bottom: 1px solid var(--line);
+      background: radial-gradient(circle at 16px 15px, #f3b4ae 4px, transparent 5px), radial-gradient(circle at 32px 15px, #f6d79b 4px, transparent 5px),
+                  radial-gradient(circle at 48px 15px, #a8dcb3 4px, transparent 5px), var(--subtle); }
+    .prozor img { width: 100%; height: auto; cursor: zoom-in; }
+    .telefon { background: #fff; border: 1px solid var(--line-2); border-radius: 30px; padding: 9px; box-shadow: var(--senka-slika); }
+    .telefon img { border-radius: 22px; border: 1px solid var(--line); cursor: zoom-in; }
+    .prizor .telefon { position: absolute; right: 0; bottom: 0; width: 25%; padding: 6px; border-radius: 22px; }
+    .prizor .telefon img { border-radius: 16px; }
 
-.oznaka{
-  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--tirkiz);font-weight:600;
-}
+    /* brojke */
+    .brojke { background: var(--canvas); padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .brojke .sirina { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .brojka { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; box-shadow: var(--senka); }
+    .brojka strong { display: block; font-size: 1.9rem; font-weight: 800; color: var(--title); letter-spacing: -0.03em; line-height: 1.1; }
+    .brojka span { font-size: .9rem; color: var(--muted); }
 
-/* ── Zaglavlje ───────────────────────────────────────────────────────── */
-.vrh{
-  position:sticky;top:0;z-index:20;
-  background:color-mix(in srgb, var(--papir) 88%, transparent);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--linija);
-}
-.vrh-red{display:flex;align-items:center;gap:26px;padding:14px 0}
-.znak{display:flex;align-items:center;gap:12px;text-decoration:none;flex:1}
-.znak svg{height:34px;width:auto;display:block}
-.znak-ime{font-weight:800;letter-spacing:.16em;font-size:.82rem;color:var(--plava);
-  white-space:nowrap}
-.veze{display:flex;gap:24px;align-items:center}
-.veze a{color:var(--tiho);text-decoration:none;font-size:.94rem}
-.veze a:hover{color:var(--tekst)}
-@media (max-width:760px){.veze{display:none}}
+    /* odeljci */
+    .odeljak { padding: 88px 0; }
+    .odeljak.siv { background: var(--canvas); }
+    .zaglavlje { max-width: 760px; margin-bottom: 44px; }
+    .zaglavlje.sredina { margin-left: auto; margin-right: auto; text-align: center; }
+    .zaglavlje.sredina .uvod { margin-left: auto; margin-right: auto; }
+    .zaglavlje h2 { margin-top: 14px; }
 
-.dugme{
-  display:inline-flex;align-items:center;gap:9px;
-  background:var(--mastilo);color:#fff;text-decoration:none;
-  padding:12px 22px;border-radius:999px;font-weight:600;font-size:.95rem;
-  border:1px solid var(--mastilo);
-  transition:transform .14s ease, box-shadow .14s ease;
-}
-.dugme:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(11,35,64,.22)}
-.dugme.tiho{background:transparent;color:var(--tekst);border-color:var(--linija)}
-.dugme.tiho:hover{border-color:var(--tiho);box-shadow:none}
-a:focus-visible,button:focus-visible{outline:2px solid var(--plava);outline-offset:3px;border-radius:6px}
-.jezik{
-  font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--tiho);text-decoration:none;padding:7px 12px;border-radius:8px;
-  border:1px solid var(--linija);white-space:nowrap;
-}
-.jezik:hover{color:var(--tekst);border-color:var(--tiho)}
+    .koristi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .korist { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; box-shadow: var(--senka); }
+    .korist i { width: 46px; height: 46px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 16px; }
+    .korist:nth-child(6n+1) i { background: #e8f7ee; color: #16a34a; }
+    .korist:nth-child(6n+2) i { background: #eaf2fe; color: #3b82f6; }
+    .korist:nth-child(6n+3) i { background: #e7f6f4; color: #0f9890; }
+    .korist:nth-child(6n+4) i { background: #fff3e5; color: #ea8a1a; }
+    .korist:nth-child(6n+5) i { background: #f3effe; color: #7c5cf0; }
+    .korist:nth-child(6n+6) i { background: #fdecee; color: #e5484d; }
+    .korist p { margin: 8px 0 0; color: var(--text-2); font-size: .97rem; }
 
-/* ── Naslovna ────────────────────────────────────────────────────────── */
-.naslovna{padding:74px 0 64px}
-.naslovna-mreza{display:flex;flex-direction:column;gap:40px}
-.naslovna-tekst{max-width:64ch}
-@media (max-width:940px){.naslovna{padding:48px 0 40px}}
-.naslovna h1{font-size:clamp(2.1rem,4.6vw,3.35rem);margin:16px 0 20px}
-.naslovna .uvod{color:var(--tiho);font-size:1.09rem;max-width:60ch}
-.akcije{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.pod-akcija{margin-top:16px;color:var(--tiho);font-size:.88rem}
+    .uloga { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr); gap: 56px; align-items: center; padding: 44px 0; }
+    .uloga + .uloga { border-top: 1px solid var(--line); }
+    .uloga.obrnuto { grid-template-columns: minmax(0, 1.25fr) minmax(0, .9fr); }
+    .uloga.obrnuto .tekst { order: 2; }
+    .uloga .oznaka { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-t); }
+    .uloga .oznaka i { width: 30px; height: 30px; border-radius: 9px; background: var(--accent-50); display: inline-flex; align-items: center; justify-content: center; font-size: .95rem; }
+    .uloga h3 { font-size: clamp(1.4rem, 2.2vw, 1.75rem); margin: 12px 0 0; letter-spacing: -0.025em; font-weight: 800; }
+    .spisak { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 11px; }
+    .spisak li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; color: var(--text); font-size: .97rem; line-height: 1.5; }
+    .spisak li::before { content: "\F26E"; font-family: "bootstrap-icons"; color: var(--accent); font-size: 1.05rem; line-height: 1.4; }
+    .slike-dve { position: relative; padding-bottom: 46px; }
+    .slike-dve .mala { position: absolute; right: -10px; bottom: 0; width: 46%; }
+    .slike-dve.levo .mala { right: auto; left: -10px; }
 
-/* Živ prikaz panela iz proizvoda — ne slika. Isti jezik kao radni ekran:
-   ista zaobljenja, iste pločice, isti tabelarni brojevi. */
-.prikaz{
-  background:var(--povrsina);border:1px solid var(--linija);border-radius:var(--r);
-  box-shadow:var(--senka);overflow:hidden;
-}
-.prikaz-vrh{
-  display:flex;align-items:center;gap:10px;
-  padding:12px 16px;border-bottom:1px solid var(--linija);background:var(--povrsina-2);
-}
-.tacke{display:flex;gap:6px}
-.tacke i{width:9px;height:9px;border-radius:50%;background:var(--linija);display:block}
-.prikaz-vrh .put{font-size:.76rem;color:var(--tiho)}
-.prikaz-telo{padding:20px 18px}
-.prikaz-naslov{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px}
-.prikaz-naslov h3{font-size:1.02rem}
-/* Cetiri broja dana, pa cetiri reda rasporeda — dovoljno da se vidi da
-   recepcija, laboratorija i hirurgija stoje u istom spisku. */
-.brojevi{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--linija);
-  border-block:1px solid var(--linija)}
-.broj-polje{background:var(--povrsina);padding:15px 16px;display:flex;flex-direction:column;
-  justify-content:flex-start;gap:3px;min-height:78px}
-.broj-polje .v{font-size:1.42rem;font-weight:700;letter-spacing:-.02em;display:block;line-height:1.1}
-.broj-polje .n{font-size:.72rem;color:var(--tiho);letter-spacing:.03em;line-height:1.35}
-.broj-polje .v.novac{color:var(--dobro)}
-.broj-polje .v.pazi{color:var(--pazi)}
-.redovi{display:flex;flex-direction:column;overflow-x:auto}
-.zaglavlje-tabele{
-  display:grid;grid-template-columns:76px minmax(0,1.6fr) 118px 108px 176px;gap:14px;
-  padding:9px 18px;background:var(--povrsina-2);border-bottom:1px solid var(--linija);
-  font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--tiho);font-weight:700;
-}
-.red{display:grid;grid-template-columns:76px minmax(0,1.6fr) 118px 108px 176px;gap:14px;
-  align-items:center;padding:12px 18px;border-bottom:1px solid var(--linija)}
-.red:last-child{border-bottom:0}
-.red .kada{font-size:.84rem;color:var(--tiho)}
-.red .sta{font-size:.92rem;min-width:0}
-.red .sta i{font-style:normal;color:var(--tiho);font-size:.86rem}
-.red .gde{font-size:.84rem;color:var(--tiho)}
-.red .para{font-size:.88rem;font-weight:600;text-align:right}
-.red .para.duguje{color:var(--pazi)}
-.stanje{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  padding:3px 9px;border-radius:999px;border:1px solid transparent;
-  /* NE `nowrap`: natpis duži od kolone je izlazio iz okvira. Sme da se
-     prelomi u dva reda — tako nijedan budući natpis ne može da iscuri. */
-  white-space:normal;text-align:center;line-height:1.3;max-width:100%}
-.stanje.gotovo{background:color-mix(in srgb, var(--dobro) 12%, transparent);color:var(--dobro);
-  border-color:color-mix(in srgb, var(--dobro) 28%, transparent)}
-.stanje.utoku{background:color-mix(in srgb, var(--plava) 12%, transparent);color:var(--plava);
-  border-color:color-mix(in srgb, var(--plava) 28%, transparent)}
-.stanje.ceka{background:var(--pazi-tlo);color:var(--pazi);
-  border-color:color-mix(in srgb, var(--pazi) 28%, transparent)}
+    .istaknuto { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+    .istaknuto .ekran { background: #fff; border: 10px solid #e9eef4; border-radius: 18px; box-shadow: var(--senka-slika); overflow: hidden; }
+    .istaknuto .ekran img { cursor: zoom-in; }
 
-/* ── Traka sa problemom ──────────────────────────────────────────────── */
-.odeljak{padding:66px 0;border-top:1px solid var(--linija)}
-.odeljak-glava{margin-bottom:34px}
-.odeljak-glava h2{font-size:clamp(1.5rem,2.8vw,2.05rem);margin:10px 0 12px}
-.odeljak-glava p{color:var(--tiho);max-width:60ch}
+    .bezbednost { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .bezbednost div { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .bezbednost i { color: var(--accent); font-size: 1.4rem; }
+    .bezbednost h3 { margin-top: 12px; font-size: 1.05rem; }
+    .bezbednost p { margin: 8px 0 0; color: var(--text-2); font-size: .95rem; }
 
-.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media (max-width:860px){.tri{grid-template-columns:1fr}}
-.karta{
-  background:var(--povrsina);border:1px solid var(--linija);border-radius:var(--r);
-  padding:22px 20px;
-}
-.karta h3{font-size:1.02rem;margin-bottom:8px}
-.karta p{color:var(--tiho);font-size:.93rem}
+    .telefoni { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; max-width: 900px; margin: 0 auto; }
+    .telefoni figure { margin: 0; }
+    .telefoni figcaption { text-align: center; margin-top: 16px; font-weight: 600; color: var(--title); font-size: .95rem; }
+    .telefoni figcaption span { display: block; font-weight: 400; color: var(--muted); font-size: .88rem; margin-top: 2px; }
 
-/* ── Moduli ──────────────────────────────────────────────────────────── */
-.moduli{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--linija);
-  border:1px solid var(--linija);border-radius:var(--r);overflow:hidden}
-@media (max-width:980px){.moduli{grid-template-columns:repeat(2,1fr)}}
-.modul{background:var(--povrsina);padding:24px 20px;display:flex;flex-direction:column;gap:8px}
-.modul .ikona{width:26px;height:26px;color:var(--tirkiz)}
-.modul h3{font-size:.99rem}
-.modul p{font-size:.88rem;color:var(--tiho)}
+    .koraci { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; counter-reset: korak; }
+    .korak { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; position: relative; }
+    .korak::before { counter-increment: korak; content: counter(korak); width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 14px; }
+    .korak p { margin: 8px 0 0; color: var(--text-2); font-size: .97rem; }
+    .obilazak { margin-top: 22px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); gap: 32px; }
+    .obilazak ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+    .obilazak li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; align-items: baseline; font-size: .97rem; }
+    .obilazak li b { color: var(--accent-t); font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; }
+    .obilazak .vazno { margin-top: 16px; font-size: .9rem; color: var(--muted); }
 
-/* ── Tamna traka: zašto ──────────────────────────────────────────────── */
-.tamna{background:var(--traka);color:var(--traka-tekst);padding:70px 0;border:0}
-.tamna h2{font-size:clamp(1.5rem,2.8vw,2.05rem);margin:10px 0 12px}
-.tamna .oznaka{color:var(--plava)}
-.tamna .uvodni{color:var(--traka-tiho);max-width:60ch;margin-bottom:36px}
-.razlozi{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--traka-linija);
-  border:1px solid var(--traka-linija);border-radius:var(--r);overflow:hidden}
-@media (max-width:820px){.razlozi{grid-template-columns:1fr}}
-.razlog{background:var(--traka);padding:26px 24px}
-.razlog h3{font-size:1.04rem;margin-bottom:9px;color:#fff}
-.razlog p{color:var(--traka-tiho);font-size:.93rem}
-.razlog .broj{
-  font-size:1.9rem;font-weight:700;color:var(--plava);display:block;margin-bottom:2px;
-  font-family:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,monospace;
-  font-variant-numeric:tabular-nums;letter-spacing:-.02em;
-}
+    .uvodjenje { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 40px; margin-top: 8px; }
+    .uvodjenje > div { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
+    .uvodjenje i { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-50); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+    .uvodjenje p { margin: 4px 0 0; color: var(--text-2); font-size: .95rem; }
 
-/* ── Slike ekrana ────────────────────────────────────────────────────── */
-.snimci{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-@media (max-width:860px){.snimci{grid-template-columns:1fr}}
-figure.snimak{margin:0}
-.ram{
-  aspect-ratio:16/10;border:1px solid var(--linija);border-radius:12px;overflow:hidden;
-  background:var(--povrsina-2);display:flex;align-items:center;justify-content:center;
-}
-.ram img{width:100%;height:100%;object-fit:cover;object-position:top left}
-.mesto{text-align:center;padding:22px;color:var(--tiho)}
-/* Snimak razgovora je uspravan — okvir 16:10 bi mu odsekao dve trecine. */
-.snimak.uspravan .ram{aspect-ratio:auto;max-width:392px;margin:0 auto}
-.snimak.uspravan .ram img{height:auto;object-fit:contain}
-.mesto .sifra{display:block;font-size:.74rem;letter-spacing:.12em;margin-bottom:8px;color:var(--tirkiz)}
-.mesto b{display:block;font-size:.95rem;color:var(--tekst);margin-bottom:4px}
-.mesto span{font-size:.83rem}
-figcaption{margin-top:11px;font-size:.9rem;color:var(--tiho)}
-figcaption b{color:var(--tekst);font-weight:600}
+    .poziv { background: var(--accent-50); border: 1px solid var(--accent-100); border-radius: 22px; padding: 48px; display: grid; grid-template-columns: minmax(0, 1.4fr) auto; gap: 32px; align-items: center; }
+    .poziv h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+    .poziv p { margin: 10px 0 0; color: var(--text-2); }
+    .poziv .dugmad { display: flex; flex-direction: column; gap: 10px; }
+    .kontakt { margin: 24px 0 0; display: grid; gap: 8px; }
+    .kontakt div { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 12px; font-size: .95rem; }
+    .kontakt dt { color: var(--muted); font-weight: 600; }
+    .kontakt dd { margin: 0; color: var(--title); overflow-wrap: anywhere; }
 
-/* ── Kontakt ─────────────────────────────────────────────────────────── */
-.kontakt{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
-@media (max-width:860px){.kontakt{grid-template-columns:1fr;gap:28px}}
-.vizit{
-  background:var(--povrsina);border:1px solid var(--linija);border-radius:var(--r);
-  padding:26px 24px;box-shadow:var(--senka);
-}
-.vizit dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0}
-.vizit dt{color:var(--tiho);font-size:.83rem;letter-spacing:.04em;text-transform:uppercase;
-  font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace}
-.vizit dd{margin:0;font-size:.97rem}
-.vizit dd a{color:var(--plava);text-decoration:none}
-.vizit dd a:hover{text-decoration:underline}
+    footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: .88rem; }
+    footer .sirina { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .podnozje-znak { display: inline-flex; align-items: center; gap: 12px; }
+    .maat-talas.mali { width: 52px; }
 
-/* ── Podnožje ────────────────────────────────────────────────────────── */
-.dno{border-top:1px solid var(--linija);padding:26px 0 40px;color:var(--tiho);font-size:.86rem}
-.dno-red{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+    /* uvecana slika */
+    dialog.uvecano { border: 0; padding: 0; background: transparent; max-width: min(1440px, 96vw); max-height: 94vh; }
+    dialog.uvecano::backdrop { background: rgba(241, 245, 249, .94); }
+    dialog.uvecano img { max-width: min(1440px, 96vw); max-height: 90vh; width: auto; height: auto; border-radius: 12px; border: 1px solid var(--line-2); box-shadow: var(--senka-slika); cursor: zoom-out; }
+    dialog.uvecano p { text-align: center; color: var(--text-2); font-size: .92rem; margin: 10px 0 0; }
 
-.poverenje{
-  display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;padding:18px 0 0;margin:22px 0 0;
-  border-top:1px solid var(--linija);
-  font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:var(--tiho);
-}
-.poverenje li{display:flex;align-items:center;gap:8px}
-.poverenje li::before{
-  content:"";width:5px;height:5px;border-radius:50%;background:var(--tirkiz);flex:none;
-}
+    /* problem */
+    .problemi { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .problem { background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--warn); border-radius: 14px; padding: 22px; box-shadow: var(--senka); }
+    .problem i { color: var(--warn); font-size: 1.3rem; }
+    .problem h3 { margin-top: 12px; font-size: 1.02rem; }
+    .problem p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
+    /* sve celine */
+    .celine { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .celina { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .celina h3 { font-size: .97rem; display: flex; align-items: center; gap: 10px; }
+    .celina h3 i { width: 32px; height: 32px; border-radius: 9px; background: var(--accent-50); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-size: .95rem; flex: none; }
+    .celina p { margin: 8px 0 0; font-size: .88rem; color: var(--text-2); line-height: 1.5; }
+    /* zasto MAAT */
+    .razlozi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .razlog { background: var(--accent-50); border: 1px solid var(--accent-100); border-radius: 16px; padding: 26px 28px; }
+    .razlog i { color: var(--accent); font-size: 1.4rem; }
+    .razlog h3 { margin-top: 12px; }
+    .razlog p { margin: 8px 0 0; color: var(--text-2); }
+    /* pomocnik */
+    .pomocnik { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 48px; align-items: center; }
+    .pomocnik-kartice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .pomocnik-kartice > div { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+    .pomocnik-kartice i { color: var(--accent); font-size: 1.35rem; }
+    .pomocnik-kartice h3 { margin-top: 10px; font-size: 1.02rem; }
+    .pomocnik-kartice p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
+    .pomocnik figure { margin: 0; }
+    .pomocnik figcaption { margin-top: 14px; font-size: .88rem; color: var(--muted); text-align: center; }
+    /* integracije */
+    .integracije { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .integracija { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .integracija i { color: var(--accent); font-size: 1.4rem; }
+    .integracija h3 { margin-top: 12px; font-size: 1.05rem; }
+    .integracija p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
+    .beleska { margin-top: 18px; background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 16px 20px; color: var(--text-2); font-size: .93rem; }
+    .beleska b { color: var(--accent-t); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; }
+    /* galerija, po grupama; bez skripte se vide sve grupe jedna ispod druge */
+    .grupe { display: flex; flex-wrap: wrap; gap: 8px; margin: -12px 0 30px; }
+    .grupe button { font: inherit; font-size: .9rem; font-weight: 600; color: var(--text-2); background: #fff; border: 1px solid var(--line-2); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+    .grupe button:hover { border-color: var(--accent-100); color: var(--title); }
+    .grupe button span { color: var(--faint); font-weight: 500; margin-left: 4px; }
+    .grupe button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .grupe button[aria-selected="true"] span { color: rgba(255, 255, 255, .8); }
+    .galerija-grupa + .galerija-grupa { margin-top: 48px; }
+    .galerija-grupa > h3 { margin-bottom: 18px; }
+    .ima-grupe .galerija-grupa > h3 { display: none; }
+    .ima-grupe .galerija-grupa + .galerija-grupa { margin-top: 0; }
+    .galerija { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 22px; }
+    .galerija figure { margin: 0; }
+    .galerija .prozor::before { height: 22px; background-size: auto; }
+    .galerija figcaption { margin-top: 12px; font-size: .9rem; color: var(--text-2); line-height: 1.5; }
+    .galerija figcaption b { display: block; color: var(--title); margin-bottom: 2px; }
+    /* cena */
+    .cene { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .cena { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .cena i { color: var(--accent); font-size: 1.35rem; }
+    .cena h3 { margin-top: 12px; font-size: 1.05rem; }
+    .cena p { margin: 8px 0 0; color: var(--text-2); font-size: .93rem; }
 
-/* ── Telefon ──────────────────────────────────────────────────────────────
-   Prvi utisak se najcesce stice na telefonu, pa se ovde ne stedi. */
-@media (max-width:720px){
-  body{font-size:16px}
-  .okvir{width:min(1140px,100% - 32px)}
-  .vrh-red{padding:10px 0;gap:10px}
-  .znak svg{height:25px}
-  .znak-ime{font-size:.7rem;letter-spacing:.13em}
-  /* Zaglavlje na telefonu nosi SAMO logo i jezik. Dugme se prelivalo preko
-     ivice, a isto to dugme stoji odmah ispod, u naslovnoj. */
-  .vrh-red > .dugme{display:none}
-  .jezik{font-size:.7rem;padding:6px 10px;letter-spacing:.06em}
-  .naslovna{padding:34px 0 36px}
-  .naslovna h1{font-size:clamp(1.85rem,7.4vw,2.5rem);margin:12px 0 14px}
-  .naslovna .uvod{font-size:1rem}
-  .odeljak{padding:46px 0}
-  .odeljak-glava{margin-bottom:24px}
-  .tamna{padding:48px 0}
-  /* Dugmad preko cele sirine — palac ih tako pogadja iz prve. */
-  .akcije{gap:10px}
-  .akcije .dugme{flex:1 1 100%;justify-content:center;padding:14px 20px}
-  .vrh-red .dugme{padding:9px 15px;font-size:.86rem}
-  .poverenje{gap:7px 16px;font-size:.68rem;margin-top:18px;padding-top:14px}
-  /* Pet brojeva u jednom redu na telefonu postaju necitljivi — idu 2 u red,
-     a poslednji se rasteže preko cele širine da ne ostane prazno polje. */
-  .brojevi{grid-template-columns:repeat(2,1fr)}
-  .broj-polje{padding:13px 14px;min-height:0}
-  .broj-polje:last-child{grid-column:1 / -1}
-  .broj-polje .v{font-size:1.3rem}
-  /* Široka tabela se na telefonu prelama u dva reda po stavci: gore vreme,
-     pacijent i iznos, dole mesto i stanje. Vodoravno klizanje na telefonu
-     niko ne primeti, pa se sadržaj ne sme skrivati iza njega. */
-  .zaglavlje-tabele{display:none}
-  .redovi{overflow-x:visible}
-  .red{grid-template-columns:auto minmax(0,1fr) auto;row-gap:8px;padding:13px 14px;align-items:start}
-  .red .sta{white-space:normal}
-  .red .gde{grid-column:2;font-size:.8rem;margin-top:-4px}
-  .red .stanje{grid-column:2 / -1;justify-self:start}
-  .red .para{align-self:start}
-  .modul{padding:20px 18px}
-  .karta{padding:20px 18px}
-  .razlog{padding:22px 20px}
-  .vizit{padding:22px 20px}
-  .vizit dl{grid-template-columns:1fr;gap:3px}
-  .vizit dt{margin-top:10px}
-  .vizit dl > dt:first-child{margin-top:0}
-}
-/* Dve kolone se drze do 430px — jedna kolona od dvadeset celina je predugacka. */
-@media (max-width:560px){.moduli{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:430px){
-  .moduli{grid-template-columns:1fr}
-  .brojevi{grid-template-columns:1fr}
-  .broj-polje{flex-direction:row;align-items:baseline;gap:10px}
-  .broj-polje .v{font-size:1.15rem}
-  .red{grid-template-columns:auto minmax(0,1fr);}
-  .red .para{grid-column:2;text-align:left;color:var(--tekst)}
-  .poverenje{flex-direction:column;gap:6px}
-}
-
-@media (prefers-reduced-motion:reduce){
-  *{animation:none !important;transition:none !important}
-}
-
-/* ── 04.10.2026: svetlo — bez tamnih traka i skoro crne dugmadi (za klinike: „nikako crna").
-   Tamna tema koju posetilac izabere na svom racunaru ostaje. ─────────────────────────── */
-:root{--traka:#EAF2FA;--traka-tekst:#16304A;--traka-tiho:#5C7690;--traka-linija:#DAE6EF;--dugme:#1F6FC4;--dugme-h:#185BA3}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){--traka:#070F1F;--traka-tekst:#EAF3F8;--traka-tiho:#93B2C9;--traka-linija:#1B3760;--dugme:#3A8DE8;--dugme-h:#5AA2EE}
-}
-:root[data-theme="dark"]{--traka:#070F1F;--traka-tekst:#EAF3F8;--traka-tiho:#93B2C9;--traka-linija:#1B3760;--dugme:#3A8DE8;--dugme-h:#5AA2EE}
-.razlog h3{color:var(--traka-tekst)}
-.dugme{background:var(--dugme);border-color:var(--dugme)}
-.dugme:hover{background:var(--dugme-h)}
-.dugme.tiho{background:transparent}
-[data-demo][hidden]{display:none!important}
-
-/* ── Na telefonu ──────────────────────────────────────────────────────── */
-.telefoni-glava{margin:54px 0 22px;max-width:62ch}
-.telefoni-glava h3{font-size:1.3rem;margin:8px 0 8px}
-.telefoni-glava p{color:var(--tiho)}
-.telefoni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;max-width:900px}
-.telefoni figure{margin:0}
-.telefon-ram{background:var(--povrsina);border:1px solid var(--linija);border-radius:30px;padding:9px;box-shadow:var(--senka)}
-.telefon-ram img{display:block;width:100%;height:auto;border-radius:22px;border:1px solid var(--linija)}
-.telefoni figcaption{margin-top:14px;font-size:.92rem;color:var(--tiho)}
-.telefoni figcaption b{color:var(--tekst)}
-@media (max-width:760px){.telefoni{grid-template-columns:minmax(0,1fr);max-width:320px}}
+    @media (max-width: 1140px) {
+      .meni nav { gap: 18px; }
+      .meni nav a.manje { display: none; }
+    }
+    @media (max-width: 980px) {
+      .meni nav a:not(.dugme):not(.jezik) { display: none; }
+      .vrh .sirina, .uloga, .uloga.obrnuto, .istaknuto, .obilazak, .poziv, .pomocnik { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+      .uloga.obrnuto .tekst { order: 0; }
+      .brojke .sirina { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .koristi, .bezbednost, .koraci, .problemi, .celine, .integracije, .galerija { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cene { grid-template-columns: minmax(0, 1fr); }
+      .pomocnik figure { max-width: 290px; margin: 0 auto; }
+      .odeljak { padding: 64px 0; }
+    }
+    @media (max-width: 640px) {
+      .sirina { padding: 0 16px; }
+      .vrh .sirina { padding-top: 40px; padding-bottom: 48px; }
+      .vrh .dugmad .dugme { flex: 1 1 100%; }
+      .koristi, .bezbednost, .koraci, .uvodjenje, .problemi, .celine, .integracije, .galerija, .razlozi, .pomocnik-kartice { grid-template-columns: minmax(0, 1fr); }
+      .telefoni { grid-template-columns: minmax(0, 1fr); max-width: 300px; }
+      .obilazak { padding: 20px; }
+      .obilazak li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+      .poziv { padding: 28px 22px; }
+      .kontakt div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+      .prizor .telefon { width: 30%; }
+      .slike-dve .mala { width: 52%; }
+      .znak small { display: none; }
+      .meni .sirina { height: 60px; gap: 10px; }
+      .meni nav { gap: 10px; }
+      .znak { gap: 10px; }
+      .maat-talas { width: 58px; }
+      .znak-ime { font-size: .78rem; letter-spacing: .1em; }
+      .meni nav a.dugme { padding: 9px 14px; font-size: .85rem; }
+    }
+    @media (max-width: 400px) {
+      /* uzan telefon: ime u dva reda, da znak, jezik i dugme stanu u jednu traku */
+      .maat-talas { width: 44px; }
+      .znak-ime { font-size: .74rem; letter-spacing: .08em; }
+      .znak-ime em { display: block; }
+      .meni nav a.dugme { padding: 8px 11px; }
+    }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="maatPlava" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#18ae9f"/><stop offset="1" stop-color="#0d8178"/></linearGradient></defs></svg>
 
-<header class="vrh">
-  <div class="okvir vrh-red">
-    <a class="znak" href="#" aria-label="MAAT INNOVATIONS — home">
-      <!-- Znak iz brend-maat/svg/maat-znak.svg — iste koordinate kao na logotipu,
-           crta ih isti kod. `currentColor` znaci da znak uzima boju teksta oko
-           sebe, pa prati temu posetioca bez druge datoteke za tamnu temu. -->
-      <svg viewBox="0 0 468.5 108.5" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MAAT">
-        <g fill="none" stroke="currentColor" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6.2 56.2 L52.2 56.2 L86.2 6.2 L126.2 102.2 L166.2 6.2 L206.2 102.2 L246.2 6.2 L286.2 102.2 L326.2 6.2 L366.2 102.2 L406.2 6.2 L462.2 6.2"/>
-          <path d="M372.2 6.2 L406.2 6.2"/>
-        </g>
-      </svg>
-      <span class="znak-ime">INNOVATIONS</span>
-    </a>
-    <nav class="veze" aria-label="Main navigation">
-      <a href="#pokriva">What it covers</a>
-      <a href="#zasto">Why MAAT</a>
-      <a href="#pomocnik">Assistant</a>
-      <a href="#integracije">Integrations</a>
-      <a href="#ekrani">Screens</a>
-      <a data-demo hidden>Demo</a>
-      <a href="#pricing">How we charge</a>
+<header class="meni">
+  <div class="sirina">
+    <a class="znak" href="#" aria-label="MAAT INNOVATIONS — clinic management software"><svg class="maat-talas" viewBox="0 0 468.5 108.5" aria-hidden="true"><g fill="none" stroke="url(#maatPlava)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 56.2 L52.2 56.2 L86.2 6.2 L126.2 102.2 L166.2 6.2 L206.2 102.2 L246.2 6.2 L286.2 102.2 L326.2 6.2 L366.2 102.2 L406.2 6.2 L462.2 6.2"/></g></svg><span><span class="znak-ime">MAAT <em>INNOVATIONS</em></span><small>clinic management software</small></span></a>
+    <nav aria-label="Page sections">
+      <a href="#moduli">What it does</a>
+      <a href="#celine">Modules</a>
+      <a href="#bezbednost" class="manje">Security</a>
+      <a href="#ekrani" class="manje">Screens</a>
+      <a href="#cena">Pricing</a>
+      <a href="#kontakt">Contact</a>
+      <a class="jezik" href="sr/" hreflang="sr" lang="sr" title="Srpski">SR</a>
+      <a class="dugme glavno" href="http://localhost:8090/demo">Try the demo</a>
     </nav>
-    <a class="jezik" href="sr/" hreflang="sr">Serbian</a>
-    <a class="dugme" href="#kontakt">Book a walkthrough</a>
   </div>
 </header>
 
-<main>
-
-<section class="naslovna">
-  <div class="okvir naslovna-mreza">
-    <div class="naslovna-tekst">
-      <p class="oznaka">Software for healthcare providers</p>
-      <h1>The whole clinic in one system — from booking to a settled invoice.</h1>
-      <p class="uvod">
-        Appointments and doctors, laboratory, surgical unit, home visits, stock, equipment,
-        quality and finance — with fiscal receipts and national e-health export. And an
-        assistant that answers from your own data instead of inventing.
-      </p>
-      <div class="akcije">
-        <a class="dugme" data-demo hidden>Try the demo &rarr;</a>
-        <a class="dugme tiho" data-bez-demoa-glavno href="#kontakt">Book a walkthrough</a>
+<section class="vrh">
+  <div class="sirina">
+    <div>
+      <span class="nadnaslov"><i class="bi bi-hospital"></i>For private clinics and polyclinics</span>
+      <h1>The whole clinic in <span>one program.</span></h1>
+      <p class="uvod">Booking, consulting rooms, a laboratory wired to its analysers, billing with fiscal receipts, the waiting room and management — connected so that a piece of data is entered once and seen wherever it is needed. It runs in the browser, on a computer, tablet or phone.</p>
+      <div class="dugmad">
+        <a class="dugme glavno" href="http://localhost:8090/demo"><i class="bi bi-play-circle"></i>Try the demo</a>
+        <a class="dugme sporedno" href="#moduli">See what it does</a>
       </div>
-      <p class="pod-akcija">Thirty minutes, on your own data or on a demo database.</p>
-      <ul class="poverenje mono" aria-label="Standards and compliance">
-        <li>Quality &amp; CAPA</li>
-        <li>FHIR / e-health</li>
-        <li>Fiscal receipts</li>
-        <li>Encrypted records</li>
-      </ul>
+      <div class="napomena"><i class="bi bi-check-circle-fill"></i>Nothing to install, no sign-up — an invented clinic with every feature unlocked.</div>
+      <div class="cipovi">
+        <span><i class="bi bi-receipt"></i>Fiscal receipts</span>
+        <span><i class="bi bi-hospital"></i>FHIR / e-health</span>
+        <span><i class="bi bi-patch-check"></i>Quality &amp; CAPA</span>
+        <span><i class="bi bi-shield-lock"></i>Encrypted records</span>
+      </div>
+      <a class="sajt-link" href="http://localhost:8090/"><i class="bi bi-globe2"></i>See that clinic's website too, as a patient sees it<i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="prizor">
+      <div class="prozor"><img src="slike/ponuda/finansije.webp" width="1440" height="900" alt="Clinic finance: revenue, costs and profit by department"></div>
+      <div class="telefon"><img src="slike/31-telefon-laboratorija.webp" width="780" height="1688" alt="The laboratory on a phone: orders with status and payment"></div>
+    </div>
+  </div>
+</section>
+
+<section class="brojke" aria-label="The demo clinic in numbers">
+  <div class="sirina">
+    <div class="brojka"><strong>9</strong><span>departments with price lists</span></div>
+    <div class="brojka"><strong>8</strong><span>roles — from front desk to management</span></div>
+    <div class="brojka"><strong>1,000+</strong><span>appointments in the demo clinic</span></div>
+    <div class="brojka"><strong>0</strong><span>installs on staff computers</span></div>
+  </div>
+</section>
+
+<section class="odeljak">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">The problem</span>
+      <h2>A clinic run in four places at once.</h2>
+      <p class="uvod">Appointments in one program, the laboratory in another, finance in a spreadsheet and stock in a notebook. Each does its part, but nothing joins up on its own.</p>
+    </div>
+    <div class="problemi">
+      <div class="problem"><i class="bi bi-door-open"></i><h3>The patient leaves without paying</h3><p>They will settle up when they collect the results. They come back three weeks later, a different shift is on, and nobody knows what is still owed — or whether anything is.</p></div>
+      <div class="problem"><i class="bi bi-telephone-inbound"></i><h3>Results are chased by phone</h3><p>A patient calls to ask whether the report is ready. Nobody knows if it was sent, to whom, or when — so it goes out twice, or never.</p></div>
+      <div class="problem"><i class="bi bi-calculator"></i><h3>Doctor earnings from memory</h3><p>At month end someone adds it up in a spreadsheet, estimating what went on materials and what the doctor is owed. It never matches what everyone assumed.</p></div>
+      <div class="problem"><i class="bi bi-journal-x"></i><h3>Stock in a notebook</h3><p>What was used, where and by whom — nobody knows until the stocktake, when it is too late to put anything right.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="odeljak siv">
+  <div class="sirina">
+    <div class="zaglavlje sredina">
+      <span class="nadnaslov">What changes</span>
+      <h2>Less searching, less retyping, fewer missed payments.</h2>
+      <p class="uvod">Every feature exists because something kept getting stuck in a clinic's day — and now it doesn't.</p>
+    </div>
+    <div class="koristi">
+      <div class="korist"><i class="bi bi-cash-coin"></i><h3>No examination left unbilled</h3><p>A finished but unpaid examination does not slip by: the front desk sees it listed with how many days it is overdue, management sees it as an alert.</p></div>
+      <div class="korist"><i class="bi bi-calendar2-check"></i><h3>Appointments never overlap</h3><p>Every service has its own duration, so the program offers only times that are truly free — to the patient online and to the front desk on the phone.</p></div>
+      <div class="korist"><i class="bi bi-upc-scan"></i><h3>A laboratory without retyping</h3><p>A barcode on every tube; analyser results land in the order on their own, and the technician only checks and confirms them.</p></div>
+      <div class="korist"><i class="bi bi-receipt"></i><h3>A fiscal receipt for every payment</h3><p>Part payments too, in the laboratory too, and at the patient's home. A receipt that was not issued stays listed until it is.</p></div>
+      <div class="korist"><i class="bi bi-tv"></i><h3>A waiting room that calls patients itself</h3><p>A TV in the waiting room calls the patient to the room by name. The doctor holds the call or calls early with one click.</p></div>
+      <div class="korist"><i class="bi bi-graph-up-arrow"></i><h3>Management sees the clinic in numbers</h3><p>Revenue by department, doctor and service, doctors' fees, stock and alerts — every morning, without copying into spreadsheets.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="odeljak" id="moduli">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">By role</span>
+      <h2>Everyone gets a screen for their own job.</h2>
+      <p class="uvod">Front desk, doctors, laboratory, field technicians and management work in the same program — but each sees only what they need.</p>
     </div>
 
-    <!-- Jedan dan klinike, preko cele širine. Pokazuje ono što naslov i tvrdi:
-         recepcija, laboratorija, hirurgija i teren stoje u ISTOM spisku, sa
-         istim iznosima. Pacijenti su samo inicijali — tako izgleda i u
-         stvarnosti kad se ekran deli sa nekim ko ne treba da vidi imena. -->
-    <div class="prikaz" aria-label="Example: one day in the clinic">
-      <div class="prikaz-vrh">
-        <span class="tacke" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="put mono">/dashboard · Friday, 15.08.2026</span>
+    <article class="uloga">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-telephone"></i>Front desk</span>
+        <h3>The whole day on one screen</h3>
+        <ul class="spisak">
+          <li>Every doctor's schedule by room — who is free, and when, at a glance.</li>
+          <li>Phone booking in a few clicks, for a family member too.</li>
+          <li>Payment with discounts and codes, cash or card, in full or in instalments.</li>
+          <li>The till by shift: taken over and handed over by counting, every difference explained.</li>
+          <li>Referrals written by doctors wait for booking in one place.</li>
+        </ul>
       </div>
+      <div class="prozor"><img src="slike/ponuda/recepcija.webp" width="1440" height="900" loading="lazy" alt="Front desk: the doctors' schedule by department and room for the whole day"></div>
+    </article>
 
-      <div class="brojevi">
-        <div class="broj-polje"><span class="v mono">18</span><span class="n">appointments today</span></div>
-        <div class="broj-polje"><span class="v mono">3</span><span class="n">in the waiting room</span></div>
-        <div class="broj-polje"><span class="v mono">5</span><span class="n">results in progress</span></div>
-        <div class="broj-polje"><span class="v mono novac">84.600</span><span class="n">RSD collected today</span></div>
-        <div class="broj-polje"><span class="v mono pazi">12.400</span><span class="n">RSD outstanding</span></div>
+    <article class="uloga obrnuto">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-heart-pulse"></i>Doctor</span>
+        <h3>A paperless consulting room</h3>
+        <ul class="spisak">
+          <li>The day's patient list; calling a patient in goes to the waiting-room TV.</li>
+          <li>Reports on structured forms — general, echocardiography, gynaecology, pregnancy, veins — with signature and stamp.</li>
+          <li>The report as a PDF or full-screen in the consulting room, for the patient to see.</li>
+          <li>The patient's chart with earlier reports from every department.</li>
+          <li>Lab orders and referrals straight from the appointment; services and prices come from the price list.</li>
+        </ul>
       </div>
+      <div class="slike-dve levo">
+        <div class="prozor"><img src="slike/ponuda/lekar.webp" width="1440" height="900" loading="lazy" alt="Doctor: appointments by day with report status and payout"></div>
+        <div class="prozor mala"><img src="slike/ponuda/nalaz.webp" width="1440" height="900" loading="lazy" alt="An examination report shown full-screen"></div>
+      </div>
+    </article>
 
-      <div class="zaglavlje-tabele mono" role="presentation">
-        <span>Time</span><span>Patient and service</span><span>Where</span>
-        <span style="text-align:right">Amount</span><span>Status</span>
+    <article class="uloga" id="laboratorija">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-eyedropper"></i>Laboratory</span>
+        <h3>From tube to report</h3>
+        <ul class="spisak">
+          <li>Reception and payment at the laboratory counter, with its own fiscal register.</li>
+          <li>A barcode label for every tube and analyser; a damaged one is reprinted on its own.</li>
+          <li>Scanning a tube opens its order at once.</li>
+          <li>Analyser results arrive on their own (HL7 and ASTM), with reference ranges — the technician confirms.</li>
+          <li>The report as a PDF, e-mailed to the patient; samples can be taken at home too.</li>
+        </ul>
       </div>
+      <div class="slike-dve">
+        <div class="prozor"><img src="slike/ponuda/lab-aparat.webp" width="1440" height="900" loading="lazy" alt="Result entry: blood count values received from the analyser"></div>
+        <div class="prozor mala"><img src="slike/ponuda/nalepnice.webp" width="793" height="938" loading="lazy" alt="Tube labels with barcode and QR code"></div>
+      </div>
+    </article>
 
-      <div class="redovi">
-        <div class="red">
-          <span class="kada mono">08:00</span>
-          <span class="sta">M. P.<br><i>Cardiology · Dr Kovačević</i></span>
-          <span class="gde">Room 3</span>
-          <span class="para mono">6.000</span>
-          <span class="stanje gotovo">Paid</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">08:30</span>
-          <span class="sta">S. B.<br><i>Laboratory · 4 tests</i></span>
-          <span class="gde">Laboratory</span>
-          <span class="para mono">3.400</span>
-          <span class="stanje utoku">Sample received</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">09:00</span>
-          <span class="sta">A. H.<br><i>Internal medicine · Dr Stojanović</i></span>
-          <span class="gde">Room 1</span>
-          <span class="para mono">4.800</span>
-          <span class="stanje utoku">In consultation</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">09:30</span>
-          <span class="sta">N. K.<br><i>Surgery · vein ablation</i></span>
-          <span class="gde">Theatre 2</span>
-          <span class="para mono">96.000</span>
-          <span class="stanje ceka">Awaiting anaesthetist</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">10:00</span>
-          <span class="sta">E. M.<br><i>Home visit · infusion</i></span>
-          <span class="gde">Home visit</span>
-          <span class="para mono">5.200</span>
-          <span class="stanje ceka">Technician en route</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">10:30</span>
-          <span class="sta">J. R.<br><i>Vein ultrasound · Dr Lukić</i></span>
-          <span class="gde">Room 2</span>
-          <span class="para mono duguje">3.600</span>
-          <span class="stanje ceka">Balance due on exit</span>
-        </div>
-        <div class="red">
-          <span class="kada mono">11:00</span>
-          <span class="sta">D. S.<br><i>Laboratory · CBC and CRP</i></span>
-          <span class="gde">Laboratory</span>
-          <span class="para mono">1.900</span>
-          <span class="stanje gotovo">Result ready</span>
-        </div>
+    <article class="uloga obrnuto">
+      <div class="tekst">
+        <span class="oznaka"><i class="bi bi-speedometer2"></i>Management</span>
+        <h3>The clinic in numbers, every morning</h3>
+        <ul class="spisak">
+          <li>Command centre: unpaid examinations, stock below minimum, laboratory delays — ranked by importance.</li>
+          <li>Finance by department: revenue, materials, fees, profit.</li>
+          <li>Doctors' fees by percentage, with bonuses — calculated without spreadsheets.</li>
+          <li>Price lists, test catalogue, stock, procurement, equipment and quality.</li>
+          <li>Staff accounts and a record of every change: who, what and when.</li>
+        </ul>
       </div>
+      <div class="slike-dve levo">
+        <div class="prozor"><img src="slike/ponuda/finansije.webp" width="1440" height="900" loading="lazy" alt="Finance by department: revenue, materials, fees and profit"></div>
+        <div class="prozor mala"><img src="slike/ponuda/komandni.webp" width="1176" height="380" loading="lazy" alt="Command centre: active alerts and the morning report"></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="odeljak siv">
+  <div class="sirina istaknuto">
+    <div class="ekran"><img src="slike/ponuda/cekaonica.webp" width="1600" height="900" loading="lazy" alt="The waiting-room TV: rooms, doctors and called patients"></div>
+    <div>
+      <span class="nadnaslov">Waiting room</span>
+      <h2 style="margin-top:14px">Patients know when it is their turn.</h2>
+      <p class="uvod">A TV in the waiting room shows every room: who has been called, where an examination is under way, when the next appointment is. The call goes out by itself when the room frees up, with a chime.</p>
+      <ul class="spisak">
+        <li>The screen shows only a first name and the initial of the surname — nothing else.</li>
+        <li>The doctor holds the call or calls early with one click.</li>
+        <li>It runs on an ordinary TV, landscape or portrait, with no special equipment.</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <section class="odeljak">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">The problem</p>
-      <h2>A clinic run in four places at once</h2>
-      <p>
-        Appointments in one program, the laboratory in another, finance in a spreadsheet
-        and stock in a notebook. Each does its part, but nothing joins up on its own.
-      </p>
+  <div class="sirina">
+    <div class="zaglavlje sredina">
+      <span class="nadnaslov">In the field and at the patient's</span>
+      <h2>It works on a phone too.</h2>
+      <p class="uvod">The field technician runs home visits from a phone, and the patient books and sees their results on the clinic's website.</p>
     </div>
-    <div class="tri">
-      <div class="karta">
-        <h3>The patient leaves without paying</h3>
-        <p>
-          They will settle up when they collect the results. They come back three weeks
-          later, different shift, and nobody knows what is still owed — or whether anything is.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Results are chased by phone</h3>
-        <p>
-          A patient calls to ask whether the report is ready. Nobody knows if it was sent,
-          to whom, or when — so it goes out twice, or never.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Doctor earnings are worked out from memory</h3>
-        <p>
-          At month end someone adds it up in a spreadsheet, estimating what went on
-          materials and what the doctor is owed. It never matches what everyone assumed.
-        </p>
-      </div>
+    <div class="telefoni">
+      <figure><div class="telefon"><img src="slike/33-telefon-tehnicar.webp" width="780" height="1688" loading="lazy" alt="Field technician on a phone: the current home visit"></div>
+        <figcaption>Home visits<span>visits, materials, payment at the door</span></figcaption></figure>
+      <figure><div class="telefon"><img src="slike/32-telefon-pacijent.webp" width="780" height="1688" loading="lazy" alt="Patient profile: appointments, reports and cancelling"></div>
+        <figcaption>The patient<span>appointments, reports, results, cancelling</span></figcaption></figure>
+      <figure><div class="telefon"><img src="slike/31-telefon-laboratorija.webp" width="780" height="1688" loading="lazy" alt="Laboratory orders on a phone"></div>
+        <figcaption>Laboratory<span>orders, payment, sending results</span></figcaption></figure>
     </div>
   </div>
 </section>
 
-<section class="odeljak" id="pokriva">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">What it covers</p>
-      <h2>Twenty modules, one system</h2>
-      <p>
-        Every workstation sees what it needs, and nothing is entered twice. A small
-        practice uses the first few; a clinic with a laboratory and a theatre uses all of
-        them.
-      </p>
+<section class="odeljak siv" id="celine">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">What it covers</span>
+      <h2>Twenty modules, one system.</h2>
+      <p class="uvod">Every workstation sees what it needs, and nothing is entered twice. A small practice uses the first few; a clinic with a laboratory and a theatre uses all of them.</p>
     </div>
-
-    <div class="moduli">
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>
-        </svg>
-        <h3>Scheduling</h3>
-        <p>Online, by phone or at the front desk. The patient picks the service and the slot lasts as long as that service takes — computed from the doctor's real schedule and theatre availability.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/>
-        </svg>
-        <h3>Clinical work</h3>
-        <p>Chart across every department, ICD-10 diagnoses, therapy, follow-up and referrals between doctors. The report comes out as a PDF with letterhead, stamp and signature — or on a screen in the consulting room.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M6 12.5h3l1.5-3.5 3 7 1.5-3.5h3"/>
-        </svg>
-        <h3>Specialist reports</h3>
-        <p>Structured forms where a blank page is not enough: cardiac ultrasound with 47 measurements, gynaecology and pregnancy, vein mapping of both legs entered by the technician who did the scan — with the images attached.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M9 3v7L4.5 18a2.5 2.5 0 0 0 2.2 3.5h10.6A2.5 2.5 0 0 0 19.5 18L15 10V3"/><path d="M8 3h8M7.5 14h9"/>
-        </svg>
-        <h3>Laboratory</h3>
-        <p>A catalogue of 1,200+ tests with its own price list, a barcode label per tube and analyser, results with reference ranges — values from the analyser arrive as a proposal the technician confirms.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/>
-        </svg>
-        <h3>Surgical unit</h3>
-        <p>Theatre scheduling, with anaesthetist clearance required before a patient is admitted.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>
-        </svg>
-        <h3>Home visits</h3>
-        <p>Field orders, technician dispatch, therapy taken from the patient's own report at booking, materials from stock or a contracted pharmacy, and call-out settlement.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 11h20M6 15h4"/>
-        </svg>
-        <h3>Billing</h3>
-        <p>Part payments, cash and card on the same invoice, discounts, and debt tracked over years.
-           Money never passes through the system — the clinic takes payment at its own till and the
-           system keeps the record.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="11" width="18" height="9" rx="1.5"/><path d="M7 11V5h10v6"/><path d="M10 8h4M10 15.5h4"/>
-        </svg>
-        <h3>Till by shift</h3>
-        <p>Each shift takes over the till by counting it and hands it over the same way. A difference is never corrected quietly — it needs a note. The change float never counts as revenue.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/>
-        </svg>
-        <h3>Stock</h3>
-        <p>Inventory and goods receipt, with automatic deduction on every service — and the name of who took it out.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/>
-        </svg>
-        <h3>Management</h3>
-        <p>Revenue by source, performance and earnings by doctor, fixed costs, pharmacy purchases as costs, and break-even per service.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>
-        </svg>
-        <h3>Equipment</h3>
-        <p>Service and calibration with due dates, depreciation, and return per device.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M9 11l2 2 4-4"/><path d="M20 12a8 8 0 1 1-3.2-6.4"/>
-        </svg>
-        <h3>Quality</h3>
-        <p>Incidents and corrective actions, laboratory quality control. The log cannot be deleted — auditors ask for it.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 5a2 2 0 0 1 2-2h2l2 4-2 2a12 12 0 0 0 6 6l2-2 4 2v2a2 2 0 0 1-2 2A16 16 0 0 1 4 5z"/>
-        </svg>
-        <h3>Calls and waiting list</h3>
-        <p>Call log, missed calls, how many calls turn into appointments, and the waiting list.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 3l4 4 4-4"/><path d="M7 12h4M7 15h7"/>
-        </svg>
-        <h3>Waiting-room screen</h3>
-        <p>A TV in the waiting room calls the patient to the room the moment it frees up. Shared rooms, a “hold” button for the doctor, first name and initial only — and no ticket machine.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/>
-        </svg>
-        <h3>Marketing</h3>
-        <p>What each channel brings in and what one new patient costs — from actual revenue, not estimates.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M6 9h5M6 13h8"/>
-        </svg>
-        <h3>Patient portal</h3>
-        <p>Patients see their appointments, results and images, download the PDF and book themselves — with two-factor sign-in. Reminders go only with their consent, which they can withdraw at any time.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
-        </svg>
-        <h3>Clinic website</h3>
-        <p>The price list, departments and doctors on the clinic's own website come straight from the system — a price changed in the app is the price on the site.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 3l8 4v6c0 4.5-3.2 7.4-8 8-4.8-.6-8-3.5-8-8V7z"/><path d="M12 9v4M12 16h.01"/>
-        </svg>
-        <h3>Command centre</h3>
-        <p>Alerts in one place and a morning report: what stalled yesterday and what needs a decision today.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 6h16l-1.5 9H5.5z"/><circle cx="8" cy="19" r="1.6"/><circle cx="16" cy="19" r="1.6"/><path d="M2 3h2l.6 3"/>
-        </svg>
-        <h3>Procurement</h3>
-        <p>Suppliers, orders, and the make-or-buy sum for whether to run a test in house or send it out.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 15a3 3 0 0 1-3 3H8l-4 3V6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3z"/><path d="M9 9h6M9 12.5h4"/>
-        </svg>
-        <h3>A chatbot that cannot invent</h3>
-        <p>Answers from your own data — services, doctors, appointments, the patient's own report.
-           When nothing covers the question it says so and points to a human. It does not generate
-           sentences and calls no outside service: it runs on your server.</p>
-      </article>
+    <div class="celine">
+      <div class="celina"><h3><i class="bi bi-calendar2-check"></i>Scheduling</h3><p>Online, by phone or at the front desk. The patient picks the service and the slot lasts as long as that service takes — computed from the doctor's real schedule and theatre availability.</p></div>
+      <div class="celina"><h3><i class="bi bi-heart-pulse"></i>Clinical work</h3><p>A chart across every department, ICD-10 diagnoses, therapy, follow-up and referrals between doctors. The report comes out as a PDF with letterhead, stamp and signature — or on a screen in the consulting room.</p></div>
+      <div class="celina"><h3><i class="bi bi-file-earmark-medical"></i>Specialist reports</h3><p>Structured forms where a blank page is not enough: cardiac ultrasound with 47 measurements, gynaecology and pregnancy, vein mapping of both legs entered by the technician who did the scan — with the images attached.</p></div>
+      <div class="celina"><h3><i class="bi bi-eyedropper"></i>Laboratory</h3><p>A catalogue of 1,200+ tests with its own price list, a barcode label per tube and analyser, results with reference ranges — values from the analyser arrive as a proposal the technician confirms.</p></div>
+      <div class="celina"><h3><i class="bi bi-hospital"></i>Surgical unit</h3><p>Theatre scheduling, with anaesthetist clearance required before a patient is admitted.</p></div>
+      <div class="celina"><h3><i class="bi bi-house-heart"></i>Home visits</h3><p>Field orders, technician dispatch, therapy taken from the patient's own report at booking, materials from stock or a contracted pharmacy, and call-out settlement.</p></div>
+      <div class="celina"><h3><i class="bi bi-cash-coin"></i>Billing</h3><p>Part payments, cash and card on the same invoice, discounts, and debt tracked over years. Money never passes through the system — the clinic takes payment at its own till and the system keeps the record.</p></div>
+      <div class="celina"><h3><i class="bi bi-receipt"></i>Fiscal receipts</h3><p>Two registers — front desk and laboratory. A receipt for every payment, instalments and doorstep collections included; a refund is its own document.</p></div>
+      <div class="celina"><h3><i class="bi bi-safe"></i>Till by shift</h3><p>Each shift takes over the till by counting it and hands it over the same way. A difference is never corrected quietly — it needs a note. The change float never counts as revenue.</p></div>
+      <div class="celina"><h3><i class="bi bi-box-seam"></i>Stock</h3><p>Inventory and goods receipt, with automatic deduction on every service — and the name of who took it out.</p></div>
+      <div class="celina"><h3><i class="bi bi-graph-up-arrow"></i>Management and finance</h3><p>Revenue by source, performance and earnings by doctor, fixed costs, pharmacy purchases as costs, and break-even per service.</p></div>
+      <div class="celina"><h3><i class="bi bi-tools"></i>Equipment</h3><p>Service and calibration with due dates, depreciation, and return per device.</p></div>
+      <div class="celina"><h3><i class="bi bi-patch-check"></i>Quality</h3><p>Incidents and corrective actions, laboratory quality control. The log cannot be deleted — auditors ask for it.</p></div>
+      <div class="celina"><h3><i class="bi bi-telephone"></i>Calls and waiting list</h3><p>Call log, missed calls, how many calls turn into appointments, and the waiting list.</p></div>
+      <div class="celina"><h3><i class="bi bi-tv"></i>Waiting-room screen</h3><p>A TV in the waiting room calls the patient to the room the moment it frees up. Shared rooms, a “hold” button for the doctor, first name and initial only — and no ticket machine.</p></div>
+      <div class="celina"><h3><i class="bi bi-megaphone"></i>Marketing</h3><p>What each channel brings in and what one new patient costs — from actual revenue, not estimates.</p></div>
+      <div class="celina"><h3><i class="bi bi-person-circle"></i>Patient portal</h3><p>Patients see their appointments, results and images, download the PDF and book themselves — with two-factor sign-in. Reminders go only with their consent, which they can withdraw at any time.</p></div>
+      <div class="celina"><h3><i class="bi bi-globe2"></i>Clinic website</h3><p>The price list, departments and doctors on the clinic's own website come straight from the system — a price changed in the app is the price on the site.</p></div>
+      <div class="celina"><h3><i class="bi bi-speedometer2"></i>Command centre</h3><p>Alerts in one place and a morning report: what stalled yesterday and what needs a decision today.</p></div>
+      <div class="celina"><h3><i class="bi bi-cart3"></i>Procurement</h3><p>Suppliers, orders, and the make-or-buy sum for whether to run a test in house or send it out.</p></div>
     </div>
   </div>
 </section>
 
-<section class="tamna" id="zasto">
-  <div class="okvir">
-    <div class="uski">
-      <p class="oznaka">Why MAAT</p>
-      <h2>What other systems leave out</h2>
-      <p class="uvodni">
-        Correct figures and screens that agree are an obligation, not a selling point.
-        Here is where the difference actually is.
-      </p>
+<section class="odeljak" id="zasto">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Why MAAT</span>
+      <h2>What other systems leave out.</h2>
+      <p class="uvod">Correct figures and screens that agree are an obligation, not a selling point. Here is where the difference actually is.</p>
     </div>
     <div class="razlozi">
-      <article class="razlog">
-        <h3>The whole clinic, not just the diary</h3>
-        <p>
-          Scheduling, charts, laboratory, surgical unit, home visits, stock and finance.
-          The same ground is usually covered by three programs that do not speak to each
-          other, so data gets retyped by hand.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Home visits as a full module</h3>
-        <p>
-          Field order, technician dispatch, materials taken off stock, and call-out
-          settlement. Clinics that visit patients at home usually keep this separately,
-          on paper.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>Billing the way it actually happens</h3>
-        <p>
-          Part cash, part card, the rest when the patient collects their results.
-          Discounts, referrers, debt across years. The laboratory bills on its own, including
-          for patients who never saw a doctor.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>A change in a day, not a quarter</h3>
-        <p>
-          You write to the person who writes the code. No ticket queue, no waiting for
-          the next release — what your clinic needs done differently gets done differently.
-        </p>
-      </article>
+      <div class="razlog"><i class="bi bi-diagram-3"></i><h3>The whole clinic, not just the diary</h3><p>Scheduling, charts, laboratory, surgical unit, home visits, stock and finance. The same ground is usually covered by three programs that do not speak to each other, so data gets retyped by hand.</p></div>
+      <div class="razlog"><i class="bi bi-house-heart"></i><h3>Home visits as a full module</h3><p>Field order, technician dispatch, materials taken off stock, and call-out settlement. Clinics that visit patients at home usually keep this separately, on paper.</p></div>
+      <div class="razlog"><i class="bi bi-wallet2"></i><h3>Billing the way it actually happens</h3><p>Part cash, part card, the rest when the patient collects their results. Discounts, referrers, debt across years. The laboratory bills on its own, including for patients who never saw a doctor.</p></div>
+      <div class="razlog"><i class="bi bi-lightning-charge"></i><h3>A change in a day, not a quarter</h3><p>You write to the person who writes the code. No ticket queue, no waiting for the next release — what your clinic needs done differently gets done differently.</p></div>
     </div>
   </div>
 </section>
 
-<section class="odeljak" id="pomocnik">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">The assistant</p>
-      <h2>It answers from your data — or says it does not know</h2>
-      <p class="uvodni">
-        A patient who receives a report usually phones the front desk to ask what one
-        number means. Now they ask the system, at the moment the report arrives.
-      </p>
+<section class="odeljak siv" id="pomocnik">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">The assistant</span>
+      <h2>It answers from your data — or says it does not know.</h2>
+      <p class="uvod">A patient who receives a report usually phones the front desk to ask what one number means. Now they ask the system, at the moment the report arrives.</p>
     </div>
-
-    <div class="razlozi">
-      <article class="razlog">
-        <h3>It cannot invent</h3>
-        <p>
-          It answers only from what the provider holds: services, prices, doctors,
-          that patient's own appointments and their reports. When the data is not there,
-          it says so and points to the front desk, instead of producing an answer that merely sounds right.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>It explains a report</h3>
-        <p>
-          The patient opens their PDF report and gets it back in plain language,
-          with the reference ranges. It does not diagnose and does not advise — it says
-          what each value means and when to see the doctor.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>It never leaves the building</h3>
-        <p>
-          It runs on in-house embeddings, inside the provider's own database. No call to
-          an external model, no fee per question, and no patient data
-          leaves the clinic's server.
-        </p>
-      </article>
-      <article class="razlog">
-        <h3>It works for the staff too</h3>
-        <p>
-          The same assistant answers questions about how the provider works — which
-          services exist, what they cost, which doctor works when — so the front desk
-          does not have to know the price list by heart.
-        </p>
-      </article>
-    </div>
-
-    <figure class="snimak uspravan" style="margin-top:26px">
-      <div class="ram">
-        <img src="slike/27-pomocnik.webp" alt="The assistant in the patient portal" hidden
-             onload="this.hidden=false;this.nextElementSibling.hidden=true">
-        <div class="mesto">
-          <span class="sifra">SCREEN 27 · /</span>
-          <b>The assistant in conversation</b>
-          <span>A patient's question, answered from the provider's data</span>
-        </div>
+    <div class="pomocnik">
+      <div class="pomocnik-kartice">
+        <div><i class="bi bi-patch-question"></i><h3>It cannot invent</h3><p>It answers only from what the provider holds: services, prices, doctors, that patient's own appointments and reports. When the data is not there, it says so and points to the front desk, instead of producing an answer that merely sounds right.</p></div>
+        <div><i class="bi bi-file-earmark-text"></i><h3>It explains a report</h3><p>The patient opens their PDF report and gets it back in plain language, with the reference ranges. It does not diagnose and does not advise — it says what each value means and when to see the doctor.</p></div>
+        <div><i class="bi bi-hdd-rack"></i><h3>It never leaves the building</h3><p>It runs on in-house embeddings, inside the provider's own database. No call to an external model, no fee per question, and no patient data leaves the clinic's server.</p></div>
+        <div><i class="bi bi-people"></i><h3>It works for the staff too</h3><p>The same assistant answers questions about how the provider works — which services exist, what they cost, which doctor works when — so the front desk does not have to know the price list by heart.</p></div>
       </div>
-      <figcaption><b>Every answer stands on something</b> — a service from the price list, that patient's appointment, or their own report; never on anything else.</figcaption>
-    </figure>
+      <figure>
+        <div class="telefon"><img src="slike/27-pomocnik.webp" width="778" height="1366" loading="lazy" alt="The assistant in the patient portal"></div>
+        <figcaption>Every answer stands on something — a service from the price list, that patient's appointment, or their own report; never on anything else.</figcaption>
+      </figure>
+    </div>
+    <div class="beleska"><b>Status</b>The assistant is in final testing and is not yet switched on in the demo; the screenshot is from an earlier trial.</div>
   </div>
 </section>
 
 <section class="odeljak" id="integracije">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Integrations and compliance</p>
-      <h2>The parts you do not get to opt out of</h2>
-      <p>
-        Fiscal receipts, national e-health export, insurance checks, laboratory analysers.
-        All of it is built and working — the readiness status is stated plainly below.
-      </p>
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Integrations and compliance</span>
+      <h2>The parts you do not get to opt out of.</h2>
+      <p class="uvod">Fiscal receipts, national e-health export, insurance checks, laboratory analysers. All of it is built and working — the readiness status is stated plainly below.</p>
     </div>
-
-    <div class="moduli">
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h3"/>
-        </svg>
-        <h3>Fiscal receipts and e-invoicing</h3>
-        <p>Two registers — front desk and laboratory. A receipt for every payment, instalments and collections at the patient's door included; a refund is its own document, and a payment without a receipt stays listed until it gets one. E-invoices for corporate clients.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 6h16v12H4z"/><path d="M4 10h16M9 14h6"/>
-        </svg>
-        <h3>E-health (FHIR)</h3>
-        <p>Data export in FHIR format, which national systems and other providers can read.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>
-        </svg>
-        <h3>Insurance check</h3>
-        <p>Coverage check before the appointment, so nothing is charged that the insurer would have paid.</p>
-      </article>
-      <article class="modul">
-        <svg class="ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M7 9h4M7 13h7M17 9v4"/>
-        </svg>
-        <h3>Laboratory analysers</h3>
-        <p>Two protocols, ASTM and HL7 (MLLP). A bridge beside the analyser keeps every result on disk until the server confirms it — nothing is lost when the internet drops, and no port is opened into the clinic. Results land in the order without retyping.</p>
-      </article>
+    <div class="integracije">
+      <div class="integracija"><i class="bi bi-receipt-cutoff"></i><h3>Fiscal receipts and e-invoicing</h3><p>Two registers — front desk and laboratory. A receipt for every payment, instalments and collections at the patient's door included; a refund is its own document, and a payment without a receipt stays listed until it gets one. E-invoices for corporate clients.</p></div>
+      <div class="integracija"><i class="bi bi-hospital"></i><h3>E-health (FHIR)</h3><p>Data export in FHIR format, which national systems and other providers can read.</p></div>
+      <div class="integracija"><i class="bi bi-shield-check"></i><h3>Insurance check</h3><p>Coverage is checked before the appointment, so nothing is charged that the insurer would have paid.</p></div>
+      <div class="integracija"><i class="bi bi-cpu"></i><h3>Laboratory analysers</h3><p>Two protocols, ASTM and HL7 (MLLP). A bridge beside the analyser keeps every result on disk until the server confirms it — nothing is lost when the internet drops, and no port is opened into the clinic. Results land in the order without retyping.</p></div>
     </div>
-
-    <p style="margin-top:20px;color:var(--tiho);font-size:.92rem;max-width:74ch">
-      <span class="mono" style="color:var(--pazi);font-size:.78rem;letter-spacing:.1em">STATUS · </span>
-      All four connections are built and run in sandbox mode; the analyser links are
-      tested against simulated instruments over a real network connection. Going live is
-      configuration — endpoint, key and certificate — not a rewrite. If configuration is
-      missing, the system will <b>not</b> quietly fall back to simulation: it raises an
-      error, so an invoice is never shown as fiscalised when it is not.
-    </p>
+    <div class="beleska"><b>Status</b>All four connections are built and run in sandbox mode; the analyser links are tested against simulated instruments over a real network connection. Going live is configuration — endpoint, key and certificate — not a rewrite. If configuration is missing, the system will not quietly fall back to simulation: it raises an error, so an invoice is never shown as fiscalised when it is not.</div>
   </div>
 </section>
 
-<section class="odeljak">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Data and security</p>
-      <h2>What happens to patient data</h2>
-      <p>These are the first questions any provider asks. Plain answers.</p>
+<section class="odeljak siv" id="bezbednost">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Security and confidentiality</span>
+      <h2>Medical data stays confidential.</h2>
+      <p class="uvod">Health data is the most sensitive data a clinic holds. So it is protected at every step, not just by a password.</p>
     </div>
-    <div class="tri">
-      <div class="karta">
-        <h3>The data is yours</h3>
-        <p>
-          The system is installed on your server and your domain, and stays there. We do not
-          hold your database or a copy of your data. Backups run on their own — encrypted,
-          the database and attachments together — and stay with you.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Encrypted at rest</h3>
-        <p>
-          Personal and medical fields are stored encrypted — addresses and laboratory
-          results included. Anyone who gets hold of the
-          database alone gets no names, no diagnoses and no phone numbers.
-        </p>
-      </div>
-      <div class="karta">
-        <h3>Access trail on charts</h3>
-        <p>
-          Every chart opened leaves a record: who, what and when. A report can be written
-          only once the appointment has started; opening it earlier takes a written reason,
-          which stays in the trail. Patient reviews are visible to management only.
-        </p>
-      </div>
+    <div class="bezbednost">
+      <div><i class="bi bi-shield-lock"></i><h3>Encrypted at rest</h3><p>Names, addresses, contacts, diagnoses and laboratory results are stored encrypted — anyone who gets hold of the database alone gets no names, no diagnoses and no phone numbers.</p></div>
+      <div><i class="bi bi-person-badge"></i><h3>Everyone sees their own</h3><p>Rights by role: the lab technician does not see finance, the front desk cannot change doctors' reports, a patient sees only their own appointments and results.</p></div>
+      <div><i class="bi bi-phone-vibrate"></i><h3>Two-factor sign-in</h3><p>A code from an app on the phone alongside the password, and automatic sign-out when the program is idle.</p></div>
+      <div><i class="bi bi-journal-check"></i><h3>Access trail on charts</h3><p>Every chart opened leaves a record: who, what and when. A report can be written only once the appointment has started; opening it earlier takes a written reason, which stays in the trail. Patient reviews are visible to management only.</p></div>
+      <div><i class="bi bi-cloud-check"></i><h3>Backups</h3><p>They run on their own — encrypted, the database and attachments together — and stay with you. A restore does not touch existing data until the copy has been verified.</p></div>
+      <div><i class="bi bi-hdd-network"></i><h3>The data is yours</h3><p>The system is installed on your server and your domain, and stays there. We do not hold your database or a copy of your data.</p></div>
     </div>
-    <p style="margin-top:20px;color:var(--tiho);font-size:.92rem;max-width:70ch">
-      <span class="mono" style="color:var(--tirkiz);font-size:.78rem;letter-spacing:.1em">UPDATES · </span>
-      Over 2,500 automated checks run before any change ships, and each run counts every
-      table before and after, so testing leaves no data behind. That does not mean bugs do
-      not exist — it means work done for one clinic does not break what already works at
-      another.
-    </p>
+    <div class="beleska"><b>Updates</b>Over 2,500 automated checks run before any change ships, and each run counts every table before and after, so testing leaves no data behind. That does not mean bugs do not exist — it means work done for one clinic does not break what already works at another.</div>
   </div>
 </section>
 
 <section class="odeljak" id="ekrani">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">Screens</p>
-      <h2>What it looks like in use</h2>
-      <p>Screens from the demo clinic — the same system, with invented doctors and patients.</p>
-      <p class="pod-akcija">The screenshots carry the provider's name, not ours: the system is installed under
-        the clinic's own mark, on its own server and at its own address.</p>
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Screens</span>
+      <h2>What it looks like in use.</h2>
+      <p class="uvod">Screens from the demo clinic — the same program, with invented doctors and patients. The screenshots carry the clinic's name, not ours: the system is installed under the clinic's own mark, on its own server and at its own address.</p>
     </div>
-
-    <!-- ═══ SLIKE ═══════════════════════════════════════════════════════
-         Ovde se NIŠTA ne menja. Snimci se samo prekopiraju u maat-innovations/slike/
-         pod imenima koja su upisana ispod i sami se pojave.
-
-         Slika stoji sakrivena dok se ne učita; tek onda sakrije prazno polje
-         ispod sebe. Ako datoteka još nije prekopirana, ostane uredno prazno
-         polje umesto polomljene sličice.
-
-         Šta tačno snimiti je u brend/slike-uputstvo.md                   -->
-
-    <div class="snimci">
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/01-naplata-po-izvorima.webp" alt="Revenue by source" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 01 · /finansije</span>
-            <b>Revenue by source</b>
-            <span>All rows with the total</span>
-          </div>
-        </div>
-        <figcaption><b>The clinic's entire turnover in one place</b> — by source, by payment method, with debts.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/02-trazi-vasu-odluku.webp" alt="Needs your decision" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 02 · /finansije</span>
-            <b>Needs your decision</b>
-            <span>The inconsistencies panel</span>
-          </div>
-        </div>
-        <figcaption><b>The system checks its own figures</b> — and flags money sitting on an appointment that was never closed.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/03-recepcija-dan.webp" alt="Front desk — the day in progress" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 03 · /service-dashboard</span>
-            <b>Front desk — the day in progress</b>
-            <span>Appointments with payment status</span>
-          </div>
-        </div>
-        <figcaption><b>The front desk sees the whole day</b> — who arrived, who is waiting, who paid and how much.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/04-recepcija-naplata.webp" alt="Payment at the front desk" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 04 · /service-dashboard</span>
-            <b>Payment at the front desk</b>
-            <span>Discount, payment method, partial</span>
-          </div>
-        </div>
-        <figcaption><b>Billing the way it actually happens</b> — part cash, part card, the rest when they come back for the report.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/05-lekar-termini.webp" alt="Doctor — the day and the reports" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 05 · /doctor-dashboard</span>
-            <b>Doctor — the day and the reports</b>
-            <span>Appointments by day, payout locked</span>
-          </div>
-        </div>
-        <figcaption><b>The doctor writes the findings and the therapy</b>, and the report reaches the patient in one click.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/06-lekar-lab-trend.webp" alt="A patient's laboratory trend" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 06 · /doctor-dashboard</span>
-            <b>Laboratory trend</b>
-            <span>One parameter across several reports</span>
-          </div>
-        </div>
-        <figcaption><b>A value over time, not a single number</b> — cholesterol across three reports, with the reference range.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/07-laboratorija-nalozi.webp" alt="Laboratory — the order queue" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 07 · /lab-dashboard</span>
-            <b>Laboratory — the order queue</b>
-            <span>Orders, samples and payment status</span>
-          </div>
-        </div>
-        <figcaption><b>The laboratory works and bills on its own</b> — including for patients who never saw a doctor.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/08-laboratorija-naplata.webp" alt="Partial payment in the laboratory" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 08 · /lab-dashboard</span>
-            <b>Partial payment</b>
-            <span>Deposit at the draw, the rest on the report</span>
-          </div>
-        </div>
-        <figcaption><b>A deposit at the blood draw, the rest on collection</b> — the order stands as partly paid.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/09-teren-misija.webp" alt="Field — an active visit" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 09 · /technician</span>
-            <b>Field — an active visit</b>
-            <span>Therapy issued from stock, call-out fee</span>
-          </div>
-        </div>
-        <figcaption><b>The field technician sees one visit</b> — what is administered, what was drawn from stock and what is owed to them.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/10-portal-pacijenta.webp" alt="Patient portal" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 10 · /</span>
-            <b>Patient portal</b>
-            <span>Appointments, reports and booking</span>
-          </div>
-        </div>
-        <figcaption><b>The patient has an account</b> — appointment history, results and PDF reports, without phoning the front desk.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/11-zakazivanje.webp" alt="Online booking" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 11 · /booking</span>
-            <b>Online booking</b>
-            <span>Through the patient's eyes, on a phone</span>
-          </div>
-        </div>
-        <figcaption><b>Patients book themselves</b> — free slots are computed from the doctor's real schedule.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/12-potvrda-mejlom.webp" alt="Appointment confirmation by e-mail" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 12 · e-mail</span>
-            <b>Appointment confirmation</b>
-            <span>With a calendar file and cancellation</span>
-          </div>
-        </div>
-        <figcaption><b>The confirmation arrives at once</b> — with a calendar button and one-click cancellation, no sign-in.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/13-komandni-centar.webp" alt="Command centre" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 13 · /komandni-centar</span>
-            <b>Command centre</b>
-            <span>The provider's whole day on one screen</span>
-          </div>
-        </div>
-        <figcaption><b>Management sees the provider, not a report about it</b> — the day as it runs, by department.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/14-finansije-pl.webp" alt="Profit by department" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 14 · /finansije</span>
-            <b>Profit by department</b>
-            <span>Revenue, cost and the difference</span>
-          </div>
-        </div>
-        <figcaption><b>Not only what was collected, but what was left</b> — by department, with labour and materials.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/15-hirurski-blok.webp" alt="Operating theatre" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 15 · /hirurgija</span>
-            <b>Operating theatre</b>
-            <span>Room schedule and case steps</span>
-          </div>
-        </div>
-        <figcaption><b>No admission without the anaesthetist's approval</b> — the system enforces it, it does not rely on an agreement.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/16-magacin.webp" alt="Stock room" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 16 · /magacin</span>
-            <b>Stock room</b>
-            <span>Balance, issues and consumption</span>
-          </div>
-        </div>
-        <figcaption><b>Materials leave stock where they were used</b> — in theatre, in the laboratory and in the field.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/17-oprema.webp" alt="Equipment and calibration" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 17 · /oprema</span>
-            <b>Equipment and calibration</b>
-            <span>Service dates and reports</span>
-          </div>
-        </div>
-        <figcaption><b>An instrument with an expired calibration shows up before the inspector does</b> — with the date and the report.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/18-audit-trag.webp" alt="Access trail" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 18 · /audit-trag</span>
-            <b>Access trail</b>
-            <span>Who opened a record, and when</span>
-          </div>
-        </div>
-        <figcaption><b>Every look into a medical record leaves a trace</b> — name, time and what was opened. The trace cannot be deleted from the application.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/19-ocene-pacijenata.webp" alt="Patient ratings" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 19 · /ocene</span>
-            <b>Patient ratings</b>
-            <span>Clinic and doctor kept apart</span>
-          </div>
-        </div>
-        <figcaption><b>Management sees the rating, the doctor it concerns does not</b> — clinic and doctor are rated separately, compared across periods.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/20-integracije.webp" alt="Integrations" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 20 · /integracije</span>
-            <b>Integrations</b>
-            <span>Analyser (ASTM), FHIR, fiscal receipts</span>
-          </div>
-        </div>
-        <figcaption><b>Analyser results arrive on their own</b> — no retyping, with FHIR export and a fiscal receipt.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/21-sajt-klinike.webp" alt="Clinic website" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 21 · /</span>
-            <b>Clinic website</b>
-            <span>Booking, prices and the portal</span>
-          </div>
-        </div>
-        <figcaption><b>The patient sees the clinic, not us</b> — website, booking and portal carry the provider's mark, at its own address.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/22-telefonsko-zakazivanje.webp" alt="Booking by phone" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 22 · /service-dashboard</span>
-            <b>Booking by phone</b>
-            <span>Free slots in front of the desk</span>
-          </div>
-        </div>
-        <figcaption><b>Callers are not an exception</b> — the desk books from the same schedule as the website, so there are no double bookings.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/23-zakazivanje-podaci.webp" alt="Booking — details" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 23 · /booking</span>
-            <b>Booking — details</b>
-            <span>The last step, no account</span>
-          </div>
-        </div>
-        <figcaption><b>A patient without an account books the same way</b> — details go in at the last step; registration is not a condition.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/24-obrazac-za-ocenu.webp" alt="The rating form" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 24 · /ocena</span>
-            <b>The rating form</b>
-            <span>What the patient gets after a visit</span>
-          </div>
-        </div>
-        <figcaption><b>The invitation goes out on its own, after the visit</b> — one click, no sign-in; only management sees the answer.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/25-gotov-nalaz.webp" alt="The finished report" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 25 · PDF</span>
-            <b>The finished report</b>
-            <span>Letterhead, clinic stamp and the doctor's signature</span>
-          </div>
-        </div>
-        <figcaption><b>The report comes out as a finished document</b> — clinic stamp, doctor's signature and proper diacritics, ready to send.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/26-zatvaranje-termina.webp" alt="Closing an appointment" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 26 · /doctor-dashboard</span>
-            <b>Closing an appointment</b>
-            <span>Services performed and the doctor's payout</span>
-          </div>
-        </div>
-        <figcaption><b>The doctor picks what was done, the system does the rest</b> — the payout locks; the clinic's billing stays with the front desk.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/28-cekaonica.webp" alt="Waiting-room screen" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 28 · /cekaonica</span>
-            <b>Waiting-room screen</b>
-            <span>A TV calls patients to rooms</span>
-          </div>
-        </div>
-        <figcaption><b>The patient sees their name and the room</b> — the TV calls the next patient the moment the room frees up; first name and initial only.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/29-nalaz-na-ekranu.webp" alt="Cardiac ultrasound report on screen" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 29 · /nalaz-na-ekranu</span>
-            <b>Report on screen</b>
-            <span>Cardiac ultrasound, readable from three metres</span>
-          </div>
-        </div>
-        <figcaption><b>The finished report on the consulting-room screen</b> — the same source as the PDF, large enough for doctor and patient to read together.</figcaption>
-      </figure>
-      <figure class="snimak">
-        <div class="ram">
-          <img src="slike/30-kasa-smena.webp" alt="Till hand-over at the end of a shift" hidden
-               onload="this.hidden=false;this.nextElementSibling.hidden=true">
-          <div class="mesto">
-            <span class="sifra">SCREEN 30 · /service-dashboard</span>
-            <b>Till hand-over</b>
-            <span>Counted, left in the till, handed over</span>
-          </div>
-        </div>
-        <figcaption><b>A shift hands over the till by counting it</b> — the system knows what should be there, and a difference needs a written explanation.</figcaption>
-      </figure>
+    <div class="grupe" role="tablist" aria-label="Screens by area" hidden>
+      <button type="button" role="tab" data-grupa="recepcija">Front desk and booking<span>5</span></button>
+      <button type="button" role="tab" data-grupa="lekar">Doctor<span>5</span></button>
+      <button type="button" role="tab" data-grupa="laboratorija">Laboratory and field<span>4</span></button>
+      <button type="button" role="tab" data-grupa="pacijent">Patient and website<span>6</span></button>
+      <button type="button" role="tab" data-grupa="uprava">Management<span>6</span></button>
+      <button type="button" role="tab" data-grupa="ostalo">Theatre, stock, equipment<span>3</span></button>
     </div>
-
-    <div class="telefoni-glava">
-      <p class="oznaka">On the phone</p>
-      <h3>The same system in a pocket</h3>
-      <p>The field technician runs home visits from a phone; the laboratory and the patient do not need a desk either.</p>
-    </div>
-    <div class="telefoni">
-      <figure>
-        <div class="telefon-ram"><img src="slike/33-telefon-tehnicar.webp" alt="Field technician on a phone: the current home visit" loading="lazy" width="780" height="1688"></div>
-        <figcaption><b>Home visits</b> — the route, what is administered and what is collected at the door.</figcaption>
-      </figure>
-      <figure>
-        <div class="telefon-ram"><img src="slike/31-telefon-laboratorija.webp" alt="Laboratory orders on a phone" loading="lazy" width="780" height="1688"></div>
-        <figcaption><b>Laboratory</b> — orders, payment and sending results, one button per step.</figcaption>
-      </figure>
-      <figure>
-        <div class="telefon-ram"><img src="slike/32-telefon-pacijent.webp" alt="Patient profile on a phone: appointments and reports" loading="lazy" width="780" height="1688"></div>
-        <figcaption><b>The patient</b> — appointments, reports and cancelling without a phone call.</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section class="odeljak" id="pricing">
-  <div class="okvir">
-    <div class="odeljak-glava uski">
-      <p class="oznaka">How we charge</p>
-      <h2>A software licence, and nothing beyond it</h2>
-      <p>
-        No percentage of your revenue and no hidden per-transaction fees. You know what you
-        pay in advance, however many patients you see.
-      </p>
-    </div>
-    <div class="tri">
-      <div class="karta">
-        <h3>Monthly or annual</h3>
-        <p>
-          A licence per practice, billed monthly or annually. The price depends on which
-          modules you use, not on how much you earned.
-        </p>
+    <div class="galerija-grupa" data-grupa="recepcija" role="tabpanel">
+      <h3>Front desk and booking</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="slike/03-recepcija-dan.webp" width="1600" height="1000" loading="lazy" alt="Front desk — the day in progress"></div><figcaption><b>Front desk — the day in progress</b>The front desk sees the whole day — who arrived, who is waiting, who paid and how much.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/22-telefonsko-zakazivanje.webp" width="1600" height="1000" loading="lazy" alt="Booking by phone"></div><figcaption><b>Booking by phone</b>Callers are not an exception — the desk books from the same schedule as the website, so there are no double bookings.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/04-recepcija-naplata.webp" width="1600" height="1000" loading="lazy" alt="Payment at the front desk"></div><figcaption><b>Payment at the front desk</b>Billing the way it actually happens — part cash, part card, the rest when they come back for the report.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/30-kasa-smena.webp" width="1600" height="1000" loading="lazy" alt="Till hand-over at the end of a shift"></div><figcaption><b>Till hand-over at the end of a shift</b>A shift hands over the till by counting it — the system knows what should be there, and a difference needs a written explanation.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/12-potvrda-mejlom.webp" width="1600" height="1000" loading="lazy" alt="Appointment confirmation by e-mail"></div><figcaption><b>Appointment confirmation by e-mail</b>The confirmation arrives at once — with a calendar button and one-click cancellation, no sign-in.</figcaption></figure>
       </div>
-      <div class="karta">
-        <h3>No cut of your revenue</h3>
-        <p>
-          We take no share of your income and charge nothing per appointment, per report or
-          per invoice. More work for you does not mean a bigger bill from us.
-        </p>
+    </div>
+    <div class="galerija-grupa" data-grupa="lekar" role="tabpanel">
+      <h3>Doctor</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="slike/05-lekar-termini.webp" width="1600" height="1000" loading="lazy" alt="Doctor — the day and the reports"></div><figcaption><b>Doctor — the day and the reports</b>The doctor writes the findings and the therapy, and the report reaches the patient in one click.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/26-zatvaranje-termina.webp" width="1600" height="1000" loading="lazy" alt="Closing an appointment"></div><figcaption><b>Closing an appointment</b>The doctor picks what was done, the system does the rest — the payout locks; the clinic's billing stays with the front desk.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/25-gotov-nalaz.webp" width="1600" height="1000" loading="lazy" alt="The finished report"></div><figcaption><b>The finished report</b>The report comes out as a finished document — clinic stamp, doctor's signature and proper diacritics, ready to send.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/29-nalaz-na-ekranu.webp" width="1600" height="1000" loading="lazy" alt="Cardiac ultrasound report on screen"></div><figcaption><b>Cardiac ultrasound report on screen</b>The finished report on the consulting-room screen — the same source as the PDF, large enough for doctor and patient to read together.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/06-lekar-lab-trend.webp" width="1600" height="1000" loading="lazy" alt="A patient's laboratory trend"></div><figcaption><b>A patient's laboratory trend</b>A value over time, not a single number — cholesterol across three reports, with the reference range.</figcaption></figure>
       </div>
-      <div class="karta">
-        <h3>Money never passes through us</h3>
-        <p>
-          Patients pay you, at your own till and your own card terminal. The system only keeps
-          the record of who paid what, how and when. We never touch your money or your bank
-          account.
-        </p>
+    </div>
+    <div class="galerija-grupa" data-grupa="laboratorija" role="tabpanel">
+      <h3>Laboratory and field</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="slike/07-laboratorija-nalozi.webp" width="1600" height="1000" loading="lazy" alt="Laboratory — the order queue"></div><figcaption><b>Laboratory — the order queue</b>The laboratory works and bills on its own — including for patients who never saw a doctor.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/08-laboratorija-naplata.webp" width="1600" height="1000" loading="lazy" alt="Partial payment in the laboratory"></div><figcaption><b>Partial payment in the laboratory</b>A deposit at the blood draw, the rest on collection — the order stands as partly paid.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/20-integracije.webp" width="1600" height="1000" loading="lazy" alt="Integrations"></div><figcaption><b>Integrations</b>Analyser results arrive on their own — no retyping, with FHIR export and a fiscal receipt.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/09-teren-misija.webp" width="1600" height="1000" loading="lazy" alt="Field — an active visit"></div><figcaption><b>Field — an active visit</b>The field technician sees one visit — what is administered, what was drawn from stock and what is owed to them.</figcaption></figure>
+      </div>
+    </div>
+    <div class="galerija-grupa" data-grupa="pacijent" role="tabpanel">
+      <h3>Patient and website</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="slike/21-sajt-klinike.webp" width="1600" height="1000" loading="lazy" alt="Clinic website"></div><figcaption><b>Clinic website</b>The patient sees the clinic, not us — website, booking and portal carry the provider's mark, at its own address.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/11-zakazivanje.webp" width="1600" height="1000" loading="lazy" alt="Online booking"></div><figcaption><b>Online booking</b>Patients book themselves — free slots are computed from the doctor's real schedule.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/23-zakazivanje-podaci.webp" width="1600" height="1000" loading="lazy" alt="Booking — details"></div><figcaption><b>Booking — details</b>A patient without an account books the same way — details go in at the last step; registration is not a condition.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/10-portal-pacijenta.webp" width="1600" height="1000" loading="lazy" alt="Patient portal"></div><figcaption><b>Patient portal</b>The patient has an account — appointment history, results and PDF reports, without phoning the front desk.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/24-obrazac-za-ocenu.webp" width="1600" height="1000" loading="lazy" alt="The rating form"></div><figcaption><b>The rating form</b>The invitation goes out on its own, after the visit — one click, no sign-in; only management sees the answer.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/28-cekaonica.webp" width="1600" height="1000" loading="lazy" alt="Waiting-room screen"></div><figcaption><b>Waiting-room screen</b>The patient sees their name and the room — the TV calls the next patient the moment the room frees up; first name and initial only.</figcaption></figure>
+      </div>
+    </div>
+    <div class="galerija-grupa" data-grupa="uprava" role="tabpanel">
+      <h3>Management</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="slike/13-komandni-centar.webp" width="1600" height="1000" loading="lazy" alt="Command centre"></div><figcaption><b>Command centre</b>Management sees the provider, not a report about it — the day as it runs, by department.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/01-naplata-po-izvorima.webp" width="1600" height="1000" loading="lazy" alt="Revenue by source"></div><figcaption><b>Revenue by source</b>The clinic's entire turnover in one place — by source, by payment method, with debts.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/02-trazi-vasu-odluku.webp" width="1600" height="1000" loading="lazy" alt="Needs your decision"></div><figcaption><b>Needs your decision</b>The system checks its own figures — and flags money sitting on an appointment that was never closed.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/14-finansije-pl.webp" width="1600" height="1000" loading="lazy" alt="Profit by department"></div><figcaption><b>Profit by department</b>Not only what was collected, but what was left — by department, with labour and materials.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/19-ocene-pacijenata.webp" width="1600" height="1000" loading="lazy" alt="Patient ratings"></div><figcaption><b>Patient ratings</b>Management sees the rating, the doctor it concerns does not — clinic and doctor are rated separately, compared across periods.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/18-audit-trag.webp" width="1600" height="1000" loading="lazy" alt="Access trail"></div><figcaption><b>Access trail</b>Every look into a medical record leaves a trace — name, time and what was opened. The trace cannot be deleted from the application.</figcaption></figure>
+      </div>
+    </div>
+    <div class="galerija-grupa" data-grupa="ostalo" role="tabpanel">
+      <h3>Theatre, stock, equipment</h3>
+      <div class="galerija">
+        <figure><div class="prozor"><img src="slike/15-hirurski-blok.webp" width="1600" height="1000" loading="lazy" alt="Operating theatre"></div><figcaption><b>Operating theatre</b>No admission without the anaesthetist's approval — the system enforces it, it does not rely on an agreement.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/16-magacin.webp" width="1600" height="1000" loading="lazy" alt="Stock room"></div><figcaption><b>Stock room</b>Materials leave stock where they were used — in theatre, in the laboratory and in the field.</figcaption></figure>
+        <figure><div class="prozor"><img src="slike/17-oprema.webp" width="1600" height="1000" loading="lazy" alt="Equipment and calibration"></div><figcaption><b>Equipment and calibration</b>An instrument with an expired calibration shows up before the inspector does — with the date and the report.</figcaption></figure>
       </div>
     </div>
   </div>
 </section>
 
-<section class="odeljak" id="kontakt">
-  <div class="okvir kontakt">
-    <div>
-      <p class="oznaka">Contact</p>
-      <h2 style="font-size:clamp(1.5rem,2.8vw,2.05rem);margin:10px 0 12px">See the system on your own data</h2>
-      <p style="color:var(--tiho);max-width:56ch">
-        The walkthrough takes half an hour. If you like, we import your service list and
-        price list first, so you are looking at your own figures rather than a demo.
-      </p>
-      <div class="akcije">
-        <!-- Kad kupite domen, zamenite adresu sa resad@maat-innovations.com -->
-        <a class="dugme" href="mailto:resadspahovic94@gmail.com?subject=MAAT%20INNOVATIONS%20%E2%80%94%20walkthrough">
-          Send a message
-        </a>
-        <a class="dugme tiho" data-demo hidden>Try the demo</a>
-        <a class="dugme tiho" href="https://resadspahovic.com">resadspahovic.com</a>
-      </div>
+<section class="odeljak siv" id="proba">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">How to try it</span>
+      <h2>Walk into the clinic as any member of staff.</h2>
+      <p class="uvod">The demo is a complete clinic with invented doctors and patients. Try anything — it all resets every night. The demo itself is in Serbian.</p>
     </div>
-
-    <aside class="vizit">
-      <dl>
-        <dt>Who</dt>
-        <dd>Rešad Spahović<br><span style="color:var(--tiho);font-size:.88rem">MAAT INNOVATIONS — software for healthcare providers</span></dd>
-        <dt>Email</dt>
-        <dd><a href="mailto:resadspahovic94@gmail.com">resadspahovic94@gmail.com</a></dd>
-        <dt>Website</dt>
-        <dd><a href="https://resadspahovic.com">resadspahovic.com</a></dd>
-        <dt>Deployment</dt>
-        <dd>On your server and your domain — we do not hold your data</dd>
-      </dl>
-    </aside>
+    <div class="koraci">
+      <div class="korak"><h3>Open the demo</h3><p>The <a href="http://localhost:8090/demo">demo</a> page lists every trial account and the password. No sign-up, nothing to install.</p></div>
+      <div class="korak"><h3>Pick a role</h3><p>Front desk, doctor, laboratory, technician, management or patient — one click and you are in.</p></div>
+      <div class="korak"><h3>Book as a patient</h3><p>On the <a href="http://localhost:8090/">clinic's website</a> the price list comes from the program, and a booking needs nobody's help — it shows up at once for the front desk and the doctor.</p></div>
+      <div class="korak"><h3>Check the mail too</h3><p>The “Otvori sanduče” (open mailbox) button shows the e-mails a patient would get: confirmations, reminders, results.</p></div>
+    </div>
+    <div class="obilazak">
+      <div>
+        <h3>A suggested 10-minute tour</h3>
+        <p class="vazno">A report is written during the appointment, as in a real consulting room — pick an appointment that has already started. Others may be trying the demo at the same time.</p>
+      </div>
+      <ol>
+        <li><b>Front desk</b><span>“Telefonsko zakazivanje” (phone booking) — book a patient with the cardiologist.</span></li>
+        <li><b>Doctor</b><span>Open today's appointment, write the report and send the patient to the laboratory.</span></li>
+        <li><b>Laboratory</b><span>Open the order, print the label and confirm the analyser results.</span></li>
+        <li><b>Front desk</b><span>“Neplaćeni pregledi” (unpaid examinations) — take the payment; it gets a fiscal receipt.</span></li>
+        <li><b>Management</b><span>Command centre and finance — the same day seen through the owner's eyes.</span></li>
+      </ol>
+    </div>
   </div>
 </section>
 
-</main>
+<section class="odeljak">
+  <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Getting started</span>
+      <h2>Your clinic, your data.</h2>
+    </div>
+    <div class="uvodjenje">
+      <div><i class="bi bi-file-earmark-spreadsheet"></i><div><h3>Price lists from your spreadsheets</h3><p>Services, prices and durations are imported from your Excel sheets — nothing is retyped.</p></div></div>
+      <div><i class="bi bi-sliders"></i><div><h3>Set up your way</h3><p>Departments, doctors, rooms, working hours, fees and tax labels are all set in the program itself.</p></div></div>
+      <div><i class="bi bi-cpu"></i><div><h3>Laboratory analysers</h3><p>They connect through a small program on the PC beside the analyser, which keeps results even when the internet goes down.</p></div></div>
+      <div><i class="bi bi-window"></i><div><h3>Nothing to install</h3><p>It runs in the browser, on the computers, tablets and phones the clinic already has.</p></div></div>
+    </div>
+    <div class="zaglavlje" style="margin-top:72px" id="cena">
+      <span class="nadnaslov">How we charge</span>
+      <h2>A software licence, and nothing beyond it.</h2>
+      <p class="uvod">No percentage of your revenue and no hidden per-transaction fees. You know what you pay in advance, however many patients you see.</p>
+    </div>
+    <div class="cene">
+      <div class="cena"><i class="bi bi-calendar-month"></i><h3>Monthly or annual</h3><p>A licence per practice, billed monthly or annually. The price depends on which modules you use, not on how much you earned.</p></div>
+      <div class="cena"><i class="bi bi-percent"></i><h3>No cut of your revenue</h3><p>We take no share of your income and charge nothing per appointment, per report or per invoice. More work for you does not mean a bigger bill from us.</p></div>
+      <div class="cena"><i class="bi bi-bank"></i><h3>Money never passes through us</h3><p>Patients pay you, at your own till and your own card terminal. The system only keeps the record of who paid what, how and when. We never touch your money or your bank account.</p></div>
+    </div>
+  </div>
+</section>
 
-<footer class="dno">
-  <div class="okvir dno-red">
-    <span>© 2026 MAAT INNOVATIONS · Rešad Spahović</span>
-    <span class="mono">clinic management software</span>
+<section class="odeljak siv" id="kontakt">
+  <div class="sirina">
+    <div class="poziv">
+      <div>
+        <span class="nadnaslov">Contact</span>
+        <h2 style="margin-top:14px">See the system on your own data.</h2>
+        <p>The walkthrough takes half an hour. If you like, we import your service list and price list first, so you are looking at your own figures rather than a demo.</p>
+        <dl class="kontakt">
+          <div><dt>Who</dt><dd>Rešad Spahović, MAAT INNOVATIONS — software for healthcare providers</dd></div>
+          <div><dt>E-mail</dt><dd><a href="mailto:resadspahovic94@gmail.com">resadspahovic94@gmail.com</a></dd></div>
+          <div><dt>Website</dt><dd><a href="https://resadspahovic.com">resadspahovic.com</a></dd></div>
+          <div><dt>Deployment</dt><dd>on your server and your domain</dd></div>
+        </dl>
+      </div>
+      <div class="dugmad">
+        <a class="dugme glavno" href="mailto:resadspahovic94@gmail.com?subject=MAAT%20INNOVATIONS%20%E2%80%94%20walkthrough"><i class="bi bi-envelope"></i>Send a message</a>
+        <a class="dugme sporedno" href="http://localhost:8090/demo"><i class="bi bi-play-circle"></i>Try the demo</a>
+        <a class="dugme sporedno" href="http://localhost:8090/"><i class="bi bi-globe2"></i>The demo clinic's website</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="sirina">
+    <span class="podnozje-znak"><svg class="maat-talas mali" viewBox="0 0 468.5 108.5" aria-hidden="true"><g fill="none" stroke="url(#maatPlava)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 56.2 L52.2 56.2 L86.2 6.2 L126.2 102.2 L166.2 6.2 L206.2 102.2 L246.2 6.2 L286.2 102.2 L326.2 6.2 L366.2 102.2 L406.2 6.2 L462.2 6.2"/></g></svg><span>© 2026 MAAT INNOVATIONS · Rešad Spahović · <a href="http://localhost:8090/demo">Demo</a> · <a href="https://resadspahovic.com">resadspahovic.com</a></span></span>
+    <span>“Demo Klinika” is invented; the doctors, patients and data in the demo are not real.</span>
   </div>
 </footer>
 
+<dialog class="uvecano" id="uvecano" aria-label="Enlarged screenshot">
+  <img alt="">
+  <p></p>
+</dialog>
 
 <script>
-  /* DEMO: adresa se upisuje SAMO u <meta name="maat-demo"> u zaglavlju (obe jezicke verzije).
-     Dok je prazna, dugmad za demo se ne prikazuju, a „Book a walkthrough" ostaje glavno dugme. */
+  // Galerija po grupama: dugmad iznad, vidi se jedna grupa. Bez skripte — sve grupe jedna ispod druge.
   (function () {
-    var meta = document.querySelector('meta[name="maat-demo"]');
-    var adresa = meta ? meta.getAttribute('content').trim() : '';
-    if (!adresa) {
-      document.querySelectorAll('[data-bez-demoa-glavno]').forEach(function (el) { el.classList.remove('tiho'); });
-      return;
+    var traka = document.querySelector('.grupe');
+    if (!traka) { return; }
+    var dugmad = Array.prototype.slice.call(traka.querySelectorAll('button'));
+    var grupe = document.querySelectorAll('.galerija-grupa');
+    function pokazi(ime) {
+      dugmad.forEach(function (d) {
+        var izabrano = d.getAttribute('data-grupa') === ime;
+        d.setAttribute('aria-selected', izabrano ? 'true' : 'false');
+        d.tabIndex = izabrano ? 0 : -1;
+      });
+      grupe.forEach(function (g) { g.hidden = g.getAttribute('data-grupa') !== ime; });
     }
-    document.querySelectorAll('[data-demo]').forEach(function (el) {
-      el.hidden = false;
-      if (el.tagName === 'A') { el.href = adresa; el.target = '_blank'; el.rel = 'noopener'; }
+    dugmad.forEach(function (d, i) {
+      d.addEventListener('click', function () { pokazi(d.getAttribute('data-grupa')); });
+      d.addEventListener('keydown', function (e) {
+        var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!k) { return; }
+        var sledece = dugmad[(i + k + dugmad.length) % dugmad.length];
+        sledece.focus();
+        pokazi(sledece.getAttribute('data-grupa'));
+      });
     });
+    traka.hidden = false;
+    document.getElementById('ekrani').classList.add('ima-grupe');
+    pokazi(dugmad[0].getAttribute('data-grupa'));
+  })();
+
+  // Klik na sliku ekrana — uvećano preko cele strane; klik ili Esc zatvara.
+  (function () {
+    var prozor = document.getElementById('uvecano');
+    if (!prozor || typeof prozor.showModal !== 'function') { return; }
+    var slika = prozor.querySelector('img');
+    var opis = prozor.querySelector('p');
+    document.querySelectorAll('.prozor img, .telefon img, .ekran img').forEach(function (img) {
+      img.addEventListener('click', function () {
+        slika.src = img.currentSrc || img.src;
+        slika.alt = img.alt;
+        opis.textContent = img.alt;
+        prozor.showModal();
+      });
+    });
+    prozor.addEventListener('click', function () { prozor.close(); });
   })();
 </script>
 </body>
