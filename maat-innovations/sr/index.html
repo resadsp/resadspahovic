@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- DEMO: upisite adresu dema (npr. https://demo.vasdomen.rs/demo) i dugmad „Probajte demo" se pojave. -->
+<meta name="maat-demo" content="">
 <title>MAAT INNOVATIONS — softver za vođenje klinike</title>
 <meta name="description" content="Termini, lekari, laboratorija, hirurški blok, kućne posete i naplata u jednom sistemu. Ako je pregled naplaćen, naplaćen je na svakom ekranu.">
 <meta property="og:title" content="MAAT INNOVATIONS — softver za vođenje klinike">
@@ -364,6 +366,31 @@ figcaption b{color:var(--tekst);font-weight:600}
 @media (prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}
 }
+
+/* ── 04.10.2026: svetlo — bez tamnih traka i skoro crne dugmadi (za klinike: „nikako crna").
+   Tamna tema koju posetilac izabere na svom racunaru ostaje. ─────────────────────────── */
+:root{--traka:#EAF2FA;--traka-tekst:#16304A;--traka-tiho:#5C7690;--traka-linija:#DAE6EF;--dugme:#1F6FC4;--dugme-h:#185BA3}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--traka:#070F1F;--traka-tekst:#EAF3F8;--traka-tiho:#93B2C9;--traka-linija:#1B3760;--dugme:#3A8DE8;--dugme-h:#5AA2EE}
+}
+:root[data-theme="dark"]{--traka:#070F1F;--traka-tekst:#EAF3F8;--traka-tiho:#93B2C9;--traka-linija:#1B3760;--dugme:#3A8DE8;--dugme-h:#5AA2EE}
+.razlog h3{color:var(--traka-tekst)}
+.dugme{background:var(--dugme);border-color:var(--dugme)}
+.dugme:hover{background:var(--dugme-h)}
+.dugme.tiho{background:transparent}
+[data-demo][hidden]{display:none!important}
+
+/* ── Na telefonu ──────────────────────────────────────────────────────── */
+.telefoni-glava{margin:54px 0 22px;max-width:62ch}
+.telefoni-glava h3{font-size:1.3rem;margin:8px 0 8px}
+.telefoni-glava p{color:var(--tiho)}
+.telefoni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;max-width:900px}
+.telefoni figure{margin:0}
+.telefon-ram{background:var(--povrsina);border:1px solid var(--linija);border-radius:30px;padding:9px;box-shadow:var(--senka)}
+.telefon-ram img{display:block;width:100%;height:auto;border-radius:22px;border:1px solid var(--linija)}
+.telefoni figcaption{margin-top:14px;font-size:.92rem;color:var(--tiho)}
+.telefoni figcaption b{color:var(--tekst)}
+@media (max-width:760px){.telefoni{grid-template-columns:minmax(0,1fr);max-width:320px}}
 </style>
 </head>
 <body>
@@ -388,6 +415,7 @@ figcaption b{color:var(--tekst);font-weight:600}
       <a href="#pomocnik">Pomoćnik</a>
       <a href="#integracije">Integracije</a>
       <a href="#ekrani">Ekrani</a>
+      <a data-demo hidden>Demo</a>
       <a href="#placanje">Kako se plaća</a>
     </nav>
     <a class="jezik" href="../" hreflang="en">English</a>
@@ -408,8 +436,8 @@ figcaption b{color:var(--tekst);font-weight:600}
         iz Vaših podataka umesto da izmišlja.
       </p>
       <div class="akcije">
-        <a class="dugme" href="#kontakt">Zakažite prikaz</a>
-        <a class="dugme tiho" href="#pokriva">Šta sistem pokriva</a>
+        <a class="dugme" data-demo hidden>Probajte demo &rarr;</a>
+        <a class="dugme tiho" data-bez-demoa-glavno href="#kontakt">Zakažite prikaz</a>
       </div>
       <p class="pod-akcija">Prikaz traje pola sata, na Vašim podacima ili na demo bazi.</p>
       <ul class="poverenje mono" aria-label="Standardi i propisi">
@@ -446,7 +474,7 @@ figcaption b{color:var(--tekst);font-weight:600}
       <div class="redovi">
         <div class="red">
           <span class="kada mono">08:00</span>
-          <span class="sta">M. P.<br><i>Kardiologija · dr Jovanović</i></span>
+          <span class="sta">M. P.<br><i>Kardiologija · dr Kovačević</i></span>
           <span class="gde">Ordinacija 3</span>
           <span class="para mono">6.000</span>
           <span class="stanje gotovo">Naplaćeno</span>
@@ -460,14 +488,14 @@ figcaption b{color:var(--tekst);font-weight:600}
         </div>
         <div class="red">
           <span class="kada mono">09:00</span>
-          <span class="sta">A. H.<br><i>Interna · dr Hodžić</i></span>
+          <span class="sta">A. H.<br><i>Interna · dr Stojanović</i></span>
           <span class="gde">Ordinacija 1</span>
           <span class="para mono">4.800</span>
           <span class="stanje utoku">Pregled u toku</span>
         </div>
         <div class="red">
           <span class="kada mono">09:30</span>
-          <span class="sta">N. K.<br><i>Hirurgija · septoplastika</i></span>
+          <span class="sta">N. K.<br><i>Hirurgija · ablacija vena</i></span>
           <span class="gde">Sala 2</span>
           <span class="para mono">96.000</span>
           <span class="stanje ceka">Čeka anesteziologa</span>
@@ -481,7 +509,7 @@ figcaption b{color:var(--tekst);font-weight:600}
         </div>
         <div class="red">
           <span class="kada mono">10:30</span>
-          <span class="sta">J. R.<br><i>Ultrazvuk · dr Begić</i></span>
+          <span class="sta">J. R.<br><i>Ultrazvuk vena · dr Lukić</i></span>
           <span class="gde">Ordinacija 2</span>
           <span class="para mono duguje">3.600</span>
           <span class="stanje ceka">Doplata pri odlasku</span>
@@ -914,7 +942,7 @@ figcaption b{color:var(--tekst);font-weight:600}
     </div>
     <p style="margin-top:20px;color:var(--tiho);font-size:.92rem;max-width:70ch">
       <span class="mono" style="color:var(--tirkiz);font-size:.78rem;letter-spacing:.1em">NADOGRADNJA · </span>
-      Pre svake izmene sistema pokrene se preko 2.400 automatskih provera, a svako
+      Pre svake izmene sistema pokrene se preko 2.500 automatskih provera, a svako
       pokretanje prebroji svaku tabelu pre i posle, pa provera ne ostavlja podatke za
       sobom. To ne znači da greške ne postoje — znači da izmena rađena za jednu ustanovu ne obara ono što već
       radi kod druge.
@@ -927,7 +955,7 @@ figcaption b{color:var(--tekst);font-weight:600}
     <div class="odeljak-glava uski">
       <p class="oznaka">Ekrani</p>
       <h2>Kako to izgleda u radu</h2>
-      <p>Slike iz sistema koji radi — bez podataka pravih pacijenata.</p>
+      <p>Slike iz demo klinike — isti sistem, sa izmišljenim lekarima i pacijentima.</p>
       <p class="pod-akcija">Na snimcima stoji ime ustanove, a ne naše: sistem se
         postavlja pod znakom klinike, na njenom serveru i njenom adresom.</p>
     </div>
@@ -1292,6 +1320,26 @@ figcaption b{color:var(--tekst);font-weight:600}
         <figcaption><b>Smena predaje kasu brojanjem</b> — sistem zna koliko treba da bude, a razlika traži pisano objašnjenje.</figcaption>
       </figure>
     </div>
+
+    <div class="telefoni-glava">
+      <p class="oznaka">Na telefonu</p>
+      <h3>Isti sistem u džepu</h3>
+      <p>Terenski tehničar vodi kućne posete sa telefona; ni laboratoriji ni pacijentu ne treba računar.</p>
+    </div>
+    <div class="telefoni">
+      <figure>
+        <div class="telefon-ram"><img src="../slike/33-telefon-tehnicar.webp" alt="Terenski tehničar na telefonu: trenutna kućna poseta" loading="lazy" width="780" height="1688"></div>
+        <figcaption><b>Kućne posete</b> — ruta, šta se daje i šta se naplaćuje na vratima.</figcaption>
+      </figure>
+      <figure>
+        <div class="telefon-ram"><img src="../slike/31-telefon-laboratorija.webp" alt="Laboratorijski nalozi na telefonu" loading="lazy" width="780" height="1688"></div>
+        <figcaption><b>Laboratorija</b> — nalozi, naplata i slanje nalaza, jedno dugme po koraku.</figcaption>
+      </figure>
+      <figure>
+        <div class="telefon-ram"><img src="../slike/32-telefon-pacijent.webp" alt="Profil pacijenta na telefonu: termini i izveštaji" loading="lazy" width="780" height="1688"></div>
+        <figcaption><b>Pacijent</b> — termini, izveštaji i otkazivanje bez poziva.</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -1345,6 +1393,7 @@ figcaption b{color:var(--tekst);font-weight:600}
         <a class="dugme" href="mailto:resadspahovic94@gmail.com?subject=MAAT%20INNOVATIONS%20%E2%80%94%20zakazivanje%20prikaza">
           Pošaljite poruku
         </a>
+        <a class="dugme tiho" data-demo hidden>Probajte demo</a>
         <a class="dugme tiho" href="https://resadspahovic.com">resadspahovic.com</a>
       </div>
     </div>
@@ -1373,5 +1422,22 @@ figcaption b{color:var(--tekst);font-weight:600}
   </div>
 </footer>
 
+
+<script>
+  /* DEMO: adresa se upisuje SAMO u <meta name="maat-demo"> u zaglavlju (obe jezicke verzije).
+     Dok je prazna, dugmad za demo se ne prikazuju, a „Zakažite prikaz" ostaje glavno dugme. */
+  (function () {
+    var meta = document.querySelector('meta[name="maat-demo"]');
+    var adresa = meta ? meta.getAttribute('content').trim() : '';
+    if (!adresa) {
+      document.querySelectorAll('[data-bez-demoa-glavno]').forEach(function (el) { el.classList.remove('tiho'); });
+      return;
+    }
+    document.querySelectorAll('[data-demo]').forEach(function (el) {
+      el.hidden = false;
+      if (el.tagName === 'A') { el.href = adresa; el.target = '_blank'; el.rel = 'noopener'; }
+    });
+  })();
+</script>
 </body>
 </html>
