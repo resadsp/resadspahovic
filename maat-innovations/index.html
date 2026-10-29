@@ -104,8 +104,8 @@
     .klijent-mesto { margin-top: 12px; color: var(--muted); font-size: .9rem; }
     .klijent-kartica h2 { margin: 8px 0 10px; }
     .klijent-kartica p { margin: 0; color: var(--text-2); }
-    .klijent-koristi { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
-    .klijent-koristi li { background: var(--accent-50); color: var(--accent-t); border-radius: 999px; padding: 6px 12px; font-size: .86rem; font-weight: 600; }
+    .klijent-koristi { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+    .klijent-koristi li { display: flex; align-items: center; justify-content: center; text-align: center; background: var(--accent-50); color: var(--accent-t); border-radius: 12px; padding: 7px 10px; font-size: .86rem; font-weight: 600; line-height: 1.3; }
     .brojka { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; box-shadow: var(--senka); }
     .brojka strong { display: block; font-size: 1.9rem; font-weight: 800; color: var(--title); letter-spacing: -0.03em; line-height: 1.1; }
     .brojka span { font-size: .9rem; color: var(--muted); }
@@ -255,6 +255,8 @@
     @media (max-width: 1140px) {
       .meni nav { gap: 18px; }
       .meni nav a.manje { display: none; }
+      .klijent-kartica { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+      .klijent-znak { max-width: 220px; }
     }
     @media (max-width: 980px) {
       .meni nav a:not(.dugme):not(.jezik) { display: none; }
@@ -269,6 +271,7 @@
       .odeljak { padding: 64px 0; }
     }
     @media (max-width: 640px) {
+      .klijent-koristi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .sirina { padding: 0 16px; }
       .vrh .sirina { padding-top: 40px; padding-bottom: 48px; }
       .vrh .dugmad .dugme { flex: 1 1 100%; }
