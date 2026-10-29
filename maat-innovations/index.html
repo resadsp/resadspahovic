@@ -98,7 +98,7 @@
     /* brojke */
     .brojke { background: var(--canvas); padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .brojke .sirina { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-    .klijent { padding: 56px 0 8px; }
+    .klijent { padding: 72px 0; }
     .klijent-kartica { display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: 40px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 32px 36px; box-shadow: var(--senka); }
     .klijent-znak img { display: block; width: 100%; height: auto; }
     .klijent-mesto { margin-top: 12px; color: var(--muted); font-size: .9rem; }
@@ -360,35 +360,6 @@
     <div class="brojka"><strong>8</strong><span>roles — from front desk to management</span></div>
     <div class="brojka"><strong>1,000+</strong><span>appointments in the demo clinic</span></div>
     <div class="brojka"><strong>0</strong><span>installs on staff computers</span></div>
-  </div>
-</section>
-
-<!-- PRVI KLIJENT (29.10.2026, uz pismenu saglasnost klinike). Samo ono što klinika STVARNO
-     koristi — fiskalizacija je kod njih isključena, pa je ovde nema. Slike ekrana su i dalje
-     iz demoa, nikad iz klinike. Citat dodati kad stigne od klinike (ispod spiska, isti par). -->
-<section class="klijent" id="u-radu" aria-label="Who uses it">
-  <div class="sirina">
-    <div class="klijent-kartica">
-      <div class="klijent-znak">
-        <a href="https://hayatmedic.rs" target="_blank" rel="noopener"><img src="slike/klijenti/hayat-medic.svg" width="250" height="45" alt="HAYAT Medic"></a>
-        <div class="klijent-mesto"><i class="bi bi-geo-alt" aria-hidden="true"></i> Novi Pazar, Serbia</div>
-      </div>
-      <div>
-        <span class="nadnaslov">In daily use</span>
-        <h2>HAYAT Medic runs on MAAT.</h2>
-        <p>A polyclinic and laboratory in Novi Pazar, Serbia. Since October 2026 its front desk, doctors, laboratory and management work in one program — from an appointment booked online to the report the laboratory issues.</p>
-        <ul class="klijent-koristi">
-          <li>Online booking</li>
-          <li>Patient charts</li>
-          <li>Front desk and billing</li>
-          <li>Cash desk by shift</li>
-          <li>Doctors' reports</li>
-          <li>Laboratory with analysers</li>
-          <li>Partner laboratories</li>
-          <li>Management and finance</li>
-        </ul>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -800,6 +771,35 @@
       <div class="dugmad">
         <a class="dugme glavno" href="mailto:resadspahovic94@gmail.com?subject=MAAT%20INNOVATIONS%20%E2%80%94%20walkthrough"><i class="bi bi-envelope"></i>Send a message</a>
         <a class="dugme sporedno" href="https://demo.resadspahovic.com/zahtev?lang=en"><i class="bi bi-play-circle"></i>Request demo access</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRVI KLIJENT (29.10.2026, uz pismenu saglasnost klinike). Samo ono što klinika STVARNO
+     koristi — fiskalizacija je kod njih isključena, pa je ovde nema. Slike ekrana su i dalje
+     iz demoa, nikad iz klinike. Citat dodati kad stigne od klinike (ispod spiska, isti par). -->
+<section class="klijent" id="u-radu" aria-label="Who uses it">
+  <div class="sirina">
+    <div class="klijent-kartica">
+      <div class="klijent-znak">
+        <a href="https://hayatmedic.rs" target="_blank" rel="noopener"><img src="slike/klijenti/hayat-medic.svg" width="250" height="45" alt="HAYAT Medic"></a>
+        <div class="klijent-mesto"><i class="bi bi-geo-alt" aria-hidden="true"></i> Novi Pazar, Serbia</div>
+      </div>
+      <div>
+        <span class="nadnaslov">In daily use</span>
+        <h2>HAYAT Medic runs on MAAT.</h2>
+        <p>A polyclinic and laboratory in Novi Pazar, Serbia. Since October 2026 its front desk, doctors, laboratory and management work in one program — from an appointment booked online to the report the laboratory issues.</p>
+        <ul class="klijent-koristi">
+          <li>Online booking</li>
+          <li>Patient charts</li>
+          <li>Front desk and billing</li>
+          <li>Cash desk by shift</li>
+          <li>Doctors' reports</li>
+          <li>Laboratory with analysers</li>
+          <li>Partner laboratories</li>
+          <li>Management and finance</li>
+        </ul>
       </div>
     </div>
   </div>

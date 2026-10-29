@@ -98,7 +98,7 @@
     /* brojke */
     .brojke { background: var(--canvas); padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .brojke .sirina { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-    .klijent { padding: 56px 0 8px; }
+    .klijent { padding: 72px 0; }
     .klijent-kartica { display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: 40px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 32px 36px; box-shadow: var(--senka); }
     .klijent-znak img { display: block; width: 100%; height: auto; }
     .klijent-mesto { margin-top: 12px; color: var(--muted); font-size: .9rem; }
@@ -360,35 +360,6 @@
     <div class="brojka"><strong>8</strong><span>uloga — od recepcije do uprave</span></div>
     <div class="brojka"><strong>1.000+</strong><span>termina u probnoj klinici</span></div>
     <div class="brojka"><strong>0</strong><span>instalacija na računarima osoblja</span></div>
-  </div>
-</section>
-
-<!-- PRVI KLIJENT (29.10.2026, uz pismenu saglasnost klinike). Samo ono što klinika STVARNO
-     koristi — fiskalizacija je kod njih isključena, pa je ovde nema. Slike ekrana su i dalje
-     iz demoa, nikad iz klinike. Citat dodati kad stigne od klinike (ispod spiska, isti par). -->
-<section class="klijent" id="u-radu" aria-label="Ko ga koristi">
-  <div class="sirina">
-    <div class="klijent-kartica">
-      <div class="klijent-znak">
-        <a href="https://hayatmedic.rs" target="_blank" rel="noopener"><img src="../slike/klijenti/hayat-medic.svg" width="250" height="45" alt="HAYAT Medic"></a>
-        <div class="klijent-mesto"><i class="bi bi-geo-alt" aria-hidden="true"></i> Novi Pazar</div>
-      </div>
-      <div>
-        <span class="nadnaslov">U stvarnom radu</span>
-        <h2>HAYAT Medic radi u MAAT-u.</h2>
-        <p>Poliklinika i laboratorija iz Novog Pazara. Od oktobra 2026. recepcija, lekari, laboratorija i uprava rade u istom programu — od termina zakazanog na sajtu do nalaza koji laboratorija izda.</p>
-        <ul class="klijent-koristi">
-          <li>Zakazivanje na sajtu</li>
-          <li>Kartoni pacijenata</li>
-          <li>Recepcija i naplata</li>
-          <li>Kasa po smenama</li>
-          <li>Izveštaji lekara</li>
-          <li>Laboratorija sa aparatima</li>
-          <li>Partnerske laboratorije</li>
-          <li>Uprava i finansije</li>
-        </ul>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -800,6 +771,35 @@
       <div class="dugmad">
         <a class="dugme glavno" href="mailto:resadspahovic94@gmail.com?subject=MAAT%20INNOVATIONS%20%E2%80%94%20zakazivanje%20prikaza"><i class="bi bi-envelope"></i>Pošaljite poruku</a>
         <a class="dugme sporedno" href="https://demo.resadspahovic.com/zahtev"><i class="bi bi-play-circle"></i>Zatražite pristup demou</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRVI KLIJENT (29.10.2026, uz pismenu saglasnost klinike). Samo ono što klinika STVARNO
+     koristi — fiskalizacija je kod njih isključena, pa je ovde nema. Slike ekrana su i dalje
+     iz demoa, nikad iz klinike. Citat dodati kad stigne od klinike (ispod spiska, isti par). -->
+<section class="klijent" id="u-radu" aria-label="Ko ga koristi">
+  <div class="sirina">
+    <div class="klijent-kartica">
+      <div class="klijent-znak">
+        <a href="https://hayatmedic.rs" target="_blank" rel="noopener"><img src="../slike/klijenti/hayat-medic.svg" width="250" height="45" alt="HAYAT Medic"></a>
+        <div class="klijent-mesto"><i class="bi bi-geo-alt" aria-hidden="true"></i> Novi Pazar</div>
+      </div>
+      <div>
+        <span class="nadnaslov">U stvarnom radu</span>
+        <h2>HAYAT Medic radi u MAAT-u.</h2>
+        <p>Poliklinika i laboratorija iz Novog Pazara. Od oktobra 2026. recepcija, lekari, laboratorija i uprava rade u istom programu — od termina zakazanog na sajtu do nalaza koji laboratorija izda.</p>
+        <ul class="klijent-koristi">
+          <li>Zakazivanje na sajtu</li>
+          <li>Kartoni pacijenata</li>
+          <li>Recepcija i naplata</li>
+          <li>Kasa po smenama</li>
+          <li>Izveštaji lekara</li>
+          <li>Laboratorija sa aparatima</li>
+          <li>Partnerske laboratorije</li>
+          <li>Uprava i finansije</li>
+        </ul>
       </div>
     </div>
   </div>
