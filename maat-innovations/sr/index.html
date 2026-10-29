@@ -98,7 +98,8 @@
     /* brojke */
     .brojke { background: var(--canvas); padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .brojke .sirina { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-    .klijent { padding: 72px 0; }
+    .klijent { padding: 88px 0 72px; }
+    .klijent .zaglavlje { margin-bottom: 32px; }
     .klijent-kartica { display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: 40px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 32px 36px; box-shadow: var(--senka); }
     .klijent-znak img { display: block; width: 100%; height: auto; }
     .klijent-mesto { margin-top: 12px; color: var(--muted); font-size: .9rem; }
@@ -779,8 +780,13 @@
 <!-- PRVI KLIJENT (29.10.2026, uz pismenu saglasnost klinike). Samo ono što klinika STVARNO
      koristi — fiskalizacija je kod njih isključena, pa je ovde nema. Slike ekrana su i dalje
      iz demoa, nikad iz klinike. Citat dodati kad stigne od klinike (ispod spiska, isti par). -->
-<section class="klijent" id="u-radu" aria-label="Ko ga koristi">
+<section class="klijent" id="u-radu">
   <div class="sirina">
+    <div class="zaglavlje">
+      <span class="nadnaslov">Klijenti</span>
+      <h2>Gde MAAT već radi.</h2>
+      <p class="uvod">Nije samo demo — u ovim ustanovama program radi svaki dan, sa pravim pacijentima.</p>
+    </div>
     <div class="klijent-kartica">
       <div class="klijent-znak">
         <a href="https://hayatmedic.rs" target="_blank" rel="noopener"><img src="../slike/klijenti/hayat-medic.svg" width="250" height="45" alt="HAYAT Medic"></a>
