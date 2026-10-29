@@ -98,6 +98,14 @@
     /* brojke */
     .brojke { background: var(--canvas); padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .brojke .sirina { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .klijent { padding: 56px 0 8px; }
+    .klijent-kartica { display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: 40px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 32px 36px; box-shadow: var(--senka); }
+    .klijent-znak img { display: block; width: 100%; height: auto; }
+    .klijent-mesto { margin-top: 12px; color: var(--muted); font-size: .9rem; }
+    .klijent-kartica h2 { margin: 8px 0 10px; }
+    .klijent-kartica p { margin: 0; color: var(--text-2); }
+    .klijent-koristi { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+    .klijent-koristi li { background: var(--accent-50); color: var(--accent-t); border-radius: 999px; padding: 6px 12px; font-size: .86rem; font-weight: 600; }
     .brojka { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; box-shadow: var(--senka); }
     .brojka strong { display: block; font-size: 1.9rem; font-weight: 800; color: var(--title); letter-spacing: -0.03em; line-height: 1.1; }
     .brojka span { font-size: .9rem; color: var(--muted); }
@@ -253,6 +261,8 @@
       .vrh .sirina, .uloga, .uloga.obrnuto, .istaknuto, .obilazak, .poziv, .pomocnik { grid-template-columns: minmax(0, 1fr); gap: 32px; }
       .uloga.obrnuto .tekst { order: 0; }
       .brojke .sirina { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .klijent-kartica { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 24px; }
+      .klijent-znak { max-width: 220px; }
       .koristi, .bezbednost, .koraci, .problemi, .celine, .integracije, .galerija { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .cene { grid-template-columns: minmax(0, 1fr); }
       .pomocnik figure { max-width: 290px; margin: 0 auto; }
@@ -347,6 +357,32 @@
     <div class="brojka"><strong>8</strong><span>uloga — od recepcije do uprave</span></div>
     <div class="brojka"><strong>1.000+</strong><span>termina u probnoj klinici</span></div>
     <div class="brojka"><strong>0</strong><span>instalacija na računarima osoblja</span></div>
+  </div>
+</section>
+
+<!-- PRVI KLIJENT (29.10.2026, uz pismenu saglasnost klinike). Samo ono što klinika STVARNO
+     koristi — fiskalizacija je kod njih isključena, pa je ovde nema. Slike ekrana su i dalje
+     iz demoa, nikad iz klinike. Citat dodati kad stigne od klinike (ispod spiska, isti par). -->
+<section class="klijent" id="u-radu" aria-label="Ko ga koristi">
+  <div class="sirina">
+    <div class="klijent-kartica">
+      <div class="klijent-znak">
+        <a href="https://hayatmedic.rs" target="_blank" rel="noopener"><img src="../slike/klijenti/hayat-medic.svg" width="250" height="45" alt="HAYAT Medic"></a>
+        <div class="klijent-mesto"><i class="bi bi-geo-alt" aria-hidden="true"></i> Novi Pazar</div>
+      </div>
+      <div>
+        <span class="nadnaslov">U stvarnom radu</span>
+        <h2>HAYAT Medic radi u MAAT-u.</h2>
+        <p>Poliklinika i laboratorija iz Novog Pazara. Od oktobra 2026. recepcija, lekari, laboratorija i uprava rade u istom programu — od termina zakazanog na sajtu do nalaza koji laboratorija izda.</p>
+        <ul class="klijent-koristi">
+          <li>Zakazivanje na sajtu</li>
+          <li>Recepcija i naplata</li>
+          <li>Izveštaji lekara</li>
+          <li>Laboratorija sa aparatima</li>
+          <li>Uprava i finansije</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -586,7 +622,7 @@
       <div class="integracija"><i class="bi bi-shield-check"></i><h3>Provera osiguranja</h3><p>Pokrivenost pacijenta proverava se pre pregleda, da se ne naplati ono što ide preko osiguranja.</p></div>
       <div class="integracija"><i class="bi bi-cpu"></i><h3>Analizatori u laboratoriji</h3><p>Dva protokola, ASTM i HL7 (MLLP). Posrednik pored aparata čuva svaki rezultat na disku dok ga server ne potvrdi — ništa se ne gubi kad padne internet, a u kliniku se ne otvara nijedan port. Rezultat stiže u nalog bez prepisivanja.</p></div>
     </div>
-    <div class="beleska"><b>Stanje</b>Sve četiri veze su napravljene i rade u probnom režimu; veza sa analizatorima je isprobana na simuliranim aparatima, preko prave mrežne veze. Prelazak na pravi servis je podešavanje — adresa, ključ i sertifikat — a ne prepravka sistema. Ako podešavanje nedostaje, sistem neće tiho preći na simulaciju: prijaviće grešku, da se račun nikad ne prikaže kao fiskalizovan ako nije.</div>
+    <div class="beleska"><b>Stanje</b>Analizatori rade u stvarnom radu: u klinici HAYAT Medic BioSystems BA 200 prima naloge od programa čim pročita bar kod epruvete i vraća rezultate u nalog, a Mindray BC-5310 CRP šalje krvnu sliku. Fiskalni račun, eZdravlje i provera osiguranja napravljeni su i rade u probnom režimu. Prelazak na pravi servis je podešavanje — adresa, ključ i sertifikat — a ne prepravka sistema. Ako podešavanje nedostaje, sistem neće tiho preći na simulaciju: prijaviće grešku, da se račun nikad ne prikaže kao fiskalizovan ako nije.</div>
     <div class="beleska" style="margin-top:12px"><b>Po dogovoru</b>Online plaćanje kroz portal, terapije i poruke u portalu, elektronske saglasnosti sa verzijom i potpisom, uvoz bankarskih izvoda i razmena sa računovodstvom, EBITDA i EBIT u finansijskom izveštaju. Uključuju se kad ih ustanova zatraži.</div>
   </div>
 </section>
